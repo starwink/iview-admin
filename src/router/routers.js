@@ -12,8 +12,10 @@ import parentView from '@/components/parent-view'
  *  notCache: (false) 设为true后页面不会缓存
  *  access: (null) 可访问该页面的权限数组，当前路由设置的权限会影响子路由
  *  icon: (-) 该页面在左侧菜单、面包屑和标签导航处显示的图标，如果是自定义图标，需要在图标名称前加下划线'_'
+ *  href: 'https://xxx' (default: null) 用于跳转到外部连接
  *  beforeCloseName: (-) 设置该字段，则在关闭当前tab页时会去'@/router/before-close.js'里寻找该字段名对应的方法，作为关闭前的钩子函数
  * }
+ * [使用文档](https://lison16.github.io/iview-admin-doc/#/%E8%B7%AF%E7%94%B1%E9%85%8D%E7%BD%AE)
  */
 
 export default [
