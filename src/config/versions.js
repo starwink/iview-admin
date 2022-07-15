@@ -1,0 +1,1 @@
+export default {"versions":"202207150917","branch":"vtemplate"}

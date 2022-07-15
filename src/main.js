@@ -16,6 +16,10 @@ import '@/assets/icons/iconfont.css'
 /* eslint-disable */
 if (process.env.NODE_ENV !== 'production') require('@/mock')
 
+import versionsJson from "@/config/versions.js";
+console.info('%c Versions','color: white; background-color: #13939e;padding:4px 6px 4px 0px',`${versionsJson.branch}-${versionsJson.versions}`);
+
+
 Vue.use(ViewUI);
 /**
  * @description 注册admin内置插件
