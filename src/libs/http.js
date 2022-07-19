@@ -2,6 +2,9 @@ import axios from "axios";
 import qs from "qs";
 import NProgress from "nprogress";
 import { Message } from "view-design";
+
+let successCode=[200]
+
 NProgress.configure({ showSpinner: false });
 // axios.defaults.timeout = 60000;
 // if (process.env.NODE_ENV == "development") {
@@ -53,7 +56,7 @@ axios.interceptors.response.use(
         if (response.data.code === 200400) {
             //登录超时重定向
             window.location.hash = "/login"
-        } else if (response.data.code !== 1) {
+        } else if (!successCode.includes(response.data.code)) {
             Message.error({ content: response.data.message, duration: 0, closable: true });
         }
         return response;
@@ -73,63 +76,67 @@ axios.interceptors.response.use(
 
 export const request = {
     async get(url, data) {
-        try {
-            let res = await axios.get(url, { params: data });
-            res = res.data;
-            return new Promise(resolve => {
+        let res = await axios.get(url, { params: data });
+        res = res.data;
+        return new Promise((resolve ,reject)=> {
+            if (successCode.includes(res.code)) {
                 resolve(res);
-            });
-        } catch (err) {
-            console.log(err);
-        }
+            }else{
+                reject(res);
+            }
+        });
+       
     },
-
+  
     async post(url, data) {
-        try {
-            let headers = { "Content-Type": "application/json;charset=UTF-8" };
-            let res = await axios.post(url, data, headers);
-            res = res.data;
-            return new Promise(resolve => {
+        let headers = { "Content-Type": "application/json;charset=UTF-8" };
+        let res = await axios.post(url, data, headers);
+        res = res.data;
+        return new Promise((resolve ,reject)=> {
+            if (successCode.includes(res.code)) {
                 resolve(res);
-            });
-        } catch (err) {
-            console.log(err);
-        }
+            }else{
+                reject(res);
+            }
+        });
+        
     },
     async postForm(url, data) {
-        try {
             let headers = { "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8" };
             let res = await axios.post(url, qs.stringify(data), headers);
             res = res.data;
-            return new Promise(resolve => {
-                resolve(res);
+            return new Promise((resolve ,reject)=> {
+                if (successCode.includes(res.code)) {
+                    resolve(res);
+                }else{
+                    reject(res);
+                }
             });
-        } catch (err) {
-            console.log(err);
-        }
+        
     },
     async patch(url, data) {
-        try {
-            let res = await axios.patch(url, data);
-            res = res.data;
-            return new Promise(resolve => {
+        let res = await axios.patch(url, data);
+        res = res.data;
+        return new Promise((resolve ,reject)=> {
+            if (successCode.includes(res.code)) {
                 resolve(res);
-            });
-        } catch (err) {
-            console.log(err);
-        }
+            }else{
+                reject(res);
+            }
+        });
+        
     },
     async delete(url, data) {
-        try {
-            //   let headers = { "Content-Type": "application/json;charset=UTF-8" };
-            let res = await axios.delete(url, data);
-            res = res.data;
-            return new Promise(resolve => {
+        //   let headers = { "Content-Type": "application/json;charset=UTF-8" };
+        let res = await axios.delete(url, data);
+        res = res.data;
+        return new Promise((resolve ,reject)=> {
+            if (successCode.includes(res.code)) {
                 resolve(res);
-            });
-        } catch (err) {
-            console.log(err);
-        }
+            }else{
+                reject(res);
+            }
+        });
     },
    
     /**get方式下载excel  
