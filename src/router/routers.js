@@ -1,6 +1,8 @@
 import Main from '@/components/main'
 import parentView from '@/components/parent-view'
 
+import demo from './routers/demo.js'
+
 /**
  * iview-admin中meta除了原生参数外可配置的参数:
  * meta: {
@@ -17,8 +19,12 @@ import parentView from '@/components/parent-view'
  * }
  * [使用文档](https://lison16.github.io/iview-admin-doc/#/%E8%B7%AF%E7%94%B1%E9%85%8D%E7%BD%AE)
  */
-
+let demoRouter = []
+if (process.env.NODE_ENV === 'development') {
+  demoRouter = [...demo]
+}
 export default [
+  ...demoRouter,
   {
     path: '/login',
     name: 'login',

@@ -6,7 +6,7 @@
 import echarts from 'echarts'
 import tdTheme from './theme.json'
 import { on, off } from '@/libs/tools'
-echarts.registerTheme('tdTheme', tdTheme)
+// echarts.registerTheme('tdTheme', tdTheme)
 export default {
   name: 'ChartPie',
   props: {

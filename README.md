@@ -24,3 +24,12 @@ vue 2;node12;
 ### 1.引入 docker目录
 用于项目打包测试
 ### 2.升级iview4.0 view-design 
+
+## 项目本地vs code 格式化配置
+.vscode/settings.json
+```json
+{
+    "editor.tabSize": 4,
+    "html.format.contentUnformatted": "",
+}
+```
