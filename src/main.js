@@ -8,6 +8,12 @@ import ViewUI from 'view-design'
 import config from '@/config'
 import importDirective from '@/directive'
 import installPlugin from '@/plugin'
+import 'echarts';
+import ECharts from 'vue-echarts';
+
+// 全局注册组件（也可以使用局部注册）
+Vue.component('v-chart', ECharts);
+// import 'echarts-liquidfill'
 
 import 'view-design/dist/styles/iview.css'
 import './index.less'
@@ -18,6 +24,8 @@ if (process.env.NODE_ENV !== 'production') require('@/mock')
 
 import versionsJson from "@/config/versions.js";
 console.info('%c Versions','color: white; background-color: #13939e;padding:4px 6px 4px 0px',`${versionsJson.branch}-${versionsJson.versions}`);
+
+
 
 
 Vue.use(ViewUI);

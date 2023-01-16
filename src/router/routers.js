@@ -24,7 +24,7 @@ if (process.env.NODE_ENV === 'development') {
   demoRouter = [...demo]
 }
 export default [
-  ...demoRouter,
+    ...demoRouter,
   {
     path: '/login',
     name: 'login',
@@ -44,6 +44,7 @@ export default [
       notCache: true
     },
     children: [
+        
       {
         path: '/home',
         name: 'home',
