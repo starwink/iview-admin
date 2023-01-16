@@ -10,6 +10,7 @@ import importDirective from '@/directive'
 import installPlugin from '@/plugin'
 import 'echarts';
 import ECharts from 'vue-echarts';
+import helper from '@/utils/helper.js'
 
 // 全局注册组件（也可以使用局部注册）
 Vue.component('v-chart', ECharts);
@@ -41,6 +42,7 @@ Vue.config.productionTip = false
  * @description 全局注册应用配置
  */
 Vue.prototype.$config = config
+Vue.prototype.$helper = helper
 /**
  * 注册指令
  */
