@@ -2,7 +2,7 @@
     <div class="editor-echart">
         <Split v-model="split.lr">
             <div slot="left" class="demo-split-pane no-padding">
-                <editor v-model="form.json" @init="editorInit" lang="javascript" theme="tomorrow_night_blue"  :height="editor.height"></editor>
+                <editor v-model="form.json" @init="editorInit" lang="jsoniq" theme="vibrant_ink"  :height="editor.height"></editor>
             </div>
             <div slot="right" class="demo-split-pane">
                 <div class="header">
@@ -107,10 +107,10 @@ export default {
 
         editorInit: function (editor) {
             require('brace/ext/language_tools') //language extension prerequsite...
-            require('brace/ext/searchbox') //添加搜索功能
-            // require('brace/mode/jsoniq')
+            require('brace/mode/jsoniq')
             require('brace/mode/javascript')
-            require('brace/theme/tomorrow_night_blue')
+            // require('brace/mode/javascript')    //language
+            require('brace/theme/vibrant_ink')
             require('brace/snippets/javascript') //snippet
             editor.setOptions({
                 enableBasicAutocompletion: true,
@@ -122,26 +122,19 @@ export default {
             try{
                 let code=this.formatRunCode(this.form.json);
                 // let obj=eval(`(var fun=function(){${code};return num};fun())()`);
-                var myChart=this.$refs.echartView.chart;
+                var mychar=this.$refs.echartView.chart;
                 var params=this.form.params;
                 // let obj=eval(`(() => {var option;${code};return option})()`);
                 let obj;
-               /*  (function () {
+                (function () {
                     // var mychar=mychar2;
                     // var params=params2;
+                    // console.log('mycha222r',mychar)
                     (function inner() {
                       obj=eval(`(() => {var option;${code};return option})()`);
                     }());
-                }()); */
-                //# 关于不使用eval,使用function替换的mdn示例说明
-                //https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/eval#%E6%B0%B8%E8%BF%9C%E4%B8%8D%E8%A6%81%E4%BD%BF%E7%94%A8_eval%EF%BC%81
-                function runCodeWithDateFunction(obj){
-                    return Function('"use strict";return (' + obj + ')')()(
-                        params,myChart
-                    );
-                }
-                obj=runCodeWithDateFunction(`function(params,myChart){ var option;${code};return option ;}`)
-               
+                }());
+
                 if(obj){
                     this.echart.options=obj
                     // this.echart.options={...obj.baseOption,...obj.options[0]}
