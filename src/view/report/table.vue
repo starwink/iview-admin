@@ -1,5 +1,5 @@
 <template>
-    <div class="editor-echart">
+    <div class="editor-table">
         <Split v-model="split.lr">
             <div slot="left" class="demo-split-pane no-padding">
                 <editor v-model="form.json" @init="editorInit" lang="javascript" theme="tomorrow_night_blue"  :height="editor.height"></editor>
@@ -22,7 +22,7 @@
                     {{ formatRunCode(form.json) }}
                 </p>
                 <div class="review-chart" >
-                    <echartView ref="echartView" :options="echart.options" :style="{width:config.width,height:config.height}" />
+                    <Table :columns="table.columns" :data="table.data"></Table>
                 </div>
                 
             </div>
@@ -30,13 +30,9 @@
     </div>
 </template>
 <script>
-import echartView from '@/view/editor/components/echartView';
-
-import * as echarts from 'echarts'
 export default {
     components: {
         editor: require('vue2-ace-editor'),
-        echartView
     },
     data() {
         return {
@@ -54,13 +50,15 @@ export default {
                 width:'100%',
                 height:'300px'
             },
-            echart:{
-                options:{}
-            },
+            
             editor: {
                 height: '300'
             },
-            cacheName:'editorEchartJosn'
+            cacheName:'editorTableJson',
+            table:{
+                columns:[],
+                data:[]
+            }
         }
     },
     created() {
@@ -69,9 +67,9 @@ export default {
     methods: {
         init() {
             this.editor.height = document.documentElement.clientHeight - 20;
-            var editorEchartJosn=sessionStorage.getItem(this.cacheName)
-            if(editorEchartJosn){
-                this.form.json=editorEchartJosn || ''
+            var editorTableJson=sessionStorage.getItem(this.cacheName)
+            if(editorTableJson){
+                this.form.json=editorTableJson || ''
                 
             }
             this.getData()
@@ -81,7 +79,7 @@ export default {
         },
         getData(){
             var that=this;
-            var url='/json/1.json'
+            var url='/json/table.json'
             var xhr = new XMLHttpRequest()
                 xhr.open('GET', url, true)
                 //设置响应类型为 blob
@@ -95,6 +93,7 @@ export default {
                     var str=this.response
                     if(that.$helper.isJSON(str)){
                         that.form.params=JSON.parse(str);
+                       
                     }else{
                         that.form.params=str;
                     }
@@ -125,31 +124,19 @@ export default {
         run(){
             try{
                 let code=this.formatRunCode(this.form.json);
-                // let obj=eval(`(var fun=function(){${code};return num};fun())()`);
-                var myChart=this.$refs.echartView.chart;
                 var params=this.form.params;
-                //graphic
-                console.log('123',echarts)
-                // let obj=eval(`(() => {var option;${code};return option})()`);
+                console.log(params);
                 let obj;
-               /*  (function () {
-                    // var mychar=mychar2;
-                    // var params=params2;
-                    (function inner() {
-                      obj=eval(`(() => {var option;${code};return option})()`);
-                    }());
-                }()); */
-                //# 关于不使用eval,使用function替换的mdn示例说明
-                //https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/eval#%E6%B0%B8%E8%BF%9C%E4%B8%8D%E8%A6%81%E4%BD%BF%E7%94%A8_eval%EF%BC%81
+             
                 function runCodeWithDateFunction(obj){
                     return Function('"use strict";return (' + obj + ')')()(
-                        params,myChart,echarts
+                        params
                     );
                 }
-                obj=runCodeWithDateFunction(`function(params,myChart,echarts){ var option;${code};return option ;}`)
-               
+                obj=runCodeWithDateFunction(`function(params){ var option;${code};return option ;}`)
+                console.log(obj)
                 if(obj){
-                    this.echart.options=obj
+                    this.table=obj
                     // this.echart.options={...obj.baseOption,...obj.options[0]}
                     sessionStorage.setItem(this.cacheName,this.form.json)
                 }
@@ -162,7 +149,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.editor-echart {
+.editor-table {
     height: 100vh;
     border: 1px solid #dcdee2;
 }
