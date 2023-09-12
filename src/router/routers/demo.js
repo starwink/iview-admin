@@ -36,5 +36,18 @@ export default [
         },
         component: () => import("@/view/report/table.vue"),
       },
+
+      {
+        path: "/sqlite/run",
+        name: "sqlite/run",
+        meta: {
+          token: false,
+          hideInMenu: true,
+          title: '表格-外部参数调用表格',
+          notCache: true,
+          // icon: 'md-home'
+        },
+        component: () => import("@/view/sqlite/run.vue"),
+      }
   ];
   

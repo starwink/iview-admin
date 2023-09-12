@@ -12,6 +12,8 @@ import 'echarts';
 import ECharts from 'vue-echarts';
 import helper from '@/utils/helper.js'
 
+import { api } from '@/axios/api/index.js'
+
 // 全局注册组件（也可以使用局部注册）
 Vue.component('v-chart', ECharts);
 // import 'echarts-liquidfill'
@@ -19,6 +21,7 @@ Vue.component('v-chart', ECharts);
 import 'view-design/dist/styles/iview.css'
 import './index.less'
 import '@/assets/icons/iconfont.css'
+
 // 实际打包时应该不引入mock
 /* eslint-disable */
 if (process.env.NODE_ENV !== 'production') require('@/mock')
@@ -43,6 +46,7 @@ Vue.config.productionTip = false
  */
 Vue.prototype.$config = config
 Vue.prototype.$helper = helper
+Vue.prototype.$api = api
 /**
  * 注册指令
  */

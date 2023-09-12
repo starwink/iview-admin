@@ -1,0 +1,87 @@
+.button-span {
+    cursor: pointer;
+    margin: 0 8px;
+}
+.button-color-edit {
+    cursor: pointer;
+    color: $primary-color;
+}
+.button-color-del {
+    cursor: pointer;
+    color: #e02020;
+}
+.button-color-edit {
+    span {
+        color: $primary-color;
+    }
+}
+.button-color-del {
+    span {
+        color: #e02020;
+    }
+}
+.case-type-color-success {
+    color: #6dd400;
+}
+.case-type-color-login {
+    color: #fea41e;
+}
+.case-type-color-error {
+    color: #e02020;
+}
+.case-type-color-freeze {
+    color: #87ceeb;
+}
+
+.case-page {
+    height: calc(100vh - 90px);
+    overflow-y: auto;
+    .table-box {
+        margin: 10px 0;
+        overflow-y: auto;
+    }
+
+    .other-button-box {
+        text-align: right;
+        margin: 10px 0;
+        min-height: 1px;
+
+        .userSel {
+            text-align: left;
+            width: 100%;
+            overflow: auto;
+            min-height: 10px;
+        }
+    }
+
+    .search_where {
+        // margin: 10px;
+        // padding: 10px;
+        background-color: #fff;
+
+        .ivu-form-item {
+            margin: 0;
+        }
+
+        .ivu-card-body {
+            padding: 16px;
+        }
+
+        .ivu-row {
+            &:not(:first-child) {
+                margin-top: 6px;
+            }
+        }
+    }
+
+    .rigth-button {
+        text-align: right;
+    }
+
+    .page-box {
+        margin-top: 20px;
+        .ivu-page {
+            text-align: right;
+        }
+    }
+}
