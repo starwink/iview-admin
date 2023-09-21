@@ -10,9 +10,10 @@ const { homeName } = config
 Vue.use(Router)
 const router = new Router({
   routes,
-  mode: 'history'
+//   mode: 'history'
 })
 const LOGIN_PAGE_NAME = 'login'
+const NO_PARM_PAGE=['']
 
 const turnTo = (to, access, next) => {
   if (canTurnTo(to.name, access, routes)) next() // 有权限，可访问
@@ -22,6 +23,8 @@ const turnTo = (to, access, next) => {
 router.beforeEach((to, from, next) => {
   ViewUI.LoadingBar.start()
   const token = getToken()
+  next();
+  return;
   if (!token && to.name !== LOGIN_PAGE_NAME) {
     // 未登录且要跳转的页面不是登录页
     next({

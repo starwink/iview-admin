@@ -5,6 +5,7 @@
         </div>
         <div>
             <Button @click="add">创建</Button>
+            <Button @click="createDataBase">初始化数据库</Button>
         </div>
         <div class="table-box">
             <Table :columns="list.columns" :data="list.data" :loading="loading" stripe  width="calc(100% - 16px)">
@@ -15,6 +16,7 @@
                     <span>{{$helper.getDateParams(row.update_datetime,'YYYY-MM-DD HH:mm')}}</span>
                 </template>
                 <template slot-scope="{ row, index }" slot="action">
+                    <span type="text" class="button-span button-color-edit" ghost style="margin-right: 5px"  @click.stop="open(row)">open</span>
                     <span type="text" class="button-span button-color-edit" ghost style="margin-right: 5px"  @click.stop="edit(row)">编辑</span>
                   
                     <Poptip confirm transfer placement="top-end" @on-ok="del(row)">
@@ -51,19 +53,20 @@ export default {
             list: {
                 columns: [
                     {
-                        title: "路径",
-                        minWidth: 260,
-                        ellipsis:true,
-                        tooltip:true,
-                        key: 'path',
-                    },
-                    {
                         title: "标题",
                         minWidth: 120,
                         ellipsis:true,
                         tooltip:true,
                         key: "title"
                     },
+                    {
+                        title: "路径",
+                        minWidth: 260,
+                        ellipsis:true,
+                        tooltip:true,
+                        key: 'path',
+                    },
+                    
                     {
                         title: '创建时间',
                         width: 180,
@@ -129,6 +132,11 @@ export default {
                 this.page.total = res.total || 0;
             });
         },
+        createDataBase(){
+            this.$api.initDataBase().then(res => {
+               
+            });
+        },
         add() {
             this.$refs.formModal.init();
         },
@@ -143,6 +151,9 @@ export default {
                     this.search();
                 })
             }
+        },
+        open(row){
+            this.$api.openPath(row).then(res=>{})
         }
     }
 }

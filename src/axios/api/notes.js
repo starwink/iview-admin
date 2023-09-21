@@ -1,6 +1,10 @@
 import { request } from '@/axios/request/http.js'
 let url = "/controller/notes";
 export default {
+    initDataBase(){
+        return request.get(`${url}/initDataBase`);
+    },
+
     getNotesList(data){
         return request.post(`${url}/list`, data);
     },
@@ -13,6 +17,11 @@ export default {
     delNotes(id){
         return request.post(`${url}/del`, {id});
     },
+    openPath(data){
+        return request.post(`${url}/openPath`, data);
+    },
+
+    
    
 
 
