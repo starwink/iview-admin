@@ -1,7 +1,7 @@
 import Main from '@/components/main'
 import parentView from '@/components/parent-view'
 
-import demo from './routers/demo.js'
+// import demo from './routers/demo.js'
 
 /**
  * iview-admin中meta除了原生参数外可配置的参数:
@@ -21,7 +21,7 @@ import demo from './routers/demo.js'
  */
 let demoRouter = []
 if (process.env.NODE_ENV === 'development') {
-  demoRouter = [...demo]
+//   demoRouter = [...demo]
 }
 export default [
   ...demoRouter,
@@ -66,6 +66,49 @@ export default [
       icon: 'ios-book'
     }
   },
+  {
+    path: '/fonts',
+    name: 'fonts',
+    meta: {
+      title: '字体验证',
+    //   href: 'https://lison16.github.io/iview-admin-doc/#/',
+      icon: 'ios-book'
+    },
+    component: () => import('@/view/fonts/index.vue')
+  },
+ /*  {
+    path: '/notes',
+    name: 'notes',
+    meta: {
+      title: '输入练习管理',
+    //   href: 'https://lison16.github.io/iview-admin-doc/#/',
+      icon: 'ios-book'
+    },
+    component: parentView,
+    children: [
+        {
+            path: '/notes/list',
+            name: 'notes/list',
+            meta: {
+            title: '输入练习管理',
+            //   href: 'https://lison16.github.io/iview-admin-doc/#/',
+            icon: 'ios-book'
+            },
+            component: () => import('@/view/notes/list.vue')
+        }
+    ]
+  }, */
+  {
+    path: '/notes',
+    name: 'notes',
+    meta: {
+      title: '输入练习管理',
+      icon: 'ios-book'
+    },
+ 
+    component: () => import('@/view/notes/list.vue')
+  },
+  
   {
     path: '/multilevel',
     name: 'multilevel',

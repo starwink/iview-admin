@@ -1,11 +1,8 @@
 import axios from "axios";
 import qs from "qs";
-import NProgress from "nprogress";
-import { Message } from "view-design";
 
 let successCode=[200]
 
-NProgress.configure({ showSpinner: false });
 // axios.defaults.timeout = 60000;
 // if (process.env.NODE_ENV == "development") {
 //   axios.defaults.baseURL = process.env.VUE_APP_URL;
@@ -21,7 +18,6 @@ axios.create({
 });
 axios.interceptors.request.use(
     config => {
-        NProgress.start() // 设置加载进度条(开始..)
         // if(localStorage.getItem("user")){
         //     config.headers["Authorization"] = JSON.parse(localStorage.getItem("user")).token
         // }
@@ -52,7 +48,6 @@ let errorStatus = new Map([
 // 响应拦截器即异常处理
 axios.interceptors.response.use(
     response => {
-        NProgress.done() // 设置加载进度条(结束..)
         if (response.data.code === 200400) {
             //登录超时重定向
             window.location.hash = "/login"
@@ -62,7 +57,6 @@ axios.interceptors.response.use(
         return response;
     },
     err => {
-        NProgress.done()
         if (err && err.response) {
             let status = err.response.status;
             let error = errorStatus.get(status).error || errorStatus.get("default").error + err.response.status;

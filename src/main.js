@@ -8,10 +8,11 @@ import ViewUI from 'view-design'
 import config from '@/config'
 import importDirective from '@/directive'
 import installPlugin from '@/plugin'
+import helper from '@/libs/helper.js'
+import { api } from '@/api/index.js'
 
-import 'view-design/dist/styles/iview.css'
-import './index.less'
-import '@/assets/icons/iconfont.css'
+import '@/assets/styles';
+
 // 实际打包时应该不引入mock
 /* eslint-disable */
 if (process.env.NODE_ENV !== 'production') require('@/mock')
@@ -33,6 +34,11 @@ Vue.config.productionTip = false
  * @description 全局注册应用配置
  */
 Vue.prototype.$config = config
+
+Vue.prototype.$helper = helper
+Vue.prototype.$api = api
+
+
 /**
  * 注册指令
  */
