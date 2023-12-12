@@ -7,12 +7,12 @@
         </div>
         
         <div class="page-buttons" ref="pageButtons">
-            <Button style="margin-left: 10px;" @click="add">新增</Button>
+            <Button @click="add" type="primary" class="ml-10" >新增</Button>
         </div>
+
         <div class="table-list">
             <Table :columns="list.columns" :data="list.data" width="calc(100% - 16px)" :height="tableHeight">
                 <template slot-scope="{ row, index }" slot="created_at">
-                    <!-- <span>{{$helper.getReat(row.avgGatherRate,2,100)}}%</span> -->
                     <span>{{$helper.getDateParams(row.created_at)}}</span>
                 </template>
                 <template slot-scope="{ row, index }" slot="update_datetime">
@@ -20,8 +20,8 @@
                 </template>
 
                 <template slot-scope="{ row, index }" slot="action">
-                    <span type="text" class="button-span button-color-edit" ghost style="margin-right: 5px" @click.stop="edit(row)">编辑</span>
-                    <span type="text" class="button-span button-color-edit" ghost style="margin-right: 5px" @click.stop="del(row)">删除</span>
+                    <span @click.stop="edit(row)" class="button-span button-color-edit mr-5"   >编辑</span>
+                    <span @click.stop="del(row)" class="button-span button-color-del  mr-5"   >删除</span>
                 </template>
             </Table>
         </div>
@@ -112,14 +112,11 @@ export default {
             this.$nextTick(()=>{
                 this.$_resize();
                 this.search();
-
             })
-
         },
         reset() {
             let redata = this.$options.data()
             Object.assign(this.$data.form, redata.form)
-            this.form.dictionaryId = this.$route.params.id;
             this.search()
         },
         search() {
@@ -141,12 +138,9 @@ export default {
             }
             this.loading = true
             let params = { ...this.form, ...{ pageNum: this.page.current, pageSize: this.page.pageSize } }
-            console.log('ss',this.$api.getNotesList(params))
             this.$api.getNotesList(params).then(res => {
-                console.log(res);
                 this.loading = false
                 if(res.code==1){
-                  
                     this.list.data = res?.object?.list || [];
                     this.page.total = res?.object?.total || 0;
                 }
@@ -161,11 +155,22 @@ export default {
             this.$refs.baseForm.edit({id:row.id});
         },
         del(row) {
-            this.$api.delNotes({id:row.id}).then(res=>{
-                if(res.code==1){
-                    this.getList()
+            this.$Modal.confirm({
+                title: `提示`,
+                content: `<span style="color:red;margin-right: 8px;">确认删除?</span><span  style="color:#999">你还要继续吗？</span>`,
+                onOk: () => {
+                    // this.delMenuItem(item.id);
+                    this.$api.delNotes({id:row.id}).then(res=>{
+                        if(res.code==1){
+                            this.getList()
+                        }
+                    });
+                },
+                onCancel: () => {
                 }
             });
+
+            
             // this.$refs.baseForm.del({id:row.id});
         },
     },
@@ -175,23 +180,6 @@ export default {
 }
 </script>
 <style lang="less" >
-.page-main{
-    padding:16px;
-    height: 100%;
-    .search-form{
-        padding:8px 0;
-        .search-input{
-            width:156px;
-        }
-    }
-}
-.page-buttons{
-    text-align: right;
-    margin: 10px 0;
-}
 
-.page-paging{
-    text-align: right;
-    margin: 10px 0;
-}
+
 </style>

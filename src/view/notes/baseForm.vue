@@ -1,12 +1,12 @@
 <template>
     <div>
-        <Modal class-name="eModal eModal-cancelFormModal" v-model="show" @on-cancel="close" transfer footer-hide>
+        <Modal class-name="eModal eModal-cancelFormModal" width="50" v-model="show" @on-cancel="close" transfer footer-hide  :mask-closable="false">
             <div class="detail">
                 <div class="header" ref="header">
-                    <span class="title">{{ title }}</span>
+                    <span class="title">{{ form.id?'新增':'编辑' }}</span>
                 </div>
                 <div class="eModal-body">
-                    <Form :model="form" :rules="rules" ref="form"   :label-width="156">
+                    <Form :model="form" :rules="rules" ref="form"   :label-width="96">
                         <FormItem label="文字：" prop="text" :rules="[{ required: true, message: '请输入', trigger: 'blur' }]">
                             <Input v-model.trim="form.text" maxlength="50" ></Input>
                         </FormItem>
@@ -23,7 +23,7 @@
                     </div>
                     <div class="right">
                         <Button @click.stop="close">取消</Button>
-                        <Button @click.stop="save()" type="primary">保存</Button>
+                        <Button class="ml-10" @click.stop="save()" type="primary">保存</Button>
                     </div>
                 </div>
 
@@ -55,6 +55,7 @@ export default {
     methods: {
         add() {
             Object.assign(this.$data, this.$options.data());
+
             this.show = true;
             this.$nextTick(() => {
                 this.resetForm()
@@ -106,6 +107,18 @@ export default {
         },
         close() {
             this.show = false;
+        },
+        goTop (returnDom = '.drawer-1',targetDom = '.ivu-modal-wrap', ) {
+            const targetD = document.querySelector('.customHeaderModal').querySelector(targetDom)
+            const returnD = document.querySelectorAll(returnDom)
+            const targetZIndex = targetD.style[`z-index`]
+            console.log(targetZIndex)
+            returnD.forEach((dom, index) => {
+                const inner = dom.querySelector('.ivu-drawer-wrap')
+                const innerMask = dom.querySelector('.ivu-drawer-mask')
+                inner.style[`z-index`] = Number(targetZIndex) + 200 + index
+                innerMask.style[`z-index`] = Number(targetZIndex) + 200 + index
+            })
         }
     },
     mounted() {
@@ -145,7 +158,7 @@ export default {
         height: auto !important;
         padding: 16px;
         overflow: hidden;
-        margin-bottom: 48px;
+        margin-bottom: 24px;
         position: relative;
 
         .tips {

@@ -10,6 +10,7 @@ import axios from 'axios';
 import qs from 'qs';
 import router from '@/router/index';
 import helper from "@/libs/helper.js";
+import { Message } from "view-design";
 
 //axios.defaults.timeout = 5000;
 if (process.env.NODE_ENV == 'development') {
@@ -89,11 +90,11 @@ axios.interceptors.response.use(
             // API部分，执行SQL语句不再全局提示错误
             if (!response.config.url.includes('/api/run/simple')) {
                 // console.log(response);
-                this.$Message.error(response.data.message);
+                Message.error(response.data.message);
             }
             if (response.data.code == 503) {
                 window.location.hash = '/login';
-                this.$Message.error(response.data.message);
+                Message.error(response.data.message);
             }
         }
         return response;
@@ -106,9 +107,9 @@ axios.interceptors.response.use(
             let error =
                 errorStatus.get(status).error ||
                 errorStatus.get('default').error + err.response.status;
-            this.$Message.error(error);
+            Message.error(error);
         } else {
-            this.$Message.error('连接到服务器失败');
+            Message.error('连接到服务器失败');
             console.log('连接到服务器失败');
         }
         return Promise.resolve(err.response);

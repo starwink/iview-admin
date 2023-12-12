@@ -15,4 +15,75 @@
 @border-color-split:rgba(216,216,216,1);
 @warning-color          : #DF5A2C;
 @table-td-hover-bg            : rgba(245,247,250,1);
+@font-family:"Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+@code-family            : Consolas,Menlo,Courier,monospace;
+@font-size-color:rgba(0,0,0,0.65);
 
+html,body{
+    font-size: 14px;
+    color: @font-size-color;
+    font-family:@font-family;
+    ::scrollbar {
+        width: 8px;
+        height: 8px;
+    }
+    ::scrollbar-track-piece {
+        background-color: #fff;
+        border-radius: 4px;
+    }
+    ::scrollbar-thumb:vertical {
+        height: 4px;
+        background-color: @font-size-color;
+        border-radius: 4px;
+    }
+    ::scrollbar-thumb:horizontal {
+        width: 4px;
+        background-color: @font-size-color;
+        border-radius: 4px;
+    }
+    // system-ui,-apple-system,BlinkMacSystemFont,segoe ui,Roboto,Helvetica,Arial,"Microsoft YaHei",微软雅黑,sans-serif;
+}
+
+.page-main{
+    padding:16px;
+    height: 100%;
+    .search-form{
+        padding:8px 0;
+        .search-input{
+            width:156px;
+        }
+    }
+}
+.page-buttons{
+    text-align: right;
+    margin: 10px 0;
+}
+
+.page-paging{
+    text-align: right;
+    margin: 10px 0;
+}
+
+
+.button-span {
+    cursor: pointer;
+    margin: 0 8px;
+}
+.button-color-edit {
+    cursor: pointer;
+    color: @primary-color;
+}
+.button-color-del {
+    cursor: pointer;
+    color: #e02020;
+}
+.button-color-edit {
+    span {
+        // color: $primary-color;
+    }
+}
+.button-color-del {
+    span {
+        color: #e02020;
+    }
+}

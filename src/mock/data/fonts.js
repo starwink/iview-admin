@@ -6,7 +6,6 @@ export default (Mock) => {
     Mock.mock(/\/notes\/list/, function(req)  {
         let tableData = []
         let {pageNum=1 ,pageSize=20 }= helper.getRequestParam(req.url)
-        // console.log('req',req,pageNum,pageSize,helper.getRequestParam(req.url))
         let total=pageSize*8;
         doCustomTimes(total, () => {
             tableData.push(Mock.mock({
