@@ -6,10 +6,7 @@
   "scripts": {
     "dev": "vue-cli-service serve --open",
     "serve": "vue-cli-service serve --open",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "test:unit": "vue-cli-service test:unit",
-    "test:e2e": "vue-cli-service test:e2e"
+    "build": "vue-cli-service build"
   },
   "dependencies": {
     "@babel/plugin-proposal-optional-chaining": "^7.21.0",
@@ -22,8 +19,6 @@
     "echarts": "^5.4.1",
     "html2canvas": "^1.0.0-alpha.12",
     "js-cookie": "^2.2.0",
-    "node-sass": "^4.14",
-    "sass-loader": "8.0.2",
     "simplemde": "^1.11.2",
     "sortablejs": "^1.7.0",
     "view-design": "^4.0.0",
@@ -48,6 +43,8 @@
     "less-loader": "^4.0.5",
     "lint-staged": "^6.0.0",
     "mockjs": "^1.1.0",
+    "node-sass": "^8",
+    "sass-loader": "^10",
     "vue-template-compiler": "^2.5.13"
   },
   "browserslist": [

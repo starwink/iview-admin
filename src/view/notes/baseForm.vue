@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Modal class-name="eModal eModal-cancelFormModal" width="50" v-model="show" @on-cancel="close" transfer footer-hide  :mask-closable="false">
+        <Modal class-name="eModal eModal-notesFormModal" width="50" v-model="show" @on-cancel="close" transfer footer-hide  :mask-closable="false">
             <div class="detail">
                 <div class="header" ref="header">
                     <span class="title">{{ form.id?'新增':'编辑' }}</span>
@@ -55,12 +55,12 @@ export default {
     methods: {
         add() {
             Object.assign(this.$data, this.$options.data());
-
             this.show = true;
             this.$nextTick(() => {
                 this.resetForm()
             })
         },
+
         edit(params){
             Object.assign(this.$data, this.$options.data());
             this.show = true;
@@ -69,8 +69,8 @@ export default {
                 this.resetForm()
                 this.form=res?.object || {}
             });
-           
         },
+
         resetForm() {
             this.$refs.form.fields.forEach(function (e) {
                 e.resetField()
@@ -83,9 +83,6 @@ export default {
                     this.runapi();
                 }
             });
-        },
-        del(){
-
         },
 
         runapi() {
@@ -101,6 +98,7 @@ export default {
                 this.loading = false;
             });
         },
+
         success() {
             this.close();
             this.$emit('success')
@@ -108,18 +106,7 @@ export default {
         close() {
             this.show = false;
         },
-        goTop (returnDom = '.drawer-1',targetDom = '.ivu-modal-wrap', ) {
-            const targetD = document.querySelector('.customHeaderModal').querySelector(targetDom)
-            const returnD = document.querySelectorAll(returnDom)
-            const targetZIndex = targetD.style[`z-index`]
-            console.log(targetZIndex)
-            returnD.forEach((dom, index) => {
-                const inner = dom.querySelector('.ivu-drawer-wrap')
-                const innerMask = dom.querySelector('.ivu-drawer-mask')
-                inner.style[`z-index`] = Number(targetZIndex) + 200 + index
-                innerMask.style[`z-index`] = Number(targetZIndex) + 200 + index
-            })
-        }
+       
     },
     mounted() {
         // this.init();
@@ -153,7 +140,7 @@ export default {
     }
 }
 
-.eModal-cancelFormModal {
+.eModal-notesFormModal {
     .eModal-body {
         height: auto !important;
         padding: 16px;

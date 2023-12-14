@@ -20,8 +20,8 @@
                 </template>
 
                 <template slot-scope="{ row, index }" slot="action">
-                    <span @click.stop="edit(row)" class="button-span button-color-edit mr-5"   >编辑</span>
-                    <span @click.stop="del(row)" class="button-span button-color-del  mr-5"   >删除</span>
+                    <span @click.stop="edit(row)" class="button-span button-color-edit mr-5" >编辑</span>
+                    <span @click.stop="del(row)" class="button-span button-color-del  mr-5" >删除</span>
                 </template>
             </Table>
         </div>

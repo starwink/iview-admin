@@ -1,5 +1,8 @@
-import Main from '@/components/main'
+// import Main from '@/components/main'
+import Main from '@/components/mainByEwell'
 import parentView from '@/components/parent-view'
+
+
 
 // import demo from './routers/demo.js'
 
