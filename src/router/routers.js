@@ -2,6 +2,7 @@
 import Main from '@/components/mainByEwell'
 import parentView from '@/components/parent-view'
 
+import custom_list from "./routers/custom-list.js";
 
 
 // import demo from './routers/demo.js'
@@ -28,6 +29,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 export default [
   ...demoRouter,
+ 
   {
     path: '/login',
     name: 'login',
@@ -58,6 +60,7 @@ export default [
         },
         component: () => import('@/view/single-page/home')
       }
+      , ...custom_list,
     ]
   },
   {

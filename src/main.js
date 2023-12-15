@@ -12,7 +12,8 @@ import helper from '@/libs/helper.js'
 import { api } from '@/api/index.js'
 
 import '@/assets/styles';
-
+const appId='app-j7d4c1bwkdk7';//用于项目高度计算
+Vue.prototype.appId = appId
 // 实际打包时应该不引入mock
 /* eslint-disable */
 if (process.env.NODE_ENV !== 'production') require('@/mock')
@@ -39,6 +40,7 @@ Vue.prototype.$helper = helper
 Vue.prototype.$api = api
 
 
+
 /**
  * 注册指令
  */
@@ -46,7 +48,8 @@ importDirective(Vue)
 
 /* eslint-disable no-new */
 new Vue({
-  el: '#app',
+//   el: appId,
+  el: `#${appId}`,
   router,
   store,
   render: h => h(App)

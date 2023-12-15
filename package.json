@@ -1,7 +1,7 @@
 {
-  "name": "iview-admin",
-  "version": "2.0.0",
-  "author": "Lison<lison.modern@gmail.com>",
+  "name": "vue-com-construct-blocks",
+  "version": "1.0.0",
+  "author": "hanleiming<hanleiming@ewell.cc>",
   "private": false,
   "scripts": {
     "dev": "vue-cli-service serve --open",
@@ -25,6 +25,7 @@
     "vue": "^2.5.10",
     "vue-i18n": "^7.8.0",
     "vue-router": "^3.0.1",
+    "vue2-datepicker": "^3.11.1",
     "vuedraggable": "^2.16.0",
     "vuex": "^3.0.1",
     "wangeditor": "^3.1.1",
@@ -51,18 +52,6 @@
     "> 1%",
     "last 2 versions",
     "not ie <= 8"
-  ],
-  "gitHooks": {
-    "pre-commit": ""
-  },
-  "lint-staged": {
-    "*.js": [
-      "vue-cli-service lint",
-      "git add"
-    ],
-    "*.vue": [
-      "vue-cli-service lint",
-      "git add"
-    ]
-  }
+  ]
+ 
 }

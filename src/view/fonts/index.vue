@@ -1,5 +1,5 @@
 <template>
-    <div class="page-main fonts-page">
+    <div class="case-page fonts-page">
         <div class="page-body">
             <span>1234567890 ,</span>
             <p class="code">A、B、C、D、E、F、G、H、I、J、K、L、M、N、O、P、Q、R、S、T、U、V、W、X、Y、Z,</p>

@@ -1,5 +1,5 @@
 <template>
-    <div class="page-main" ref="pageMain">
+    <div class="case-page" ref="pageMain">
         <div ref="searchForm">
             <Form :model="form" @keydown.native.enter.prevent="search"  class="search-form"  @submit.native.prevent >
                 <Input  v-model.trim="form.key" @on-clear="search" class="search-input" maxlength="50" placeholder="请输入关键字" clearable    />

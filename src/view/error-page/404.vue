@@ -1,5 +1,5 @@
 <template>
-  <error-content code="404" desc="Oh~~您的页面好像飞走了~" :src="src"/>
+  <error-content code="404" desc="您访问的页面不存在" :src="src"/>
 </template>
 
 <script>

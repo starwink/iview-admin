@@ -12,8 +12,8 @@ const resolve = dir => {
 // 例如：https://www.foobar.com/my-app/
 // 需要将它改为'/my-app/'
 const BASE_URL = process.env.NODE_ENV === 'production'
-  ? '/'
-  : '/'
+  ? '/promod'
+  : '/promod'
 
 module.exports = {
   // Project deployment base
@@ -33,6 +33,18 @@ module.exports = {
     config.resolve.alias
       .set('@', resolve('src')) // key,value自行定义，比如.set('@@', resolve('src/components'))
       .set('_c', resolve('src/components'))
+
+    // config.module.rule('less').use('less-loader').loader('less-loader').options({
+    //     lessOptions: {
+    //     /**less-loader 配置 */
+    //     strictMath: true,
+    //     noIeCompat: true
+    //     }
+    // })
+
+    // config.module.rule('less').use('style-loader').loader('style-loader').use('css-loader').loader('css-loader').use('less-loader').loader('less-loader');
+
+     
   },
   // 打包时不生成.map文件
   productionSourceMap: false,
@@ -42,14 +54,23 @@ module.exports = {
     host: '0.0.0.0',
     open: false,
     proxy: {
-        
         '/htest': {
-          target: 'http://127.0.0.1:3331/',
-          changeOrigin: true,
-        //   pathRewrite: {
-        //       '^/htest': '',
-        //   },
+            target: 'http://127.0.0.1:3331/',
+            changeOrigin: true,
         },
+        "/zuul": {
+            target: "http://192.168.140.20:8733", //开发
+            // target: 'http://192.168.150.163:8733',//测试
+            changeOrigin: true
+        },
+        "/collect": {
+            target: "http://192.168.140.20:8744", //开发
+            // target: 'http://192.168.150.163:8744', //测试
+            changeOrigin: true,
+          
+        },
+
+        
     }
   }
 }

@@ -1,13 +1,11 @@
 <template>
-  <Layout style="height: 100%" class="main">
+  <!-- <Layout style="height: 100%" class="main"> -->
           
-    <Content class="content-wrapper">
         <keep-alive >
             <!-- :include="cacheList" -->
             <router-view/> 
         </keep-alive>
-    </Content>
-  </Layout>
+  <!-- </Layout> -->
 </template>
 <script>
 import { mapMutations, mapActions, mapGetters } from 'vuex'

@@ -1,27 +1,24 @@
 <template>
-  <div id="app">
+  <div id="app-j7d4c1bwkdk7">
     <router-view/>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'App'
 }
 </script>
 
 <style lang="less">
-.size{
-  width: 100%;
-  height: 100%;
-}
 html,body{
-  .size;
-  overflow: hidden;
-  margin: 0;
-  padding: 0;
+    height: 100%;
 }
-#app {
-  .size;
+#app-j7d4c1bwkdk7{
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
 }
+
 </style>
