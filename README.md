@@ -15,7 +15,15 @@ npm run serve
 
 # 前端框架
 基于 iview-amdin template 分支[1d06fb3a] (20181102)
-vue 2;node12;
+vue 2;node18;
+
+## build问题
+#### mac &linux
+export NODE_OPTIONS=--openssl-legacy-provider
+#### windows
+set NODE_OPTIONS=--openssl-legacy-provider
+
+
 ## iview-admin官方文档
 [官方文档](https://github.com/iview/iview-admin/blob/template/README.md)
 [组件文档](http://v4.iviewui.com/components/table)

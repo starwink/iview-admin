@@ -10,7 +10,8 @@ const { homeName } = config
 Vue.use(Router)
 const router = new Router({
   routes,
-//   mode: 'history'
+  mode: 'history', //hase: # ,history
+  base: process.env.BASE_URL,
 })
 const LOGIN_PAGE_NAME = 'login'
 
@@ -21,6 +22,7 @@ const turnTo = (to, access, next) => {
 
 router.beforeEach((to, from, next) => {
   ViewUI.LoadingBar.start()
+ 
   next() ;return ;
   const token = getToken()
   if (!token && to.name !== LOGIN_PAGE_NAME) {

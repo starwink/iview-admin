@@ -11,9 +11,7 @@ const resolve = dir => {
 // 如果您的应用程序部署在子路径中，则需要在这指定子路径
 // 例如：https://www.foobar.com/my-app/
 // 需要将它改为'/my-app/'
-const BASE_URL = process.env.NODE_ENV === 'production'
-  ? '/promod'
-  : '/promod'
+const BASE_URL = process.env.NODE_ENV === 'production' ? '/promod' : '/promod'
 
 module.exports = {
   // Project deployment base
@@ -53,6 +51,7 @@ module.exports = {
     // proxy: 'localhost:3000',
     host: '0.0.0.0',
     open: false,
+    port:8766,
     proxy: {
         '/htest': {
             target: 'http://127.0.0.1:3331/',

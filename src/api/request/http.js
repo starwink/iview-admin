@@ -87,11 +87,7 @@ axios.interceptors.response.use(
             response.data.code !== 1 &&
             response.data.code !== 303
         ) {
-            // API部分，执行SQL语句不再全局提示错误
-            if (!response.config.url.includes('/api/run/simple')) {
-                // console.log(response);
-                Message.error(response.data.message);
-            }
+           
             if (response.data.code == 503) {
                 window.location.hash = '/login';
                 Message.error(response.data.message);
