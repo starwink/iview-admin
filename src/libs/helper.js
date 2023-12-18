@@ -196,6 +196,38 @@ export default {
             }
         }
     },
+    getCacheFun(){
+        //用token来判断是在院内端还是采集端 ;todo:之后还是用iframemsg 来做初始化吧
+        if(sessionStorage.getItem('token')){
+            return sessionStorage
+        }else{
+            return localStorage
+        }
+    },
+    getCache(name){
+        let storage=this.getCacheFun();
+        return storage.getItem(name)
+    },
+    setCache(name,value){
+        let storage=this.getCacheFun();
+        return storage.setItem(name,value)
+    },
+    delCache(name){
+        let storage=this.getCacheFun();
+        return storage.removeItem(name)
+    },
+    delCacheAll(){
+        let storage=this.getCacheFun();
+        storage.clear();
+    },
+    getToken(){
+        let token='';
+        let val=this.getCache('user');
+        if(this.isJSON(val)){
+           token= this.getJSONByStr(val)?.token || ''
+        }
+        return token
+    },
   
     getDate: (str, format = 'YYYY-MM-DD HH:mm:ss') => {
         if (!str) {
@@ -300,18 +332,7 @@ export default {
         return `${this.getReatToFormatMinimumText(obj['达成率'], 2, 100)}(${obj['分子']}/${obj['分母']})`;
     },
 
-    getCache(name) {
-        return sessionStorage.getItem(name)
-    },
-    setCache(name, val) {
-        sessionStorage.setItem(name)
-    },
-    deleteCache(name) {
-        localStorage.removeItem(name);
-    },
-    removeCache() {
-        localStorage.clear();
-    },
+   
     //参数中科室no过滤成病区no
     createParmasDsetNoFilterWardNo(params) {
         let p = JSON.parse(JSON.stringify(params));
@@ -890,7 +911,6 @@ export default {
 
 
     getJsonFile(url, fun) {
-        console.log('getJsonFile', url)
         var xhr = new XMLHttpRequest()
         xhr.open('GET', url, true)
         //设置响应类型为 blob
@@ -939,7 +959,6 @@ export default {
         let res = 1;
         let loopGetLevel = (obj, level) => {
             var level = level ? level : 1;
-            //console.log(obj,typeof obj)
             if (typeof obj === 'object') {
                 for (var key in obj) {
                     if (typeof obj[key] === 'object') {

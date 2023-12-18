@@ -59,6 +59,7 @@
         width: 100%;
         // bottom: 0;
         margin-top: 0;
+        text-align: right;
         background-color: #fff;
     }
 }

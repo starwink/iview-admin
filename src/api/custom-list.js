@@ -3,6 +3,11 @@ import { request } from "@/api/request/http.js";
 const url='/collect'
 
 export default{
+    //数据库来源
+    databaseList(data) {
+        return request.get(`${url}/source/list`, data);
+    },
+
     //定制化列表
     getCustomList(data) {
         return request.post(`${url}/newdataease/find`, data);

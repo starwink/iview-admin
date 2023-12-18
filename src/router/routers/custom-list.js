@@ -5,7 +5,6 @@ if(process.env.NODE_ENV=='development'){
     _import= file => () => import('@/view/' + file)
 }
 
-console.log('process.env.NODE_ENV',process.env.NODE_ENV)
 export default [
     {
         path: '/custom-list',

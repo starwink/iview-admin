@@ -34,7 +34,7 @@ axios.create({
 });
 axios.interceptors.request.use(
     (config) => {
-        config.headers['Authorization'] = sessionStorage.getItem('token');
+        config.headers['Authorization'] =  helper.getToken();
         return config;
     },
     (error) => {
@@ -74,24 +74,9 @@ const toLogin = () => {
 // 响应拦截器即异常处理
 axios.interceptors.response.use(
     (response) => {
-        if (
-            response.data.code === 10106 &&
-            process.env.NODE_ENV !== 'development'
-        ) {
-            window.location.href = axios.defaults.baseURL;
-        } else if (response.data.code === 2 || response.data.code === -100) {
-            //登录超时重定向
-            window.location.hash = '/login';
-        } else if (
-            (response.data.code || response.data.code === 0) &&
-            response.data.code !== 1 &&
-            response.data.code !== 303
-        ) {
-           
-            if (response.data.code == 503) {
-                window.location.hash = '/login';
-                Message.error(response.data.message);
-            }
+        if ( response?.data?.code !== 1  ) {
+            //  window.location.hash = '/login';
+            Message.error(response.data.message);
         }
         return response;
     },
@@ -271,7 +256,7 @@ export const request = {
         }
     },
     getExport(data, name, type) {
-        let Authorization = JSON.parse(sessionStorage.getItem('user')).token;
+        let Authorization = helper.getToken();
         var xhr = new XMLHttpRequest();
         xhr.open('GET', data, true);
         //设置请求头参数的方式,如果没有可忽略此行代码
@@ -318,4 +303,33 @@ export const request = {
     commonGet(url, params = {}, _object = {}) {
         return axios.get(url, { params, ..._object });
     },
+    downExcel(url,data={},name='导出',fileExtension='xlsx'){
+        let Authorization = helper.getToken();
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", url, true);
+        //设置请求头参数的方式,如果没有可忽略此行代码
+        xhr.setRequestHeader("Authorization", `${Authorization}`);
+        xhr.setRequestHeader("Content-Type", 'application/json');
+        //设置响应类型为 blob
+        xhr.send(JSON.stringify(data));
+        xhr.responseType = "blob";
+        //关键部分
+        xhr.onload = function (e) {
+            //如果请求执行成功
+            if (this.status == 200) {
+                // that.$message.success("导出成功");
+                const link = document.createElement("a");
+                let blob = new Blob([this.response], {
+                    type: "application/vnd.ms-excel;charset=utf-8"
+                });
+                link.style.display = "none";
+                link.href = URL.createObjectURL(blob);
+                link.download = `${name}.${fileExtension}`; //下载的文件名
+                document.body.appendChild(link);
+                link.click();
+            } else {
+                // that.$message.error("导出失败");
+            }
+        };
+      },
 };

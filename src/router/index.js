@@ -10,7 +10,7 @@ const { homeName } = config
 Vue.use(Router)
 const router = new Router({
   routes,
-  mode: 'history', //hase: # ,history
+  mode: 'history', //hash ,history
   base: process.env.BASE_URL,
 })
 const LOGIN_PAGE_NAME = 'login'
