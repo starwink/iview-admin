@@ -3,6 +3,7 @@ import Main from '@/components/mainByEwell'
 import parentView from '@/components/parent-view'
 
 import custom_list from "./routers/custom-list.js";
+import demo from "./routers/demo.js";
 
 
 // import demo from './routers/demo.js'
@@ -25,7 +26,7 @@ import custom_list from "./routers/custom-list.js";
  */
 let demoRouter = []
 if (process.env.NODE_ENV === 'development') {
-//   demoRouter = [...demo]
+  demoRouter = [...demo]
 }
 export default [
   ...demoRouter,
