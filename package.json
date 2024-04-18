@@ -7,6 +7,7 @@
     "dev": "vue-cli-service serve --open",
     "serve": "vue-cli-service serve --open",
     "build": "vue-cli-service build",
+    
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit",
     "test:e2e": "vue-cli-service test:e2e"
@@ -33,6 +34,7 @@
     "vuedraggable": "^2.16.0",
     "vuex": "^3.0.1",
     "wangeditor": "^3.1.1",
+    "watchman": "^1.0.0",
     "xlsx": "^0.13.3"
   },
   "devDependencies": {
@@ -57,17 +59,8 @@
     "last 2 versions",
     "not ie <= 8"
   ],
-  "gitHooks": {
-    "pre-commit": ""
-  },
-  "lint-staged": {
-    "*.js": [
-      "vue-cli-service lint",
-      "git add"
-    ],
-    "*.vue": [
-      "vue-cli-service lint",
-      "git add"
-    ]
+  "volta": {
+    "node": "16.20.2",
+    "yarn": "1.22.22"
   }
 }
