@@ -48,6 +48,10 @@ module.exports = {
           pathRewrite: {
             //   '^/collect': '',
           },
+        },
+        '/markdown': {
+            target: 'http://127.0.0.1:8787',
+            changeOrigin: true,
         }
     },
     

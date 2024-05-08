@@ -14,6 +14,15 @@ import helper from '@/utils/helper.js'
 
 import { api } from '@/axios/api/index.js'
 
+import VueViewer from 'v-viewer'
+import 'viewerjs/dist/viewer.css'
+Vue.use(VueViewer, {
+  defaultOptions: {
+    zIndex: 9999
+  }
+})
+
+
 // 全局注册组件（也可以使用局部注册）
 Vue.component('v-chart', ECharts);
 // import 'echarts-liquidfill'

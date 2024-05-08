@@ -2,7 +2,6 @@ export default {
     "h1": {},
     "h2": {
         "padding": "2px 12px",
-        "color": "#74b9ff"
     },
     "h3": {},
     "h4": {},
