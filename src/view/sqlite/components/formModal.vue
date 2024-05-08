@@ -103,6 +103,9 @@ export default {
         init(form={}) {
             Object.assign(this.$data, this.$options.data());
             this.show=true;
+            this.$nextTick(()=>{
+                this.resetForm();
+            })
             console.log('vvvv')
         },
         edit(id){

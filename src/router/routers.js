@@ -3,6 +3,7 @@ import parentView from '@/components/parent-view'
 
 import demo from './routers/demo.js'
 import notes from './routers/notes.js'
+import books from './routers/books.js'
 
 /**
  * iview-admin中meta除了原生参数外可配置的参数:
@@ -27,6 +28,7 @@ if (process.env.NODE_ENV === 'development') {
 export default [
     ...demoRouter,
     ...notes,
+    ...books,
   {
     path: '/login',
     name: 'login',
