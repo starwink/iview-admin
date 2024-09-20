@@ -25,6 +25,8 @@
     "js-cookie": "^2.2.0",
     "katex": "^0.16.10",
     "marked": "^4",
+    "monaco-editor": "^0.30.0",
+    "requirejs": "^2.3.7",
     "simplemde": "^1.11.2",
     "sortablejs": "^1.7.0",
     "uuid": "^9.0.0",
@@ -64,7 +66,7 @@
     "not ie <= 8"
   ],
   "volta": {
-    "node": "20.12.2",
+    "node": "12.22.12",
     "yarn": "1.22.22"
   }
 }

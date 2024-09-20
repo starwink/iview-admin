@@ -43,7 +43,7 @@ axios.interceptors.response.use(
     if (response.data.code === -1 || response.data.code === -2) {
       // 登录超时重定向
       window.location.replace('/platform-home')
-    } else if (response.data.code !== undefined && response.data.code !== 200) {
+    } else if (response.data.code !== undefined && response.data.code !== 1) {
       let msg = response.data.message || '服务异常'
       Message.error(msg)
     }

@@ -1,5 +1,5 @@
 import { request } from '@/axios/request/http.js'
-let url = "/controller/notes";
+let url = "/lqy/notes";
 export default {
     initDataBase(){
         return request.get(`${url}/initDataBase`);

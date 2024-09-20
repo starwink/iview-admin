@@ -5,22 +5,14 @@
         </div>
         <div>
             <Button @click="add">创建</Button>
-            <!-- <Button @click="createDataBase">初始化数据库</Button> -->
+            <Button @click="createDataBase">初始化数据库</Button>
         </div>
         <div class="table-box">
             <Table :columns="list.columns" :data="list.data" :loading="loading" stripe  width="calc(100% - 16px)">
-
-                
-                <template slot-scope="{ row, index }" slot="article">
-                    <span>{{row.article.substr(0,100)}}</span>
-                </template>
-                <template slot-scope="{ row, index }" slot="release_time">
-                    <span>{{row.release_time}}</span>
-                </template>
-                <template slot-scope="{ row, index }" slot="created_at">
+                <template slot-scope="{ row, index }" slot="createTime">
                     <span>{{$helper.getDateParams(row.created_at,'YYYY-MM-DD HH:mm')}}</span>
                 </template>
-                <template slot-scope="{ row, index }" slot="update_datetime">
+                <template slot-scope="{ row, index }" slot="updateTime">
                     <span>{{$helper.getDateParams(row.update_datetime,'YYYY-MM-DD HH:mm')}}</span>
                 </template>
                 <template slot-scope="{ row, index }" slot="action">
@@ -68,24 +60,22 @@ export default {
                         key: "title"
                     },
                     {
-                        title: "正文",
+                        title: "路径",
                         minWidth: 260,
-                        slot: 'article',
+                        ellipsis:true,
+                        tooltip:true,
+                        key: 'path',
                     },
-                    {
-                        title: '发布时间',
-                        width: 180,
-                        slot: 'release_time',
-                    },
+                    
                     {
                         title: '创建时间',
                         width: 180,
-                        slot: 'created_at',
+                        slot: 'createTime',
                     },
                     {
                         title: '更新时间',
                         width: 180,
-                        slot: 'update_datetime',
+                        slot: 'updateTime',
                     },
                     {
                         title: '操作',
@@ -138,9 +128,8 @@ export default {
 
             this.$api.getNotesList(params).then(res => {
                 this.spinShow = false;
-                console.log(res);
-                this.list.data = res.object.list;
-                this.page.total = res.object.total || 0;
+                this.list.data = res.list;
+                this.page.total = res.total || 0;
             });
         },
         createDataBase(){
@@ -164,8 +153,7 @@ export default {
             }
         },
         open(row){
-
-            // this.$api.openPath(row).then(res=>{})
+            this.$api.openPath(row).then(res=>{})
         }
     }
 }

@@ -1,4 +1,5 @@
 const path = require('path')
+// const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin')
 
 const resolve = dir => {
   return path.join(__dirname, dir)
@@ -33,6 +34,13 @@ module.exports = {
       .set('@', resolve('src')) // key,value自行定义，比如.set('@@', resolve('src/components'))
       .set('_c', resolve('src/components'))
   },
+//   configureWebpack:{
+//     plugins: [
+//         new MonacoWebpackPlugin({
+//             languages: ['javascript', 'yaml', 'json', 'xml']
+//         })
+//     ],
+//   },
   // 打包时不生成.map文件
   productionSourceMap: false,
   // 这里写你调用接口的基础路径，来解决跨域，如果设置了代理，那你本地开发环境的axios的baseUrl要写为 '' ，即空字符串
@@ -41,13 +49,13 @@ module.exports = {
     host: '0.0.0.0',
     port: 8080,
     proxy: {
-        '/controller': {
-          target: 'http://127.0.0.1:17071/',
+        '/lqy': {
+          target: 'http://127.0.0.1:3331',
           // target: 'http://192.168.150.163:7211',
           changeOrigin: true,
-          pathRewrite: {
-            //   '^/collect': '',
-          },
+        //   pathRewrite: {
+        //       '^/collect': '',
+        //   },
         },
         '/markdown': {
             target: 'http://127.0.0.1:8787',

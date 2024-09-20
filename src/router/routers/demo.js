@@ -36,6 +36,20 @@ export default [
         },
         component: () => import("@/view/report/table.vue"),
       },
+      {
+        path: "/editor/json",
+        name: "editor/json",
+        meta: {
+          token: false,
+          hideInMenu: true,
+          title: '修复不规范的JSON',
+          notCache: true,
+          // icon: 'md-home'
+        },
+        component: () => import("@/views/jsonEditor/index.vue"),
+      },
+      
+
 
       
   ];

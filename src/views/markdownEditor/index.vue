@@ -25,7 +25,8 @@
 import WxRenderer from './markEditorClass/index'
 import outStypeConfig from './markEditorClass/config'
 import { marked } from 'marked'
-// import markMD from './markEditorClass/ex.mark.json.mjs'
+import markMD from './markEditorClass/ex.mark.json.mjs'
+
 import { setColor, formatDoc, formatCss,css2json,setFontSize,customCssWithTemplate } from './markEditorClass/util'
 import userStyleJson from './style.json'
 
@@ -39,7 +40,7 @@ export default {
     },
     methods: {
         init() {
-
+            // console.log('DEMOMARK',DEMOMARK)
             // ...outStypeConfig
             this.config = { 
                 currentColor:outStypeConfig.colorOption[0].value,//rgba(15, 76, 129, 1)
@@ -48,7 +49,7 @@ export default {
              };
              this.config.currentColor='#13939E'
 
-            // console.log(markMD,'markMD')
+            
             this.initMarkdownFormat();
         },
         initMarkdownFormat() {
@@ -83,7 +84,7 @@ export default {
         },
         run() {
         
-
+            console.log(markMD,'markMD')
 
             this.$api.markdownDemo().then(res => {
                 console.log('marked:',marked)
@@ -126,7 +127,7 @@ export default {
         codeThemeChanged() {
             //   let cssUrl = this.codeTheme
             let cssUrl = ``
-            cssUrl = outStypeConfig.codeThemeOption[2].value
+            cssUrl = outStypeConfig.codeThemeOption[3].value
             //cssUrl = 'https://cdn-doocs.oss-cn-shenzhen.aliyuncs.com/npm/highlight.js@11.5.1/styles/atom-one-dark.min.css'
             // cssUrl = 'https://cdn-doocs.oss-cn-shenzhen.aliyuncs.com/npm/highlight.js@11.5.1/styles/github.min.css'
             let el = document.getElementById(`hljs`)
