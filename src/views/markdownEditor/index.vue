@@ -43,7 +43,7 @@ export default {
             // console.log('DEMOMARK',DEMOMARK)
             // ...outStypeConfig
             this.config = { 
-                currentColor:outStypeConfig.colorOption[0].value,//rgba(15, 76, 129, 1)
+                currentColor:outStypeConfig.colorOption[2].value,//rgba(15, 76, 129, 1)
                 currentFont:outStypeConfig.builtinFonts[0].value,//-apple-system-font,BlinkMacSystemFont, Helvetica Neue, PingFang SC, Hiragino Sans GB , Microsoft YaHei UI , Microsoft YaHei ,Arial,sans-serif`
                 currentSize:outStypeConfig.sizeOption[2].value, //14px
              };
@@ -82,8 +82,11 @@ export default {
             console.log('themeJson',themeJson)
             this.wxRenderer.setOptions(themeJson)
         },
-        run() {
-        
+        run(val) {
+            console.log('val',val)
+            this.outHtml=val;
+            
+            return ;
             console.log(markMD,'markMD')
 
             this.$api.markdownDemo().then(res => {

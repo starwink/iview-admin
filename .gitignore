@@ -25,3 +25,5 @@ yarn-error.log*
 
 build/env.js
 docker/dist
+
+node_modules*

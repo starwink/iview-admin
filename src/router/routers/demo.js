@@ -48,6 +48,20 @@ export default [
         },
         component: () => import("@/views/jsonEditor/index.vue"),
       },
+      {
+        path: "/editor/doc",
+        name: "editor/doc",
+        meta: {
+          token: false,
+          hideInMenu: true,
+          title: 'markdown 编辑及预览组件',
+          notCache: true,
+          // icon: 'md-home'
+        },
+        component: () => import("@/view/docs/index.vue"),
+      },
+
+      
       
 
 
