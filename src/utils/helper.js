@@ -948,6 +948,13 @@ export default {
         return false;
     }
   },
+  getJSONByStr(str){
+    let obj={}
+    if(this.isJSON(str)){
+        obj=JSON.parse(str)
+    }
+    return obj;
+  },
   getWhereDeptTree(){
     let tree=[];
     let data=sessionStorage.getItem('deptTree');

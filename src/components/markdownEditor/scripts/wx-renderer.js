@@ -1,6 +1,7 @@
 import marked, { Renderer } from "marked";
 import hljs from "highlight.js";
 import markedKatex from "marked-katex-extension";
+var md5 = require('md5');
 
 marked.use(markedKatex({
   throwOnError: false,
@@ -10,6 +11,7 @@ marked.use(markedKatex({
 class WxRenderer {
   constructor(opts) {
     this.opts = opts;
+    let catalogue=[] ;//目录
     let footnotes = [];
     let footnoteIndex = 0;
     let styleMapping = new Map();
@@ -53,7 +55,11 @@ class WxRenderer {
       footnotes.push([++footnoteIndex, title, link]);
       return footnoteIndex;
     };
-
+    this.getCatalogue=()=>{
+        return catalogue;
+        console.log('catalogue',catalogue)
+    }
+    //输出正文中的链接引用
     this.buildFootnotes = () => {
       let footnoteArray = footnotes.map((x) => {
         if (x[1] === x[2]) {
@@ -95,6 +101,7 @@ class WxRenderer {
     this.hasFootnotes = () => footnotes.length !== 0;
 
     this.getRenderer = (status) => {
+      catalogue = [];
       footnotes = [];
       footnoteIndex = 0;
 
@@ -102,15 +109,20 @@ class WxRenderer {
       let renderer = new Renderer();
 
       renderer.heading = (text, level) => {
+        catalogue.push({level,text});
         switch (level) {
           case 1:
-            return `<h1 ${getStyles("h1")}>${text}</h1>`;
+            return `<h1 ${getStyles("h1")} id="title-lv${level}-${md5(text)}">${text}</h1>`;
           case 2:
-            return `<h2 ${getStyles("h2")}>${text}</h2>`;
+            return `<h2 ${getStyles("h2")} id="title-lv${level}-${md5(text)}">${text}</h2>`;
           case 3:
-            return `<h3 ${getStyles("h3")}>${text}</h3>`;
+            return `<h3 ${getStyles("h3")} id="title-lv${level}-${md5(text)}">${text}</h3>`;
+          case 4:
+            return `<h4 ${getStyles("h4")} id="title-lv${level}-${md5(text)}">${text}</h4>`;
+          case 5:
+            return `<h5 ${getStyles("h5")} id="title-lv${level}-${md5(text)}">${text}</h5>`;
           default:
-            return `<h4 ${getStyles("h4")}>${text}</h4>`;
+            return `<h6 ${getStyles("h6")} id="title-lv${level}-${md5(text)}">${text}</h6>`;
         }
       };
       renderer.paragraph = (text) => {

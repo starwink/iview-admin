@@ -1,0 +1,70 @@
+$font-size-color:rgba(0,0,0,0.65);//灰色字体
+
+html,body{
+    font-size: 14px;
+    color: $font-size-color;
+}
+$size-map: (-2: -2px,0:0px,4: 4px, 5: 5px, 6: 6px, 8:8px, 10: 10px,12:12px, 15: 15px,16: 16px, 20: 20px, 24: 24px, 25: 25px, 30: 30px, 40: 40px, 140: 140px);
+@each $name in map-keys($size-map) {
+    $value: map-get($size-map, $name);
+    .mt-#{$name} {
+        margin-top: $value;
+    }
+    .mr-#{$name} {
+        margin-right: $value;
+    }
+    .mb-#{$name} {
+        margin-bottom: $value;
+    }
+    .ml-#{$name} {
+        margin-left: $value;
+    }
+    .margin-#{$name} {
+        margin: $value;
+    }
+    .pt-#{$name} {
+        padding-top: $value !important;
+    }
+    .pr-#{$name} {
+        padding-right: $value;
+    }
+    .pb-#{$name} {
+        padding-bottom: $value;
+    }
+    .pl-#{$name} {
+        padding-left: $value;
+    }
+    .pd-#{$name} {
+        padding: $value;
+    }
+}
+
+.flex-row{display: flex;flex-direction: row;}
+.flex-col{display: flex;flex-direction: column;}
+/*************垂直上对齐********/
+.flex-y-start{display: flex;  align-items: flex-start;}
+/*************垂直居中********/
+.flex-y-center{display: flex; align-items:center;}
+/*************垂直下对齐********/
+.flex-y-end{display: flex; align-items: flex-end;}
+/*************垂直两端对齐********/
+.flex-y-between{display: flex; align-items: space-between;}
+/*************水平 间隔相等 均匀显示********/
+.flex-y-around{display: flex; align-items:space-around}
+/*************水平左对齐********/
+.flex-x-start{display: flex;justify-content: flex-start;}
+/*************水平居中********/
+.flex-x-center{display: flex;justify-content: center;}
+/*************水平两端对齐********/
+.flex-x-between{display: flex;justify-content: space-between;}
+/*************右侧对齐********/
+.flex-x-end{display: flex;justify-content: flex-end;}
+/*************水平 间隔相等 均匀显示********/
+.flex-x-around{display: flex;justify-content:space-around}
+.flex-1{display: flex;flex-grow:1}
+.flex-center{display: flex; align-items:center;justify-content: center;}
+
+// 进度条颜色
+#nprogress .bar {
+  background: #0E8792 !important; //自定义颜色
+}

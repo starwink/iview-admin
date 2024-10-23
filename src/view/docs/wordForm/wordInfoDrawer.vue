@@ -1,21 +1,15 @@
 <template>
-    <Drawer v-model="show" width="50" @on-visible-change="close" class-name="eDrawer bookFormDrawer" placement="left">
+    <Drawer v-model="show" width="50" @on-visible-change="close" :mask="false" class-name="eDrawer bookFormDrawer"  placement="right">
         <div class="detail">
             <div class="header">
-                <span class="title">编辑</span>
+                <span class="title">更多</span>
             </div>
             <div class="drawer-body">
                 <Form :model="form" ref="form" :rules="ruleCustom" :disabled="readonly" :label-width="96">
                     <FormItem label="标题：" prop="title">
                         <Input v-model.trim="form.title" maxlength="50"></Input>
                     </FormItem>
-                    <FormItem label="正文：" prop="article">
-                        <Input v-model="form.article" type="textarea" :rows="4" />
-                        <!-- <mdComp ref="mdComp"  :height="100" :overflowHeight="90" /> -->
-                    </FormItem>
-                    <FormItem label="发布时间：" prop="release_time">
-                        <Input v-model.trim="form.release_time" maxlength="50"></Input>
-                    </FormItem>
+                    
                     <FormItem label="备注：" prop="remark">
                         <Input v-model.trim="form.remark" type="textarea" :rows="4"></Input>
                     </FormItem>
@@ -30,7 +24,7 @@
             <div class="right">
 
                 <Button @click="show=false" size="small">取 消</Button>
-                <Button @click="save()" type="primary" size="small">保 存</Button>
+                <Button @click="save()" type="primary" size="small">确 认</Button>
 
             </div>
         </div>
@@ -38,10 +32,8 @@
 </template>
 
 <script>
-// import mdComp from './mdComp'
 export default {
     components: {
-        // mdComp,
     },
     data() {
         return {
@@ -65,21 +57,10 @@ export default {
             Object.assign(this.$data, this.$options.data());
             this.show=true;
             this.$nextTick(() => {
-                this.resetForm();
-            })
-            console.log('vvvv')
-        },
-        edit(id){
-            Object.assign(this.$data, this.$options.data());
-            this.show=true;
-            this.$api.getNotesDetail(id).then(res=>{
-                this.form=res.object;
-                console.log(this.data)
-                this.resetForm();
-                // this.$refs.mdComp.runView(this.data.article);
-                // this.$refs.mdComp.setValue(this.data.article);
+                this.form=JSON.parse(JSON.stringify(form));
             })
         },
+       
         resetForm() {
             this.$refs.form.fields.forEach(function (e) {
                 e.resetField()
@@ -91,11 +72,9 @@ export default {
             this.$emit('close')
         },
         save() {
-            // this.form.article=this.$refs.mdComp.setValue();
-            console.log(this.form);
             this.$api.saveNotes(this.form).then(res=>{
                 if(res.code==1){
-                    this.$emit('success')
+                    this.$emit('success',this.form)
                     this.close();
                 }
             })

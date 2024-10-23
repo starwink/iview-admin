@@ -12,14 +12,15 @@ import 'echarts';
 import ECharts from 'vue-echarts';
 import helper from '@/utils/helper.js'
 
+import { ipc } from '@/utils/ipcRenderer'
 import { api } from '@/axios/api/index.js'
 
 import VueViewer from 'v-viewer'
 import 'viewerjs/dist/viewer.css'
 Vue.use(VueViewer, {
-  defaultOptions: {
-    zIndex: 9999
-  }
+    defaultOptions: {
+        zIndex: 9999
+    }
 })
 
 
@@ -28,8 +29,10 @@ Vue.component('v-chart', ECharts);
 // import 'echarts-liquidfill'
 
 import 'view-design/dist/styles/iview.css'
+import '@/assets/style/common.scss';
 import './index.less'
-import '@/assets/icons/iconfont.css'
+import '@/assets/iconfont/notes/iconfont.css'
+// import '@/assets/notes/iconfont.css'
 
 // 实际打包时应该不引入mock
 /* eslint-disable */
@@ -56,6 +59,9 @@ Vue.config.productionTip = false
 Vue.prototype.$config = config
 Vue.prototype.$helper = helper
 Vue.prototype.$api = api
+// 全局注入IPC通信
+Vue.prototype.$ipc = ipc
+
 /**
  * 注册指令
  */

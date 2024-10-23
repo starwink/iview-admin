@@ -1,5 +1,5 @@
 <template>
-    <div class="markdown-preview">
+    <div class="markdown-preview" ref="preview" :style="{height:height}">
         <section ref="output" v-html="output"></section>
     </div>
 </template>
@@ -7,8 +7,15 @@
 // this.$refs.previewPage.init(html)
 
 import config from './scripts/config'
+import $ from 'jquery'
 
 export default {
+    props:{
+        height:{
+            type:String,
+            default:null
+        }
+    },
     data() {
         return {
             output: ``,
@@ -17,10 +24,16 @@ export default {
     methods: {
         init(html = ``) {
             this.output = html
-            this.$nextTick(() => {
-                this.codeCreateOptionsIcon();
+            // this.$nextTick(() => {
+            var that=this;
+            setTimeout(function(){
+                that.codeCreateOptionsIcon();
+            },1000)
+                // this.codeCreateOptionsIcon();
+
+
                 // document.getElementById(`output`).innerHTML = this.output
-            })
+            // })
         },
         codeThemeChanged() {
             //   let cssUrl = this.codeTheme
@@ -42,7 +55,6 @@ export default {
         },
         //追加在代码预览块上的额外的功能按钮
         codeCreateOptionsIcon(){
-            // console.log( $('.code__pre'))
             $('.code__pre').each((i,element) => {
                 console.log(i,element)
                 if($(element).hasClass('code-menu-icon')){
@@ -57,6 +69,7 @@ export default {
                 }
             });
         },
+       
     },
     created() {
         this.codeThemeChanged()

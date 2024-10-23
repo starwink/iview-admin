@@ -14,6 +14,14 @@
     }
 }
 
+.markdown-editor {
+    height: 100%;
+    // width: 100%;
+    .CodeMirror-scroll{
+        height: 100%;
+    }
+}
+
 
 </style>
 <script>
@@ -41,7 +49,6 @@ import 'codemirror/addon/hint/css-hint'
 
 export default {
     props:{
-       
         height:{
             type:String,
             default:null
@@ -59,8 +66,9 @@ export default {
                 currentFont: ``,
                 currentColor: ``,
                 currentSize: ``,
-                codeTheme: `https://cdn-doocs.oss-cn-shenzhen.aliyuncs.com/npm/highlight.js@11.5.1/styles/atom-one-dark.min.css`,
-                citeStatus: false,
+                //codeTheme: `https://cdn-doocs.oss-cn-shenzhen.aliyuncs.com/npm/highlight.js@11.5.1/styles/atom-one-dark.min.css`,
+                // citeStatus: false,
+                citeStatus: true,
                 nightMode: false,
                 isMacCodeBlock: true,
                 isEditOnLeft: true,
@@ -72,8 +80,6 @@ export default {
             this.initEditorEntity()
             this.initPageConfig()
 
-           
-
             this.editor.on(`change`, (cm, e) => {
                 if (this.changeTimer) clearTimeout(this.changeTimer)
                 this.changeTimer = setTimeout(() => {
@@ -83,10 +89,14 @@ export default {
             })
         },
 
+        toSave(){
+            console.log('toSave')
+            this.$emit('save')
+        },
         createInit() {
             this.config.currentFont = config.builtinFonts[0].value
             this.config.currentColor = config.colorOption[2].value
-            this.config.currentSize = config.sizeOption[0].value
+            this.config.currentSize = config.sizeOption[2].value
             this.config.codeTheme = config.codeThemeOption[2].value
             this.$nextTick(() => {
                 this.init()
@@ -109,6 +119,7 @@ export default {
             if (!editorDom?.value) {
                 // editorDom.value = localStorage.getItem(`__editor_content`) || formatDoc(DEFAULT_CONTENT)
             }
+            const that=this;
             this.editor = CodeMirror.fromTextArea(editorDom, {
                 mode: `text/x-markdown`,
                 theme: `xq-light`,
@@ -117,20 +128,26 @@ export default {
                 styleActiveLine: true,
                 autoCloseBrackets: true,
                 extraKeys: {
-                    [`${modPrefix}-1`]: function autoFormat(editor) {
+                    [`${modPrefix}-\``]: function autoFormat(editor) {
                         const selected = editor.getSelection()
                         editor.replaceSelection(`\r\n\`\`\`${selected}\r\n \r\n\`\`\`\r\n`)
                     },
+                    [`${modPrefix}-shift-1`]: function autoFormat(editor) {
+                        const doc = formatDoc(editor.getValue(0))
+                        this.$emit('save')
+                        // editor.replaceSelection(`\r\n\`\`\`${selected}\r\n \r\n\`\`\`\r\n`)
+                    },
                     [`${modPrefix}-S`]: function autoFormat(editor) {
                         const doc = formatDoc(editor.getValue(0))
-                        localStorage.setItem(`__editor_content`, doc)
-                        editor.setValue(doc)
+                        // localStorage.setItem(`__editor_content`, doc)
+                        // editor.setValue(doc)
+                        that.toSave();
                     },
-                    [`${modPrefix}-B`]: function bold(editor) {
+                   /*  [`${modPrefix}-B`]: function bold(editor) {
                         const selected = editor.getSelection()
                         console.log('',selected)
                         editor.replaceSelection(`**${selected}**`)
-                    },
+                    }, */
                     [`${modPrefix}-D`]: function del(editor) {
                         const selected = editor.getSelection()
                         editor.replaceSelection(`~~${selected}~~`)
@@ -157,15 +174,14 @@ export default {
             // let doc=this.defaultValue;
             // console.log('mark',doc)
             // this.editor.setValue(doc)
-            this.$nextTick(() => {
+            /* this.$nextTick(() => {
                this.editorRefresh()
-            })
+            }) */
             //************ */
         },
 
         setValue(doc){
             // this.form.source = doc
-            console.log('cc',doc)
             this.editor.setValue(doc)
             this.$nextTick(() => {
                 this.editorRefresh()
@@ -209,14 +225,22 @@ export default {
             console.log(`mouseLeft`, mouseLeft, mouseTop)
             //todo openRigthClickMenu({x:mouseLeft,y:mouseTop})
         },
+        getCatalogue(){
+            let ml=this.wxRenderer.getCatalogue();//创建目录
+            console.log('pageml',ml);
+            return ml;
+            //todo  1.纸页目录模式,2.悬浮目录模式
+        },
         editorRefresh() {
             const renderer = this.wxRenderer.getRenderer(this.config.citeStatus)
             marked.setOptions({ renderer })
             let output = marked.parse(this.editor.getValue(0))
-
             // 去除第一行的 margin-top
             output = output.replace(/(style=".*?)"/, `$1;margin-top: 0"`)
-            if (this.citeStatus) {
+        
+            
+
+            if (true) {
                 // 引用脚注
                 output += this.wxRenderer.buildFootnotes()
                 // 附加的一些 style
@@ -262,12 +286,3 @@ export default {
     },
 }
 </script>
-<style lang="less" scoped>
-.markdown-editor {
-    height: 100%;
-    // width: 100%;
-    .CodeMirror-scroll{
-        height: 100%;
-    }
-}
-</style>
