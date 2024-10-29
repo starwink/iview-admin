@@ -32,6 +32,7 @@
         .menu-list{
             max-height: calc(100vh - 116px);
             overflow: auto;
+            padding: 0 6px;
         }
 
         a {

@@ -1,11 +1,20 @@
 <template>
-    <div class="catalogue-box" ref="catalogueBox" :style="{left:currentX+'px',top:currentY+'px'}">
+    <div class="catalogue-box" ref="catalogueBox" :style="{ left: currentX + 'px', top: currentY + 'px' }">
 
         <div class="catalogue-body">
-            <div class="title" @mousedown="handleDragStart">目录</div>
+            <div class="title" @mousedown="handleDragStart">
+
+                <span>目录<Icon type="ios-search" /></span>
+                <span class="search-input">
+                    <Input v-model="form.key" size="small" placeholder="搜索..." style="width: 120px" />
+                </span>
+
+            </div>
+
             <ul class="menu-list">
-                <a v-for="(item,index) of options.mulu" href="javascript:;" @click="clickItem(item,index)">
-                    <li :class="'catalogue-lv-' + item.level" :title="item.text">{{ item.text }}</li>
+                <a v-for="(item, index) of options.mulu" href="javascript:;" @click="clickItem(item, index)">
+                    <li v-show="filterKey(item.text)" :class="'catalogue-lv-' + item.level" :title="item.text">{{
+                        item.text }}</li>
                 </a>
             </ul>
         </div>
@@ -17,19 +26,39 @@
     position: fixed;
     z-index: 1;
     width: 220px;
+
     .catalogue-body {
         background-color: #fff;
         border: solid 1px #eee;
         border-radius: 2px;
+        justify-content: flex-start;
+        padding: 6px 12px;
+
         .title {
             font-size: 14px;
-            text-align: center;
+            text-align: left;
             font-weight: 600;
             padding: 6px 0;
             border-bottom: solid 1px #eee;
             cursor: move;
+            height: 34px;
+
+            .search-input {
+                margin-left: 10px;
+                // display: flex;
+
+                display: none;
+                // display: inline-block
+            }
+
+            &:hover {
+                .search-input {
+                    display: inline-block;
+                }
+            }
         }
-        .menu-list{
+
+        .menu-list {
             max-height: calc(100vh - 116px);
             overflow: auto;
         }
@@ -63,7 +92,8 @@
             padding-left: 36px;
         }
     }
-    .box-bg{
+
+    .box-bg {
         position: absolute;
         height: calc(100% + 4px);
         width: calc(100% + 4px);
@@ -86,14 +116,14 @@ export default {
             type: [String, Number],
             default: 16
         },
-        placement:{
-            type:String,
-            default:'left'
+        placement: {
+            type: String,
+            default: 'left'
         }
-        
+
     },
-    components:{
-        
+    components: {
+
     },
     data() {
         return {
@@ -107,22 +137,25 @@ export default {
             currentY: 0,
             originalX: 0,
             originalY: 0,
+            form: {
+                key: ''
+            }
         }
     },
     methods: {
-        init(list=[]) {
-           Object.assign(this.$data, this.$options.data());
-            this.$nextTick(()=>{
-                console.log('this.placement',this.placement)
-                if(this.placement=='left'){
+        init(list = []) {
+            Object.assign(this.$data, this.$options.data());
+            this.$nextTick(() => {
+                console.log('this.placement', this.placement)
+                if (this.placement == 'left') {
                     this.currentX = parseInt(this.leftPadding);
-                }else{
-                    this.currentX = window.innerWidth- parseInt(this.leftPadding) - this.$refs.catalogueBox.clientWidth;
+                } else {
+                    this.currentX = window.innerWidth - parseInt(this.leftPadding) - this.$refs.catalogueBox.clientWidth;
                 }
                 this.currentY = parseInt(this.top);
                 this.originalX = this.currentX;
                 this.originalY = this.currentY;
-                this.options.mulu=list;
+                this.options.mulu = list;
             })
         },
 
@@ -148,9 +181,18 @@ export default {
             document.removeEventListener('mouseup', this.handleDragEnd);
             // 可以在这里进行拖拽结束后的其他处理，如碰撞检测、吸附逻辑等
         },
-        clickItem(item,index){
-            this.$emit('click',item,index)
-            console.log('ci',item,index)
+        clickItem(item, index) {
+            this.$emit('click', item, index)
+            console.log('ci', item, index)
+        },
+        filterKey(str) {
+            let status = true;
+            if (str && this.form.key) {
+                if (str?.toLocaleLowerCase().indexOf(this.form.key?.toLocaleLowerCase()) == -1) {
+                    status = false;
+                }
+            }
+            return status;
         }
     },
     created() {
