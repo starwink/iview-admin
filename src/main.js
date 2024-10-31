@@ -12,7 +12,7 @@ import 'echarts';
 import ECharts from 'vue-echarts';
 import helper from '@/utils/helper.js'
 
-import { ipc } from '@/utils/ipcRenderer'
+import { ipc,isEE } from '@/axios/ee/ipcRenderer'
 import { api } from '@/axios/api/index.js'
 
 import VueViewer from 'v-viewer'
@@ -61,6 +61,7 @@ Vue.prototype.$helper = helper
 Vue.prototype.$api = api
 // 全局注入IPC通信
 Vue.prototype.$ipc = ipc
+Vue.prototype.$isEE = isEE
 
 /**
  * 注册指令

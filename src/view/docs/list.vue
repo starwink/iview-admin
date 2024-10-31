@@ -7,6 +7,7 @@
         </div>
         <div style="text-align: right;">
             <Button @click="add">创建</Button>
+            <Button @click="runmsg">runmsg</Button>
             <!-- <Button @click="createDataBase">初始化数据库</Button> -->
         </div>
         <div class="table-box">
@@ -120,6 +121,7 @@ export default {
         }
     },
     created() {
+        console.log('isee:',this.$isEE)
         this.search();
     },
     methods:{
@@ -181,6 +183,14 @@ export default {
         },
         open(row){
             this.$router.push(`/docs/${row.id}`)
+        },
+        runmsg(){
+            let funName='controller.demo.framework.hello';
+            funName='controller.demo.os.messageShow';
+            // console.log('runmsg=>',this.$ipc,this.$ipc.invoke)
+            this.$ipc.invoke(funName, 'imyar un').then(r => {
+                console.log(r)
+            })
         }
     }
 }
