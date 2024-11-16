@@ -17,8 +17,9 @@ export default {
     delNotes(id){
         return request.post(`${url}/del`, {id});
     },
-    openPath(data){
-        return request.post(`${url}/openPath`, data);
+    
+    delNotes0xcode(data){
+        return request.get(`${url}/pass`, data);
     },
 
     

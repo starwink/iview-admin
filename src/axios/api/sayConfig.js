@@ -1,26 +1,21 @@
 import { request } from '@/axios/request/http.js'
-let url = "/test/apijson";
+let url = "/test/sayconfig";
 export default {
    
 
-    getApiTestList(data){
+    getSayConfigList(data){
         return request.post(`${url}/list`, data);
     },
-    getApiTestDetail(id){
+    getSayConfigDetail(id){
         return request.get(`${url}/detail`, {id});
     },
-    saveApiTest(data){
+    saveSayConfig(data){
         return request.post(`${url}/save`, data);
     },
-    delApiTest(id){
+    delSayConfig(id){
         return request.post(`${url}/del`, {id});
     },
-    getApiTestMaxTypeId(){
-        return request.get(`${url}/maxid`);
-    },
-    getApiTestLatelyTitle(){
-        return request.get(`${url}/latelytitle`);
-    }
+  
 
     
    
@@ -28,6 +23,7 @@ export default {
     
    
 
+    
 
 
 

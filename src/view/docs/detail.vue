@@ -1,6 +1,10 @@
 <template>
     <div class="docs-detail">
-        <div class="detail-title">{{ data.title }}</div>
+        <Breadcrumb style="margin: 8px ;" >
+            <BreadcrumbItem to="/docs">列表</BreadcrumbItem>
+            <BreadcrumbItem>{{data.title}}</BreadcrumbItem>
+        </Breadcrumb>
+        <!-- <div class="detail-title">{{ data.title }}</div> -->
         <div class="detail-info">
             <div class="release_time"><span>发布时间：</span><span>{{ data.release_time }}</span></div>
             <div class="create-time"><span>更新时间：</span><span>{{$helper.getDateParams(data.update_datetime,'YYYY-MM-DD HH:mm')}}</span></div>

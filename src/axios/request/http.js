@@ -5,6 +5,11 @@ import { Message } from 'view-design'
 // NProgress.configure({showSpinner: false});
 // http request 拦截器
 // axios.defaults.timeout=5000;
+if (process.env.NODE_ENV == 'development') {
+    axios.defaults.baseURL = '';
+}else{
+    axios.defaults.baseURL = 'http://localhost:18881';
+}
 axios.create({
   withCredentials: true
 })

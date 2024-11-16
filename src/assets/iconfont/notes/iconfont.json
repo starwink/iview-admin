@@ -6,6 +6,104 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "703499",
+      "name": "reload",
+      "font_class": "reload1",
+      "unicode": "ea42",
+      "unicode_decimal": 59970
+    },
+    {
+      "icon_id": "16361493",
+      "name": "icon_exercise_pen_3",
+      "font_class": "icon_exercise_pen_3",
+      "unicode": "e6c7",
+      "unicode_decimal": 59079
+    },
+    {
+      "icon_id": "28610881",
+      "name": "dict",
+      "font_class": "dict",
+      "unicode": "e6c8",
+      "unicode_decimal": 59080
+    },
+    {
+      "icon_id": "2485698",
+      "name": "api",
+      "font_class": "api",
+      "unicode": "e6c5",
+      "unicode_decimal": 59077
+    },
+    {
+      "icon_id": "22238292",
+      "name": "API",
+      "font_class": "API",
+      "unicode": "ebf0",
+      "unicode_decimal": 60400
+    },
+    {
+      "icon_id": "29083328",
+      "name": "api",
+      "font_class": "api1",
+      "unicode": "e6c6",
+      "unicode_decimal": 59078
+    },
+    {
+      "icon_id": "400926",
+      "name": "move2",
+      "font_class": "move2",
+      "unicode": "e7a9",
+      "unicode_decimal": 59305
+    },
+    {
+      "icon_id": "7215722",
+      "name": "Select",
+      "font_class": "Select",
+      "unicode": "e6ea",
+      "unicode_decimal": 59114
+    },
+    {
+      "icon_id": "7594871",
+      "name": "24gf-folderHeart",
+      "font_class": "24gf-folderHeart",
+      "unicode": "eac5",
+      "unicode_decimal": 60101
+    },
+    {
+      "icon_id": "7594872",
+      "name": "24gf-folderShare",
+      "font_class": "24gf-folderShare",
+      "unicode": "eac6",
+      "unicode_decimal": 60102
+    },
+    {
+      "icon_id": "7594873",
+      "name": "24gf-folderStar",
+      "font_class": "24gf-folderStar",
+      "unicode": "eac7",
+      "unicode_decimal": 60103
+    },
+    {
+      "icon_id": "24891115",
+      "name": "Selection-Tool",
+      "font_class": "Selection-Tool",
+      "unicode": "e857",
+      "unicode_decimal": 59479
+    },
+    {
+      "icon_id": "30828738",
+      "name": "select",
+      "font_class": "select1",
+      "unicode": "e6c4",
+      "unicode_decimal": 59076
+    },
+    {
+      "icon_id": "31716126",
+      "name": "select",
+      "font_class": "select2",
+      "unicode": "e793",
+      "unicode_decimal": 59283
+    },
+    {
       "icon_id": "1381295",
       "name": "appstore",
       "font_class": "appstore",

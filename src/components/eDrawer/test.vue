@@ -12,8 +12,8 @@
                 </div>
                 <div class="right">
                     <slot name="right">
-                        <el-button size="mini" @click="close()">关闭</el-button>
-                        <el-button type="primary" size="mini" @click="save()">保存</el-button>
+                        <Button size="mini" @click="close()">关闭</Button>
+                        <Button type="primary" size="mini" @click="save()">保存</Button>
                     </slot>
                 </div>
             </slot>

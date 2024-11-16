@@ -1,28 +1,20 @@
 import { request } from '@/axios/request/http.js'
-let url = "/test/apijson";
+let url = "/test/dirfile";
 export default {
    
 
-    getApiTestList(data){
+    getFilesList(data){
         return request.post(`${url}/list`, data);
     },
-    getApiTestDetail(id){
+    getFilesDetail(id){
         return request.get(`${url}/detail`, {id});
     },
-    saveApiTest(data){
+    saveFiles(data){
         return request.post(`${url}/save`, data);
     },
-    delApiTest(id){
+    delFiles(id){
         return request.post(`${url}/del`, {id});
     },
-    getApiTestMaxTypeId(){
-        return request.get(`${url}/maxid`);
-    },
-    getApiTestLatelyTitle(){
-        return request.get(`${url}/latelytitle`);
-    }
-
-    
    
 
     

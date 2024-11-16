@@ -1,22 +1,26 @@
 <template>
     <div class="sqlite">
         <div class="search">
-
+            <Input  v-model="form.key"  maxlength="50" placeholder="请输入关键字" clearable style="width: 140px;margin-right:10px" @on-enter="search()" />
+            <Button @click="search()">查询</Button>
         </div>
-        <div>
+        <div style="text-align: right;">
             <Button @click="add">创建</Button>
-            <Button @click="createDataBase">初始化数据库</Button>
         </div>
         <div class="table-box">
             <Table :columns="list.columns" :data="list.data" :loading="loading" stripe  width="calc(100% - 16px)">
+
+                <template slot-scope="{ row, index }" slot="path">
+                    <span @click="h5Copy(row)">{{row.path}}</span>
+                </template>
                 <template slot-scope="{ row, index }" slot="createTime">
                     <span>{{$helper.getDateParams(row.created_at,'YYYY-MM-DD HH:mm')}}</span>
                 </template>
                 <template slot-scope="{ row, index }" slot="updateTime">
                     <span>{{$helper.getDateParams(row.update_datetime,'YYYY-MM-DD HH:mm')}}</span>
-                </template>
+                </template> 
                 <template slot-scope="{ row, index }" slot="action">
-                    <span type="text" class="button-span button-color-edit" ghost style="margin-right: 5px"  @click.stop="open(row)">open</span>
+                    <span type="text" class="button-span button-color-edit" ghost style="margin-right: 5px"  @click.stop="open(row)">打开</span>
                     <span type="text" class="button-span button-color-edit" ghost style="margin-right: 5px"  @click.stop="edit(row)">编辑</span>
                   
                     <Poptip confirm transfer placement="top-end" @on-ok="del(row)">
@@ -49,7 +53,9 @@ export default {
     data() {
         return {
             loading: false,
-            form:{},
+            form:{
+                key:'',
+            },
             list: {
                 columns: [
                     {
@@ -62,9 +68,9 @@ export default {
                     {
                         title: "路径",
                         minWidth: 260,
-                        ellipsis:true,
-                        tooltip:true,
-                        key: 'path',
+                        // ellipsis:true,
+                        // tooltip:true,
+                        slot: 'path',
                     },
                     
                     {
@@ -79,7 +85,7 @@ export default {
                     },
                     {
                         title: '操作',
-                        width: 120,
+                        width: 170,
                         fixed: 'right',
                         slot: 'action',
                     }
@@ -126,17 +132,13 @@ export default {
             }
             this.spinShow = true;
 
-            this.$api.getNotesList(params).then(res => {
+            this.$api.getFilesList(params).then(res => {
                 this.spinShow = false;
-                this.list.data = res.list;
-                this.page.total = res.total || 0;
+                this.list.data = res.object.list;
+                this.page.total = res.object.total || 0;
             });
         },
-        createDataBase(){
-            this.$api.initDataBase().then(res => {
-               
-            });
-        },
+        
         add() {
             this.$refs.formModal.init();
         },
@@ -146,15 +148,48 @@ export default {
         del(item){
             if(item.id){
                 this.loading = true;
-                this.$api.delNotes(item.id).then(res => {
+                this.$api.delFiles(item.id).then(res => {
                     this.loading = false;
                     this.search();
                 })
             }
         },
         open(row){
-            this.$api.openPath(row).then(res=>{})
-        }
+
+           let funName='controller.demo.os.openFile';
+
+           if(row.path_type=='catalog'){
+               funName='controller.demo.os.openDir';
+           }else if(row.path_type=='file'){
+            funName='controller.demo.os.openFile';
+           }else if(row.path_type=='url'){
+            funName='controller.demo.os.openFile';
+           }
+           console.log('rownn',row)
+           this.$ipc.invoke(funName, {path:row.path}).then(r => {
+                console.log('fun',funName,r)
+            })
+        },
+        h5Copy(item) {
+            let content=item.path
+            if (!document.queryCommandSupported("copy")) {
+                // 不支持
+                return false;
+            }
+
+            let textarea = document.createElement("textarea");
+            textarea.value = content;
+            textarea.readOnly = "readOnly";
+            document.body.appendChild(textarea);
+            textarea.select(); // 选择对象
+            textarea.setSelectionRange(0, content.length); //核心
+            let result = document.execCommand("copy"); // 执行浏览器复制命令
+            textarea.remove();
+            if(result){
+                this.$Message.success('复制成功:'+item.title)
+            }
+            return result;
+        },
     }
 }
 </script>

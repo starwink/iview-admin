@@ -1,8 +1,14 @@
 <template>
     <div class="wordForm">
+        <Breadcrumb style="margin: 8px ;" >
+            <BreadcrumbItem to="/docs">列表</BreadcrumbItem>
+            <BreadcrumbItem>{{form.title}}</BreadcrumbItem>
+        </Breadcrumb>
         <div class="work-editor">
+            
             <div class="work-body">
-                <mdComp ref="mdComp"  :height="100" :overflowHeight="80" @setMuLu="setMuLu" @save="setArticle" />
+                
+                <mdComp ref="mdComp"  :height="100" :overflowHeight="141" @setMuLu="setMuLu" @save="setArticle" />
             </div>
             <div class="work-info" v-if="false">
                 <!-- <Icon custom="bookeditor-font icon-arrowdown" size="24" /> -->

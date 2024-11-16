@@ -2,18 +2,18 @@
     <div class="docs-list">
         <div class="search">
             <Input  v-model="form.key"  maxlength="50" placeholder="请输入关键字" clearable style="width: 140px;margin-right:10px" @on-enter="search()" />
-            <eDatePicker v-model="form.date" placeholder="出院开始时间 至 结束时间"   style="margin-right:10px;width:204px" @change="search"></eDatePicker>
+            <eDatePicker v-model="form.date" placeholder="创建开始时间 至 结束时间"   style="margin-right:10px;width:204px" @change="search"></eDatePicker>
             <Button @click="search()">查询</Button>
         </div>
         <div style="text-align: right;">
             <Button @click="add">创建</Button>
-            <Button @click="runmsg">runmsg</Button>
+            <!-- <Button @click="runmsg">runmsg</Button> -->
+            <Button @click="delDoc0xCode">doc处理</Button>
             <!-- <Button @click="createDataBase">初始化数据库</Button> -->
         </div>
         <div class="table-box">
-            <Table :columns="list.columns" :data="list.data" :loading="loading" stripe  width="calc(100% - 16px)">
+            <Table :columns="list.columns" :data="list.data" :loading="loading" stripe  width="calc(100% - 16px)" @on-selection-change="changeTableSelect">
 
-                
                 <template slot-scope="{ row, index }" slot="article">
                     <eTooltip :text="row.article.substr(0,200)">
                         <span>{{row.article.substr(0,40)}}</span>
@@ -33,6 +33,7 @@
                 <template slot-scope="{ row, index }" slot="action">
                     <span type="text" class="button-span button-color-edit" ghost style="margin-right: 5px"  @click.stop="open(row)">查看</span>
                     <span type="text" class="button-span button-color-edit" ghost style="margin-right: 5px"  @click.stop="edit(row)">编辑</span>
+                    <span type="text" class="button-span button-color-edit" ghost style="margin-right: 5px"  @click.stop="editByMdEditor(row)">梳理</span>
                   
                     <Poptip confirm transfer placement="top-end" @on-ok="del(row)">
                         <div slot="title">
@@ -72,6 +73,11 @@ export default {
             list: {
                 columns: [
                     {
+                        type: 'selection',
+                        width: 60,
+                        align: 'center'
+                    },
+                    {
                         title: "编号",
                         minWidth: 90,
                         key: "id"
@@ -105,7 +111,7 @@ export default {
                     },
                     {
                         title: '操作',
-                        width: 160,
+                        width: 120,
                         fixed: 'right',
                         slot: 'action',
                     }
@@ -118,13 +124,19 @@ export default {
                 current: 1,
                 pageSize: 20
             },
+            userSel:[]
         }
     },
     created() {
-        console.log('isee:',this.$isEE)
         this.search();
     },
     methods:{
+        changeTableSelect(arr){
+            console.log(arr);
+            this.userSel=arr.map(item=>{
+                return item.id
+            })
+        },
         init(){
             Object.assign(this.$data, this.$options.data());
         },
@@ -184,6 +196,9 @@ export default {
         open(row){
             this.$router.push(`/docs/${row.id}`)
         },
+        editByMdEditor(row){
+            this.$router.push(`/work/${row.id}`)
+        },
         runmsg(){
             let funName='controller.demo.framework.hello';
             funName='controller.demo.os.messageShow';
@@ -191,6 +206,30 @@ export default {
             this.$ipc.invoke(funName, 'imyar un').then(r => {
                 console.log(r)
             })
+        },
+        async delDoc0xCode(){
+            if(this.userSel.length==0){
+                return ;
+            }
+            let serves=[]
+            this.userSel.map(item=>{
+                serves.push(this.$api.delNotes0xcode({id:item}))
+            })
+            Promise.all(serves).then(v=>{
+                let y=0,n=0;
+                v.map(i=>{
+                    if(i.code==1){
+                        y++;
+                    }else{
+                        n++;
+                    }
+                })
+                if(y==serves.length){
+                    this.$Message.success('操作成功')
+                }else{
+                    this.$Message.info(`操作存在问题!成功:${y};失败:${n}`)
+                }
+            });
         }
     }
 }
@@ -198,6 +237,7 @@ export default {
 <style lang="scss">
 .docs-list{
     padding: 16px 16px 0 16px;
+    height: 100%;
     overflow: auto;
     .page-box{
         text-align: right;

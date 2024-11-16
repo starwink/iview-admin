@@ -166,7 +166,7 @@ export default {
     }
     .markdown-main{
         overflow: auto;
-        padding: 16px 8px;
+        // padding: 16px 8px;
         // position: relative;
         // height: calc(100% - 40px );
 

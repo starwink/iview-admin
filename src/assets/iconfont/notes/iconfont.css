@@ -1,8 +1,8 @@
 @font-face {
   font-family: "bookeditor-font"; /* Project id 4706800 */
-  src: url('iconfont.woff2?t=1729231667753') format('woff2'),
-       url('iconfont.woff?t=1729231667753') format('woff'),
-       url('iconfont.ttf?t=1729231667753') format('truetype');
+  src: url('iconfont.woff2?t=1731573436602') format('woff2'),
+       url('iconfont.woff?t=1731573436602') format('woff'),
+       url('iconfont.ttf?t=1731573436602') format('truetype');
 }
 
 .bookeditor-font {
@@ -11,7 +11,62 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  vertical-align: initial;
+}
+
+.icon-reload1:before {
+  content: "\ea42";
+}
+
+.icon-icon_exercise_pen_3:before {
+  content: "\e6c7";
+}
+
+.icon-dict:before {
+  content: "\e6c8";
+}
+
+.icon-api:before {
+  content: "\e6c5";
+}
+
+.icon-API:before {
+  content: "\ebf0";
+}
+
+.icon-api1:before {
+  content: "\e6c6";
+}
+
+.icon-move2:before {
+  content: "\e7a9";
+}
+
+.icon-Select:before {
+  content: "\e6ea";
+}
+
+.icon-24gf-folderHeart:before {
+  content: "\eac5";
+}
+
+.icon-24gf-folderShare:before {
+  content: "\eac6";
+}
+
+.icon-24gf-folderStar:before {
+  content: "\eac7";
+}
+
+.icon-Selection-Tool:before {
+  content: "\e857";
+}
+
+.icon-select1:before {
+  content: "\e6c4";
+}
+
+.icon-select2:before {
+  content: "\e793";
 }
 
 .icon-appstore:before {

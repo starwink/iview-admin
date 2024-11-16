@@ -1,10 +1,12 @@
 import Main from '@/components/main'
+
 import parentView from '@/components/parent-view'
 
 import demo from './routers/demo.js'
-import notes from './routers/notes.js'
-import books from './routers/books.js'
-import apiTest from './routers/apiTest.js'
+// import dirfile from './routers/dirfile.js'
+// import books from './routers/books.js'
+// import apiTest from './routers/apiTest.js'
+import electronRouters from './routers/electron.js'
 
 /**
  * iview-admin中meta除了原生参数外可配置的参数:
@@ -28,9 +30,10 @@ if (process.env.NODE_ENV === 'development') {
 }
 export default [
     ...demoRouter,
-    ...notes,
-    ...books,
-    ...apiTest,
+    // ...dirfile,
+    // ...books,
+    // ...apiTest,
+    ...electronRouters,
   {
     path: '/login',
     name: 'login',
@@ -43,7 +46,8 @@ export default [
   {
     path: '/',
     name: '_home',
-    redirect: '/home',
+    // redirect: '/home',
+    redirect: '/docs',
     component: Main,
     meta: {
       hideInMenu: true,

@@ -16,8 +16,8 @@
             </div>
             <div class="right">
 
-                <el-button size="small" @click="show=false">取 消</el-button>
-                <el-button type="primary" size="small" @click="save()">保 存</el-button>
+                <Button size="small" @click="show=false">取 消</Button>
+                <Button type="primary" size="small" @click="save()">保 存</Button>
 
             </div>
         </div>

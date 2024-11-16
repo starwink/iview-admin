@@ -51,17 +51,18 @@ module.exports = {
     proxy: {
         '/lqy': {
           target: 'http://127.0.0.1:3331',
-          // target: 'http://192.168.150.163:7211',
+        //   target: 'http://127.0.0.1:13331',
           changeOrigin: true,
         //   pathRewrite: {
         //       '^/collect': '',
         //   },
         },
-        '/apitest':{
+        '/test':{
             target: 'http://127.0.0.1:3331',
+            // target: 'http://127.0.0.1:13331',
             changeOrigin: true,
         },
-        '/markdown': {
+        '/markdown': { //8787?貌似是文件
             target: 'http://127.0.0.1:8787',
             changeOrigin: true,
         }

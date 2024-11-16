@@ -111,8 +111,8 @@ export default {
         edit(id){
             Object.assign(this.$data, this.$options.data());
             this.show=true;
-            this.$api.getNotesDetail(id).then(res=>{
-                this.form=res.obj;
+            this.$api.getFilesDetail(id).then(res=>{
+                this.form=res.object;
                 this.resetForm();
             })
             
@@ -132,7 +132,7 @@ export default {
             this.$refs['form'].validate((valid) => {
                 if (valid) {
                     let params={...this.form};
-                    this.$api.saveNotes(params).then(res=>{
+                    this.$api.saveFiles(params).then(res=>{
                         this.$emit('success')
                         this.close();
                     },e=>{

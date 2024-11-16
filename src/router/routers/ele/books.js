@@ -1,4 +1,3 @@
-import Main from '@/components/main'
 export default [
     {
         path: "/docs",
