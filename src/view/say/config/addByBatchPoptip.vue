@@ -8,7 +8,7 @@
                     <Row :gutter="16">
                         <Col span="24">
                             <FormItem label="单词：" prop="text">
-                                <Input v-model.trim="form.text"  placeholder="add,code,egg" maxlength="50"></Input>
+                                <Input v-model.trim="form.text"  placeholder="add,code,egg"></Input>
                             </FormItem>
                         </Col>
                     </Row>

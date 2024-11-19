@@ -14,17 +14,17 @@ export default [
             notCache: true
         },
         children: [
-            {
-                path: "main",
-                name: "ele/main",
-                meta: {
-                    token: false,
-                    hideInMenu: true,
-                    title: 'notes',
-                    notCache: true,
-                },
-                component: () => import("@/view/ele/main/index.vue"),
-            },
+            // {
+            //     path: "main",
+            //     name: "ele/main",
+            //     meta: {
+            //         token: false,
+            //         hideInMenu: true,
+            //         title: 'notes',
+            //         notCache: true,
+            //     },
+            //     component: () => import("@/view/ele/main/index.vue"),
+            // },
             ...dirfile,
             ...books,
             ...apiTest,
