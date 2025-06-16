@@ -11,6 +11,9 @@ import installPlugin from '@/plugin'
 import helper from '@/libs/helper.js'
 import { api } from '@/api/index.js'
 
+import { genThemeColor } from 'ivu-extends'
+
+
 import '@/assets/styles';
 const appId='app-j7d4c1bwkdk7';//用于项目高度计算
 Vue.prototype.appId = appId
@@ -38,7 +41,7 @@ Vue.prototype.$config = config
 
 Vue.prototype.$helper = helper
 Vue.prototype.$api = api
-
+genThemeColor('#ff4adb');
 
 
 /**
