@@ -1,0 +1,16 @@
+/* --layout-header-background:'fafafa' */
+/* --layout-sider-background:'fafafa' */
+.ivu-layout-header {
+background: var(--layout-header-background);
+/* background: #fafafa; */
+}
+
+.ivu-layout-sider {
+    background: var(--layout-sider-background);
+}
+.ivu-layout-sider-trigger {
+    background: var(--layout-sider-background);
+}
+.ivu-layout-sider-zero-width-trigger {
+    background: var(--layout-sider-background);
+}

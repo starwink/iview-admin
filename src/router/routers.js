@@ -1,5 +1,6 @@
 // import Main from '@/components/main'
-import Main from '@/components/mainByEwell'
+// import Main from '@/components/mainByEwell'
+import Main from '@/components/main-conversion'
 import parentView from '@/components/parent-view'
 
 import custom_list from "./routers/custom-list.js";
@@ -47,44 +48,47 @@ export default [
     redirect: '/home',
     component: Main,
     meta: {
-      hideInMenu: true,
-      notCache: true
+    //   hideInMenu: true,
+    //   notCache: true
     },
     children: [
       {
         path: '/home',
         name: 'home',
         meta: {
-          hideInMenu: true,
+        //   hideInMenu: true,
           title: '首页',
-          notCache: true,
+        //   notCache: true,
           icon: 'md-home'
         },
         component: () => import('@/view/single-page/home')
       },
+      {
+        path: '',
+        name: 'doc',
+        meta: {
+          title: '文档',
+          href: 'https://lison16.github.io/iview-admin-doc/#/',
+          icon: 'ios-book'
+        }
+      },
+      {
+        path: '/fonts',
+        name: 'fonts',
+        meta: {
+          title: '字体验证',
+        //   href: 'https://lison16.github.io/iview-admin-doc/#/',
+          icon: 'ios-book'
+        },
+        component: () => import('@/view/fonts/index.vue')
+      },
        ...custom_list,
        ...ui_component,
+
+       
     ]
   },
-  {
-    path: '',
-    name: 'doc',
-    meta: {
-      title: '文档',
-      href: 'https://lison16.github.io/iview-admin-doc/#/',
-      icon: 'ios-book'
-    }
-  },
-  {
-    path: '/fonts',
-    name: 'fonts',
-    meta: {
-      title: '字体验证',
-    //   href: 'https://lison16.github.io/iview-admin-doc/#/',
-      icon: 'ios-book'
-    },
-    component: () => import('@/view/fonts/index.vue')
-  },
+  
  /*  {
     path: '/notes',
     name: 'notes',
@@ -118,6 +122,8 @@ export default [
     component: () => import('@/view/notes/list.vue')
   },
   
+
+
   {
     path: '/multilevel',
     name: 'multilevel',
@@ -140,7 +146,7 @@ export default [
         path: 'level_2_2',
         name: 'level_2_2',
         meta: {
-          access: ['super_admin'],
+        //   access: ['super_admin'],
           icon: 'md-funnel',
           showAlways: true,
           title: '二级-2'

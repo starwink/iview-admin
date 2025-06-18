@@ -11,7 +11,7 @@ import installPlugin from '@/plugin'
 import helper from '@/libs/helper.js'
 import { api } from '@/api/index.js'
 
-import { genThemeColor } from 'ivu-extends'
+import genThemeColor from '@/libs/theme/genThemeColor'
 
 
 import '@/assets/styles';

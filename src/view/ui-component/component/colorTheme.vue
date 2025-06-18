@@ -2,7 +2,7 @@
     <div class="colorTheme">
         <Button @click="resetTheme">默认:{{form.def}}</Button>
         <Button @click="setTheme(form.demo)">demo:{{form.demo}}</Button>
-        <ColorPicker v-model="form.color"  @on-change="setTheme" transfer />
+        <ColorPicker v-model="form.color"  @on-change="setTheme" @on-active-change="setTheme" transfer />
 
         <div>
             <p>ivu-extends 扩展组件 InputNumberUnit</p>

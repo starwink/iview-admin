@@ -8,7 +8,7 @@
 ## 1.引入 docker目录
 用于项目打包测试
 
-## 2.升级iview4.0 view-design 
+## 2.升级iview4.0 view-design
 
 ## 99.个人配置
 npm run serve
@@ -31,7 +31,7 @@ set NODE_OPTIONS=--openssl-legacy-provider
 ## 项目fork变动
 ### 1.引入 docker目录
 用于项目打包测试
-### 2.升级iview4.0 view-design 
+### 2.升级iview4.0 view-design
 
 ## 项目本地vs code 格式化配置
 .vscode/settings.json
@@ -41,3 +41,11 @@ set NODE_OPTIONS=--openssl-legacy-provider
     "html.format.contentUnformatted": "",
 }
 ```
+
+## 主题色替换
+[ViewDesign主题色替换方案](https://juejin.cn/post/7297103474440814627);
+```main.js
+genThemeColor('#ff4adb');
+```
+
+新增更多的变量,项目核心的代码迁移到`/src/libs/theme/genThemeColor.js`

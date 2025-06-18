@@ -5,15 +5,12 @@ export default {
   state: {
     userName: '',
     userId: '',
-    avatorImgPath: '',
     token: getToken(),
     access: '',
     hasGetInfo: false
   },
   mutations: {
-    setAvator (state, avatorPath) {
-      state.avatorImgPath = avatorPath
-    },
+   
     setUserId (state, id) {
       state.userId = id
     },

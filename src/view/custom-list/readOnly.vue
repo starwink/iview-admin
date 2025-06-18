@@ -34,7 +34,6 @@
     </div>
 </template>
 <style lang="scss" scoped>
-@import '@/assets/styles/variable.scss';
 .case-page{
     height: 100vh;
 }

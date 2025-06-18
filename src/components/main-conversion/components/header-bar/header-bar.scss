@@ -1,0 +1,47 @@
+.header-bar {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .header-left {
+        display: flex;
+        align-items: center;
+        .login-title {
+            display: flex;
+            align-items: center;
+            padding: 0 8px;
+            .project-img{
+                display: inline-block;
+                height: 50px;
+                margin-right: 10px;
+                overflow: hidden;
+
+                img{
+                    height: 100%;
+                    width: auto;
+                    display: block;
+                }
+            }
+            .project_name{
+                font-size: 18px;
+                font-family: '阿里妈妈数黑体 Bold';
+            }
+        }
+    }
+    .header-right {
+        .custom-content-con {
+            display: flex;
+            align-items: center;
+            // float: right;
+            height: auto;
+            // padding-right: 20px;
+            .full-screen-btn-con .ivu-tooltip-rel {
+                height: auto;
+                line-height: 50px;
+            }
+            
+        }
+    }
+}

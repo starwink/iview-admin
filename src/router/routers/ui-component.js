@@ -19,6 +19,17 @@ export default [
         },
         component: _import('ui-component/index.vue')
     },
+    {
+        path: '/ui/list',
+        name: 'ui/list',
+        meta: {
+            title: '列表布局',
+            icon: 'ico-jobslist',
+            // access: ['16040801'],
+            
+        },
+        component: _import('ui-component/list.manage.vue')
+    },
  
     
 ]
