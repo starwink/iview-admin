@@ -49,3 +49,6 @@ genThemeColor('#ff4adb');
 ```
 
 新增更多的变量,项目核心的代码迁移到`/src/libs/theme/genThemeColor.js`
+
+## monaco editor 引用
+使用js script方式引用,npm中引用与vue webpack存在问题,只能在0.33以下版本,项目中需要自定义行号上的图标只能在.34以上版本,而script当下可以使用最新版本0.52.2;

@@ -12,6 +12,22 @@
       <strong>我们很抱歉，但项目不能正常工作，没有启用JavaScript。请启用它继续。</strong>
     </noscript>
     <div id="app-j7d4c1bwkdk7"></div>
+    <script src="<%= BASE_URL %>statics/monaco-editor/min/vs/loader.js"></script>
+
+    <script>
+
+        require.config({ 
+            paths: { 
+                'vs': window.location.origin+'/statics/monaco-editor/min/vs',
+            },
+            'vs/nls':{
+                'availableLanguages': { '*': 'zh-cn' } 
+            }
+        });
+        // 将monaco变量赋值为全局变量
+        require(['vs/editor/editor.main'], function() {});
+      </script>
+    <!-- <script src="<%= BASE_URL %>statics/monaco-editor/min/vs/editor/editor.main.js"></script> -->
     <!-- built files will be auto injected -->
   </body>
 </html>

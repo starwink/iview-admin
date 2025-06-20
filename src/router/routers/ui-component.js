@@ -30,6 +30,29 @@ export default [
         },
         component: _import('ui-component/list.manage.vue')
     },
+    {
+        path: '/ui/editor',
+        name: 'ui/editor',
+        meta: {
+            title: '编辑器',
+            icon: 'ico-jobslist',
+            // access: ['16040801'],
+            
+        },
+        component: _import('ui-component/editor/json.vue')
+    },
+
+    {
+        path: "/monaco/jsonpath",
+        name: "monaco/jsonpath",
+        meta: {
+            token: false,
+            hideInMenu: true,
+            title: 'notes',
+            notCache: true,
+        },
+        component: _import("ui-component/editor/jsonpath.vue"),
+    },
  
     
 ]
