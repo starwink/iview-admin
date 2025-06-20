@@ -31,15 +31,15 @@ export default [
         component: _import('ui-component/list.manage.vue')
     },
     {
-        path: '/ui/editor',
-        name: 'ui/editor',
+        path: '/ui/table',
+        name: 'ui/table',
         meta: {
-            title: '编辑器',
+            title: 'vex table示例',
             icon: 'ico-jobslist',
             // access: ['16040801'],
             
         },
-        component: _import('ui-component/editor/json.vue')
+        component: _import('ui-component/vxe-table.vue')
     },
 
     {

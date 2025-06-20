@@ -11,6 +11,9 @@ import installPlugin from '@/plugin'
 import helper from '@/libs/helper.js'
 import { api } from '@/api/index.js'
 
+import VxeUITable from 'vxe-table'
+import 'vxe-table/lib/style.css'
+
 import genThemeColor from '@/libs/theme/genThemeColor'
 
 
@@ -26,6 +29,8 @@ console.info('%c Versions','color: white; background-color: #13939e;padding:4px 
 
 
 Vue.use(ViewUI);
+Vue.use(VxeUITable)
+
 /**
  * @description 注册admin内置插件
  */
