@@ -8,6 +8,7 @@ export default {
         "isCaseId": null,
         "diseaseTypes": "UM",
         "versionNumber": "2.0",
+        "inner.no": "htesro",
         "formVersion": "#/form/v3/form-34",
         "reportDoctor": null,
         "reportTime": "2021-05-12 00:01:07",
@@ -17,8 +18,10 @@ export default {
         "reportContent": {
             "diseaseType": "UM",
             "caseId": "wo1820210510141251",
+            "diseaseId": "0512000107417092322",
             "age": 0,
             "data": {
+                "diseaseId": "0512000107417092322444",
                 "CM-0-1-1-1": "辆呜滩识频辰薄孵",
                 "CM-0-1-1-2": "拾涅亭弊怕桨传",
                 "CM-0-1-1-3": "锑饼众吠审纤",

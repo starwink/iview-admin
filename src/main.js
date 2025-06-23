@@ -18,7 +18,7 @@ import genThemeColor from '@/libs/theme/genThemeColor'
 
 
 import '@/assets/styles';
-const appId='app-j7d4c1bwkdk7';//用于项目高度计算
+const appId='app-tgmc3iola6hf8e60';//用于项目高度计算
 Vue.prototype.appId = appId
 // 实际打包时应该不引入mock
 /* eslint-disable */

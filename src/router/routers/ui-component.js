@@ -48,7 +48,7 @@ export default [
         meta: {
             token: false,
             hideInMenu: true,
-            title: 'notes',
+            title: 'jsonpath图标-测试monaco编辑器',
             notCache: true,
         },
         component: _import("ui-component/editor/jsonpath.vue"),

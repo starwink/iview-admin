@@ -1,5 +1,5 @@
 <template>
-  <div id="app-j7d4c1bwkdk7">
+  <div id="app-tgmc3iola6hf8e60">
     <router-view/>
   </div>
 </template>
@@ -12,8 +12,9 @@ export default {
 <style lang="less">
 html,body{
     height: 100%;
+    overflow: hidden;
 }
-#app-j7d4c1bwkdk7{
+#app-tgmc3iola6hf8e60{
     position: relative;
     height: 100%;
     overflow: hidden;

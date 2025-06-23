@@ -52,3 +52,26 @@ genThemeColor('#ff4adb');
 
 ## monaco editor 引用
 使用js script方式引用,npm中引用与vue webpack存在问题,只能在0.33以下版本,项目中需要自定义行号上的图标只能在.34以上版本,而script当下可以使用最新版本0.52.2;
+[使用示例](https://microsoft.github.io/monaco-editor/playground.html?source=v0.52.2#example-creating-the-editor-hello-world)
+
+## vxe table 引用
+[使用文档](https://vxetable.cn/v3/#/component/table/base/basic)
+
+## jsonpath 的使用
+`jsonpath`不支持 属性名中存在'-'的字段
+
+```js
+JSONPath({path:'$..[UM-1-3-1]',json:cities})
+JSONPath({path:'$..[inner.no]',json:cities})
+```
+
+```json
+{
+    "inner.no": "htesro",
+    "UM-1-3-1": [
+        "g",
+        "oth",
+        "c"
+    ]
+}
+```
