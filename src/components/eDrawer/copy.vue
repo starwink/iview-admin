@@ -1,10 +1,10 @@
 <template>
-    <Modal v-model="show" @on-visible-change="close" :mask-closable="false" footer-hide transfer class-name="eModal xxxxxxxxModal">
+    <Drawer v-model="show" width="86" @on-visible-change="close" class-name="eDrawer xxxxxxxxDrawer" direction="rtl">
         <div class="detail">
             <div class="header">
                 <span class="title">导出</span>
             </div>
-            <div class="eModal-body">
+            <div class="drawer-body">
                 <p class="ps">请选择需要导出的文件</p>
                
             </div>
@@ -16,12 +16,12 @@
             </div>
             <div class="right">
 
-                <el-button size="small" @click="show=false">取 消</el-button>
-                <el-button type="primary" size="small" @click="save()">保 存</el-button>
+                <el-button @click="show=false" size="small">取 消</el-button>
+                <el-button @click="save()" type="primary" size="small">保 存</el-button>
 
             </div>
         </div>
-    </Modal>
+    </Drawer>
 </template>
 
 <script>
@@ -52,12 +52,10 @@ export default {
 }
 </script>
 
-
 <style lang="scss" scoped>
-@import '@/components/eModal/eModal.scss';
-/* .xxxxxxxxModal{
-    .eModal-body{
-        height: 100%;
+@import '@/components/eDrawer/eDrawer.scss';
+/* .xxxxxxxxDrawer{
+    .drawer-body{
         padding: 16px;
     }
 } */

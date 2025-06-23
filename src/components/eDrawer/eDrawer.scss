@@ -1,32 +1,9 @@
-::v-deep .eModal .ivu-modal-body {
+::v-deep .eDrawer .ivu-drawer-body {
     padding: 0px;
     overflow: hidden;
 }
-.eModal {
-    .ivu-modal-close{
-        transform: rotate(0deg);
-        transition: all 0.5s ease 0s;
-        &:hover{
-            transform: rotate(90deg);
-        }
-        .ivu-icon-ios-close{
-            font-size: 32px;
-            font-weight: 600;
-            color:#666;
-            background-color: #f9f9f9;
-            border-radius: 50%;
-            top:0;
-            border: solid 1px #ccc;
-            &:hover{
-                color:#333;
-            }
-           
-        }
-    }
-    .ivu-modal-body {
-        padding: 0px;
-        overflow: hidden;
-    }
+.eDrawer {
+
     .header {
         display: flex;
         height: 48px;
@@ -55,7 +32,7 @@
         }
     }
 
-    .eModal-body {
+    .drawer-body {
         height: calc(100vh - 100px);
         overflow: hidden;
     }
@@ -70,21 +47,15 @@
         align-items: center;
         margin: 0;
         border-top: solid 1px #ddd;
-        // position: absolute;
-        // bottom: 0;
-        // left: 0;
-        position: static;
+        position: absolute;
+        bottom: 0;
+        left: 0;
         background-color: #fff;
         z-index: 8;
-        border-radius: 6px;
 
         .left{
           flex:1;
           text-align-last: left;
         }
-        border-radius: 0 0 8px 8px;
-    }
-    .ivu-modal-footer{
-        display: none;
     }
 }
