@@ -1,63 +1,143 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import routes from './routers'
+// import routes from './routers'
 import store from '@/store'
 import ViewUI from 'view-design'
 import { setToken, getToken, canTurnTo } from '@/libs/util'
 import config from '@/config'
+import Main from '@/components/main-conversion'
+import parentView from '@/components/parent-view'
 const { homeName } = config
+
+import asyncRoutes from '@/router/routers'
+
+const constantRoutes = [
+    {
+        path: '/login',
+        name: 'login',
+        component: () => import('@/view/login/login'),
+        meta: {
+            title: '登录',
+            i18n: 'route.login'
+        }
+    },
+    {
+        path: '/',
+        component: Main,
+        redirect: 'dashboard',
+        children: [
+            {
+                path: '/dashboard',
+                name: 'dashboard',
+                component: () => import('@/view/home/dashboard'),
+                meta: {
+                    title: '概览',
+                }
+            },
+        ]
+    },
+
+
+    {
+        path: '/401',
+        name: 'error_401',
+        meta: {
+        },
+        component: () => import('@/view/error-page/401.vue')
+    },
+    {
+        path: '/500',
+        name: 'error_500',
+        meta: {
+        },
+        component: () => import('@/view/error-page/500.vue')
+    },
+
+]
+// 需要后面追加404配置,不然动态加载路由后还是在404页
+const lastRoute = [{
+    path: '*',
+    name: 'error_404',
+    component: () => import('@/view/error-page/404.vue'),
+    meta: {
+        title: '404',
+    }
+}]
 
 Vue.use(Router)
 const router = new Router({
-  routes,
-  mode: 'hash', //hash ,history
-  base: process.env.BASE_URL,
+    routes: constantRoutes,
+    mode: 'hash', //hash ,history
+    base: process.env.BASE_URL,
 })
+
+
 const LOGIN_PAGE_NAME = 'login'
 
 const turnTo = (to, access, next) => {
-  if (canTurnTo(to.name, access, routes)) next() // 有权限，可访问
-  else next({ replace: true, name: 'error_401' }) // 无权限，重定向到401页面
+    if (canTurnTo(to.name, access, routes)) next() // 有权限，可访问
+    else next({ replace: true, name: 'error_401' }) // 无权限，重定向到401页面
 }
 
-router.beforeEach((to, from, next) => {
-  ViewUI.LoadingBar.start()
- 
-  next() ;return ;
-  const token = getToken()
-  if (!token && to.name !== LOGIN_PAGE_NAME) {
-    // 未登录且要跳转的页面不是登录页
-    next({
-      name: LOGIN_PAGE_NAME // 跳转到登录页
-    })
-  } else if (!token && to.name === LOGIN_PAGE_NAME) {
-    // 未登陆且要跳转的页面是登录页
-    next() // 跳转
-  } else if (token && to.name === LOGIN_PAGE_NAME) {
-    // 已登录且要跳转的页面是登录页
-    next({
-      name: homeName // 跳转到homeName页
-    })
-  } else {
-    if (store.state.user.hasGetInfo) {
-      turnTo(to, store.state.user.access, next)
-    } else {
-      store.dispatch('getUserInfo').then(user => {
-        // 拉取用户信息，通过用户权限和跳转的页面的name来判断是否有权限访问;access必须是一个数组，如：['super_admin'] ['super_admin', 'admin']
-        turnTo(to, user.access, next)
-      }).catch(() => {
-        setToken('')
-        next({
-          name: 'login'
+router.beforeEach(async (to, from, next) => {
+    ViewUI.LoadingBar.start()
+    // 已经登录，但还没根据权限动态生成并挂载路由
+    if (store.getters['user/isLogin'] && !store.state.menu.isGenerate) {
+        router.matcher = new Router({
+            routes: constantRoutes,
+        }).matcher;
+
+        let accessRoutes = [];
+        accessRoutes = await store.dispatch('menu/generateRoutesAtFront', {
+            asyncRoutes,
+            currentPath: to.path //用于判断是在哪个大类下
         })
-      })
+        accessRoutes.push(...lastRoute)
+        accessRoutes.forEach(route => {
+            router.addRoute(route)
+        })
+
+        next({ ...to, replace: true });
     }
-  }
+    if (store.state.menu.isGenerate) {
+        store.commit('menu/setHeaderActived', to.path)
+    }
+
+    console.log('login',to)
+    if (store.getters['user/isLogin']) {
+        if (to.name) {
+            if (to.matched.length !== 0) {
+                // 如果已登录状态下，进入登录页会强制跳转到控制台页面
+                if (to.name == 'login') {
+                    next({
+                        name: 'dashboard',
+                        replace: true
+                    })
+                }
+            } else {
+                // 如果是通过 name 跳转，并且 name 对应的路由没有权限时，需要做这步处理，手动指向到 404 页面
+                next({
+                    path: '/404'
+                })
+            }
+        }
+    } else {
+        if (to.name != 'login') {
+            next({
+                name: 'login',
+                query: {
+                    redirect: to.fullPath
+                }
+            })
+        }
+    }
+
+    next()
 })
 
 router.afterEach(to => {
-  ViewUI.LoadingBar.finish()
-  window.scrollTo(0, 0)
+    ViewUI.LoadingBar.finish()
+    window.scrollTo(0, 0)
 })
 
 export default router

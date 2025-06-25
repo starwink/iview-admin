@@ -1,85 +1,86 @@
-import { login, logout, getUserInfo } from '@/api/user'
-import { setToken, getToken } from '@/libs/util'
+import storage from '@/libs/storage'
+import {api} from '@/api'
+
+const state = {
+    account: storage.local.get('account') || '',
+    token: storage.local.get('token') || 'htest',
+    failure_time: storage.local.get('failure_time') || '',
+    permissions: []
+}
+
+const getters = {
+    isLogin: state => {
+       /*  let retn = false
+        if (state.token) {
+            let unix = Date.parse(new Date())
+            if (unix < state.failure_time * 1000) {
+                retn = true
+            }
+        } */
+        let retn = !!state.token;
+        return retn
+    }
+}
+
+const actions = {
+    login({commit}, data) {
+        return new Promise((resolve, reject) => {
+            // 通过 mock 进行登录
+            api.post('mock/member/login', data).then(res => {
+                commit('setUserData', res.data)
+                resolve()
+            }).catch(error => {
+                reject(error)
+            })
+        })
+    },
+    logout({commit}) {
+        commit('removeUserData')
+        commit('menu/invalidRoutes', null, {root: true})
+        commit('tabbar/clean', null, {root: true})
+    },
+    // 获取我的权限
+    getPermissions({state, commit}) {
+        return new Promise(resolve => {
+            // 通过 mock 获取权限
+            api.get('mock/member/permission', {
+                params: {
+                    account: state.account
+                }
+            }).then(res => {
+                commit('setPermissions', res.data.permissions)
+                resolve(res.data.permissions)
+            })
+        })
+    }
+}
+
+const mutations = {
+    setUserData(state, data) {
+        storage.local.set('account', data.account)
+        storage.local.set('token', data.token)
+        storage.local.set('failure_time', data.failure_time)
+        state.account = data.account
+        state.token = data.token
+        state.failure_time = data.failure_time
+    },
+    removeUserData(state) {
+        storage.local.remove('account')
+        storage.local.remove('token')
+        storage.local.remove('failure_time')
+        state.account = ''
+        state.token = ''
+        state.failure_time = ''
+    },
+    setPermissions(state, permissions) {
+        state.permissions = permissions
+    }
+}
 
 export default {
-  state: {
-    userName: '',
-    userId: '',
-    token: getToken(),
-    access: '',
-    hasGetInfo: false
-  },
-  mutations: {
-   
-    setUserId (state, id) {
-      state.userId = id
-    },
-    setUserName (state, name) {
-      state.userName = name
-    },
-    setAccess (state, access) {
-      state.access = access
-    },
-    setToken (state, token) {
-      state.token = token
-      setToken(token)
-    },
-    setHasGetInfo (state, status) {
-      state.hasGetInfo = status
-    }
-  },
-  actions: {
-    // 登录
-    handleLogin ({ commit }, {userName, password}) {
-      userName = userName.trim()
-      return new Promise((resolve, reject) => {
-        login({
-          userName,
-          password
-        }).then(res => {
-          const data = res.data
-          commit('setToken', data.token)
-          resolve()
-        }).catch(err => {
-          reject(err)
-        })
-      })
-    },
-    // 退出登录
-    handleLogOut ({ state, commit }) {
-      return new Promise((resolve, reject) => {
-        logout(state.token).then(() => {
-          commit('setToken', '')
-          commit('setAccess', [])
-          resolve()
-        }).catch(err => {
-          reject(err)
-        })
-        // 如果你的退出登录无需请求接口，则可以直接使用下面三行代码而无需使用logout调用接口
-        // commit('setToken', '')
-        // commit('setAccess', [])
-        // resolve()
-      })
-    },
-    // 获取用户相关信息
-    getUserInfo ({ state, commit }) {
-      return new Promise((resolve, reject) => {
-        try {
-          getUserInfo(state.token).then(res => {
-            const data = res.data
-            commit('setAvator', data.avator)
-            commit('setUserName', data.name)
-            commit('setUserId', data.user_id)
-            commit('setAccess', data.access)
-            commit('setHasGetInfo', true)
-            resolve(data)
-          }).catch(err => {
-            reject(err)
-          })
-        } catch (error) {
-          reject(error)
-        }
-      })
-    }
-  }
+    namespaced: true,
+    state,
+    actions,
+    getters,
+    mutations
 }

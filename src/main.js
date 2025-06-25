@@ -31,6 +31,9 @@ console.info('%c Versions','color: white; background-color: #13939e;padding:4px 
 Vue.use(ViewUI);
 Vue.use(VxeUITable)
 
+import VueMeta from 'vue-meta' //html title配置
+Vue.use(VueMeta)
+
 /**
  * @description 注册admin内置插件
  */
@@ -53,12 +56,11 @@ genThemeColor('#ff4adb');
  * 注册指令
  */
 importDirective(Vue)
-
-/* eslint-disable no-new */
 new Vue({
-//   el: appId,
   el: `#${appId}`,
   router,
   store,
   render: h => h(App)
 })
+
+

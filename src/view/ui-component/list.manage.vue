@@ -22,6 +22,7 @@
 export default {
     data(){
         return {
+            tableHeight:200,
             form:{
                 keyword:''
             },

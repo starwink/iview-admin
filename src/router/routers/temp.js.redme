@@ -1,0 +1,27 @@
+import Layout from '@/components/main-conversion'
+
+export default {
+    path: '/pathUrl',
+    component: Layout,
+    redirect: '/pathUrl/index',
+    name: 'printExample',
+    meta: {
+        title: '打印',
+        icon: 'ri-printer-line',
+        badge: 'PRO'
+    },
+    children: [
+        {
+            path: 'index',
+            name: 'printExampleIndex',
+            component: () => import(/* webpackChunkName: 'pathUrl' */ '@/views/pathUrl'),
+            meta: {
+                title: '打印',
+                access:[], //鉴权
+                // sidebar: false,//侧边栏
+                // breadcrumb: false, //面包屑
+                // activeMenu: '/pathUrl'
+            }
+        }
+    ]
+}
