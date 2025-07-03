@@ -19,17 +19,16 @@ const getters = {
 const actions = {
 
     //获取路由数据方法,这里触发鉴权,设定大类:筛选出生成导航数据,resolve注册的可访问的所有路由
-    generateRoutesAtFront({rootState, dispatch, commit}, data) {
+    generateRoutesAtFront({ rootState, dispatch, commit }, data) {
         return new Promise(async resolve => {
-            let accessedRoutes=data.asyncRoutes;
+            let accessedRoutes = data.asyncRoutes;
             commit('setRoutes', accessedRoutes)
             commit('setHeaderActived', data.currentPath)
-            let routes=[]
+            let routes = []
             //todo  处理路径数据
             data.asyncRoutes.map(item => {
                 routes.push(...item.children)
             })
-            console.log('generateRoutesAtFront',routes)
             resolve(routes)
         })
     }

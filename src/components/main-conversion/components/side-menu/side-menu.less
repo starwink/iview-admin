@@ -1,5 +1,20 @@
 .side-menu-wrapper{
   user-select: none;
+  overflow:hidden auto;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  .side-menu-header,.side-menu-footer{
+    flex:0 0 auto;
+  }
+  .side-menu-content{
+    flex:1;
+    overflow: auto;
+    .ivu-menu-vertical.ivu-menu-light:after {
+        display: none;;
+    }
+  }
   .menu-collapsed{
     padding-top: 10px;
 

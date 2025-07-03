@@ -57,10 +57,7 @@ export default {
     },
     methods:{
         $_resize() {
-
             let pagePageingH = this.$refs?.tableRef?.clientHeight  || 0;
-            console.log('pagePageingH',pagePageingH)
-
             this.tableHeight =pagePageingH;
         },
 
@@ -68,7 +65,6 @@ export default {
             Object.assign(this.$data, this.$options.data());
 
             let arr=Array(18).fill({name:'1fsd'});
-            console.log('ass',arr);
             this.$_resize();
             this.list.data=arr;
 

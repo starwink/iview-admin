@@ -18,6 +18,7 @@ import genThemeColor from '@/libs/theme/genThemeColor'
 
 
 import '@/assets/styles';
+import '@/assets/icons/iconfont.css';
 const appId='app-tgmc3iola6hf8e60';//用于项目高度计算
 Vue.prototype.appId = appId
 // 实际打包时应该不引入mock
@@ -33,6 +34,13 @@ Vue.use(VxeUITable)
 
 import VueMeta from 'vue-meta' //html title配置
 Vue.use(VueMeta)
+
+
+// 自动加载 svg 图标
+const req = require.context('./assets/icons-svg', false, /\.svg$/)
+const requireAll = requireContext => requireContext.keys().map(requireContext)
+requireAll(req)
+
 
 /**
  * @description 注册admin内置插件

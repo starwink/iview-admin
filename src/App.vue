@@ -6,12 +6,30 @@
 
 <script>
 export default {
+    watch:{
+        $route: {
+            handler: 'routeChange',
+            immediate: true
+        },
+    },
+    methods:{
+        // 监听路由变化，更新页面 title
+        routeChange(...e) {
+            console.log('rce',e)
+            this.$route.meta.title && this.$store.commit('settings/setTitle', this.$route.meta.title)
+        }
+    },
     metaInfo() {
         return {
-            title: 'this.$store.state.settings.enableDynamicTitle && this.$store.state.settings.title',
+            title: this.$store.state.settings.title,
             titleTemplate: title => {
-                return title ? `${title} - ${process.env.VUE_APP_TITLE}` : process.env.VUE_APP_TITLE
-            }
+                let btitle=this.$store.state.settings.project_name || '';
+                return title ? `${title} - ${btitle}` : btitle
+            },
+            meta: [
+               /*  { charset: 'utf-8' },
+                { hanhtestc: 'jfifsuqwe' }, */
+            ]
         }
     }
 }

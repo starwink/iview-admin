@@ -5,14 +5,25 @@
       <use :xlink:href="`#svgicon-404`" />
     </svg>
     <br />2:
-    <!-- <common-icon type="ios-checkmark" size="56" color="#ba68c8" /> -->
-    <!-- <common-icon type="qq" size="56" color="#ba68c8" /> -->
     <br />3:
     <!-- <Icon type="ios-checkmark"  size="44"  />
     <Icon type="logo-freebsd-devil" size="44" />
     <Icon type="woman" size="44" /> -->
-    <eIcon name="ios-checkmark" size="44" />
-    <eIcon name="ri-printer-line" size="44" />
+    <div class="p">
+
+        <eIcon name="ios-checkmark" size="14" color="#e02bb9" />
+        #ffe0cd
+    </div>
+
+    <div class="p">
+        <eIcon name="md-add" size="14" color="#0fe0cd" />
+        #0fe0cd
+    </div>
+    
+    <div class="p">
+        <eIcon name="svg:fw" size="14" color="#ffe0cd" />
+        #0fe0cd
+    </div>
 
   </div>
 </template>
@@ -42,6 +53,10 @@ export default {
 </script>
 <style lang="scss" scoped>
 .dashboard {
+    .p{
+        line-height: 24px;
+        font-size: 14px;
+    }
   .svg-icon {
     width: 1em;
     height: 1em;

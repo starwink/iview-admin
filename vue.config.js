@@ -41,7 +41,31 @@ module.exports = {
     // })
 
     // config.module.rule('less').use('style-loader').loader('style-loader').use('css-loader').loader('css-loader').use('less-loader').loader('less-loader');
-
+    config.module
+        .rule('svg')
+        .exclude.add(path.join(__dirname, 'src/assets/icons-svg'))
+        .end()
+    config.module
+        .rule('svg-sprite')
+        .test(/\.svg$/)
+        .include.add(path.join(__dirname, 'src/assets/icons-svg'))
+        .end()
+        .use('svg-sprite-loader')
+        .loader('svg-sprite-loader')
+        .options({
+            // symbolId: 'svgicon-[name]'
+            // 自定义 symbolId：基于文件相对路径生成唯一 ID
+            symbolId: (filePath) => {
+                // 1. 获取相对于 include 目录的路径（如 'subfolder/home.svg'）
+                const relativePath = path.relative(
+                  path.resolve(__dirname, 'src/assets/icons-svg'),
+                  filePath
+                );
+                // 2. 替换路径分隔符为 '-'，并去掉扩展名
+                return `svgicon-${relativePath.replace(/\//g, '-').replace(/\.svg$/, '')}`;
+              },
+        })
+        .end()
      
   },
   // 打包时不生成.map文件

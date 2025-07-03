@@ -1,47 +1,43 @@
 <template>
   <Layout style="height: 100%" class="main">
-
-    <Layout>
-      <Header class="header-con" style="padding:0;height: 50px;line-height: 50px;">
-        <header-bar :collapsed="collapsed" @on-coll-change="handleCollapsedChange">
-          <!-- <fullscreen v-model="isFullscreen" style="margin-right: 10px;" /> -->
-          <user  />
-          <!-- <language v-if="$config.useI18n" @on-lang-change="setLocal" style="margin-right: 10px;" :lang="local"/> -->
-          <!-- <error-store v-if="$config.plugin['error-store'] && $config.plugin['error-store'].showInHeader" :has-read="hasReadErrorPage" :count="errorCount"></error-store> -->
-        </header-bar>
-      </Header>
-      <Layout>
-        <Sider hide-trigger collapsible :width="220" :collapsed-width="64" v-model="collapsed" class="left-sider" :style="{overflow: 'hidden'}">
-          
-        </Sider>
-        <Content class="main-content-con">
-          <Layout class="main-layout-con">
-            <!-- <div class="tag-nav-wrapper">
-                <tags-nav :value="$route" @input="handleClick" :list="tagNavList" @on-close="handleCloseTag"/>
-            </div> -->
-            <Content class="content-wrapper">
-              <keep-alive :include="cacheList">
-                <router-view />
-              </keep-alive>
-            </Content>
-          </Layout>
-        </Content>
-      </Layout>
+    <Header class="header-con" style="height: var(--layout-layout-header-height);line-height: var(--layout-layout-header-height); padding:0 10px;">
+      <header-bar :collapsed="collapsed" @on-coll-change="handleCollapsedChange">
+        <!-- <fullscreen v-model="isFullscreen" style="margin-right: 10px;" /> -->
+        <user />
+        <SelectSys />
+        <!-- <error-store v-if="$config.plugin['error-store'] && $config.plugin['error-store'].showInHeader" :has-read="hasReadErrorPage" :count="errorCount"></error-store> -->
+      </header-bar>
+    </Header>
+    <Layout style="height: calc(100% - var(--layout-layout-header-height));">
+      <Sider hide-trigger collapsible :width="200" :collapsed-width="64" v-model="collapsed" class="left-sider" :style="{overflow: 'hidden'}" style="height:100%">
+        <!-- <p style="display:none">以:{{menuList}}</p> -->
+        <!-- <p style="display:none">menu:{{$store.state.menu}}</p> -->
+        <side-menu accordion ref="sideMenu" theme="light" :active-name="$route.name" :collapsed="collapsed" @on-select="turnToPage" :menu-list="menuList">
+          <p>head</p>
+          <p slot="footer">bottom</p>
+        </side-menu>
+      </Sider>
+      <Content class="main-content-con">
+        <keep-alive :include="cacheList">
+          <router-view />
+        </keep-alive>
+      </Content>
     </Layout>
   </Layout>
 </template>
 <script>
 import SideMenu from './components/side-menu'
 import HeaderBar from './components/header-bar'
-import TagsNav from './components/tags-nav'
+import SelectSys from './components/select-sys/index'
 import User from './components/user'
 import Fullscreen from './components/fullscreen'
-// import Language from './components/language'
 import ErrorStore from './components/error-store'
 import { mapMutations, mapActions, mapGetters } from 'vuex'
-import { getNewTagList, getNextRoute, routeEqual } from '@/libs/util'
 import minLogo from '@/assets/images/logo-min.jpg'
 import maxLogo from '@/assets/images/logo.jpg'
+import {
+  getMenuByRouterV2,
+} from '@/libs/util'
 import './main.less'
 export default {
   name: 'Main',
@@ -52,7 +48,8 @@ export default {
     // TagsNav,
     Fullscreen,
     ErrorStore,
-    User
+    User,
+    SelectSys,
   },
   data() {
     return {
@@ -69,46 +66,39 @@ export default {
     tagNavList() {
       return this.$store.state.app.tagNavList
     },
-    tagRouter() {
-      return this.$store.state.app.tagRouter
-    },
-   
+
+
     cacheList() {
-      return this.tagNavList.length ? this.tagNavList.filter(item => !(item.meta && item.meta.notCache)).map(item => item.name) : []
+      //   return [this.tagNavList.length ? this.tagNavList.filter(item => !(item.meta && item.meta.notCache)).map(item => item.name) : []]
+      return []
     },
     menuList() {
-      return this.$store.getters.menuList
+      let headerActived = this.$store.state?.menu.headerActived || 0;
+      let list = getMenuByRouterV2(this.$store.state?.menu?.routes?.[headerActived]?.children || [])
+      return list
     },
-    local() {
-      return this.$store.state.app.local
-    },
+
     hasReadErrorPage() {
       return this.$store.state.app.hasReadErrorPage
     }
   },
   methods: {
     ...mapMutations([
-      'setBreadCrumb',
-      'setTagNavList',
-      'addTag',
-      'setLocal'
     ]),
     ...mapActions([
-      'handleLogin'
     ]),
     turnToPage(route) {
-      let { name, params, query } = {}
+      let { name, params, query } = {};
       if (typeof route === 'string') name = route
       else {
+        console.info('%c ','color: white; background-color: #f06292;padding:4px 8px 4px 8px',`⬇︎⬇︎⬇︎${JSON.stringify(route)}`);
+        return ;
         name = route.name
         params = route.params
         query = route.query
       }
-     
-      if (name.indexOf('isTurnByHref_') > -1) {
-        window.open(name.split('_')[1])
-        return
-      }
+      //todo 通过name 获取跳转的配置
+    
       this.$router.push({
         name,
         params,
@@ -118,50 +108,16 @@ export default {
     handleCollapsedChange(state) {
       this.collapsed = state
     },
-    handleCloseTag(res, type, route) {
-      if (type === 'all') {
-        this.turnToPage(this.$config.homeName)
-      } else if (routeEqual(this.$route, route)) {
-        if (type !== 'others') {
-          const nextRoute = getNextRoute(this.tagNavList, route)
-          this.$router.push(nextRoute)
-        }
-      }
-      this.setTagNavList(res)
-    },
-    handleClick(item) {
-      this.turnToPage(item)
-    }
+
+
   },
   watch: {
     '$route'(newRoute) {
       const { name, query, params, meta } = newRoute
-    //   this.addTag({
-    //     route: { name, query, params, meta },
-    //     type: 'push'
-    //   })
-    //   this.setBreadCrumb(newRoute)
-    //   this.setTagNavList(getNewTagList(this.tagNavList, newRoute))
-    //   this.$refs.sideMenu.updateOpenName(newRoute.name)
     }
   },
   mounted() {
-    /**
-     * @description 初始化设置面包屑导航和标签导航
-     */
-    // this.setTagNavList()
-    // this.addTag({
-    //   route: this.$store.state.app.homeRoute
-    // })
-    // this.setBreadCrumb(this.$route)
-    // 设置初始语言
-    // this.setLocal(this.$i18n.locale)
-    // 如果当前打开页面不在标签栏中，跳到homeName页
-    // if (!this.tagNavList.find(item => item.name === this.$route.name)) {
-    //   this.$router.push({
-    //     name: this.$config.homeName
-    //   })
-    // }
+
   }
 }
 </script>

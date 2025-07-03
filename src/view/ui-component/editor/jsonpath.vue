@@ -289,7 +289,7 @@ return ;
         }
         console.log('this.editor.removeDecorations',this.editor)
         console.log('dispose',setIcon)
-        // setIcon.dispose()
+        setIcon.clear()
     }
   }
 }

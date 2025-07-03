@@ -8,17 +8,22 @@
         <TabPane label="换肤" name="colorTheme">
             <ColorTheme /> 
         </TabPane>
-        <TabPane label="标签三" name="name3">标签三的内容</TabPane>
+        <TabPane label="标签三" name="name3">
+            <countTo :end='100' :decimals="2" :duration=5 delay=1 />
+            {{this.$store.state.menu.routes}}
+        </TabPane>
     </Tabs>
     </div>
 </template>
 <script>
 import Buttons from './component/buttons.vue'
 import ColorTheme from './component/colorTheme.vue'
+import countTo from '@/components/count-to/count-to.vue'
 export default {
     components: {
         Buttons,
         ColorTheme,
+        countTo,
     },
    
    
