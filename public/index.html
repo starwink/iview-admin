@@ -20,7 +20,7 @@
             flex-direction: column;
             user-select: none;
             color: #495057;
-            background-color: snow;
+            /* background-color: snow; */
         }
         .eejxk-home .loading {
             position: relative;
@@ -73,14 +73,17 @@
     </noscript>
     <div id="app-tgmc3iola6hf8e60">
         <div class="eejxk-home">
-            <div class="loading"></div>
-            <div class="text">loading...</div>
+            <!-- <div class="loading"></div>
+            <div class="text">loading...</div> -->
+            <div class="text"><img style="width:250px;height: 250px;" src="/statics/images/loading.gif" /></div>
+
+
         </div>
     </div>
     <script src="<%= BASE_URL %>statics/monaco-editor/min/vs/loader.js"></script>
+    
 
     <script>
-
         require.config({
             paths: {
                 'vs': window.location.origin+'/statics/monaco-editor/min/vs',
@@ -92,6 +95,7 @@
         // 将monaco变量赋值为全局变量
         require(['vs/editor/editor.main'], function() {});
       </script>
+
     <!-- <script src="<%= BASE_URL %>statics/monaco-editor/min/vs/editor/editor.main.js"></script> -->
     <!-- built files will be auto injected -->
   </body>

@@ -22,6 +22,15 @@ const constantRoutes = [
         }
     },
     {
+        path: '/mark',
+        name: 'mark',
+        component: () => import('@/view/ui-component/page-mark.vue'),
+        meta: {
+            title: 'mark',
+            i18n: 'route.login'
+        }
+    },
+    {
         path: '/',
         component: Main,
         redirect: 'dashboard',

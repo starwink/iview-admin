@@ -1,4 +1,8 @@
 import directive from './directives'
+import copy from './copy'
+import debounce from './debounce'
+import throttle from './throttle'
+import style from './style'
 
 const importDirective = Vue => {
   /**
@@ -10,6 +14,15 @@ const importDirective = Vue => {
    * }
    */
   Vue.directive('draggable', directive.draggable)
+  console.log('--->',copy)
+  Vue.directive('copy', copy)
+  Vue.directive('debounce', debounce)
+  Vue.directive('fd', debounce)
+
+  Vue.directive('throttle', throttle)
+  Vue.directive('jl', throttle)
+  
+  Vue.directive('style', style)
 }
 
 export default importDirective

@@ -5,7 +5,7 @@
         <ColorPicker v-model="form.color"  @on-change="setTheme" @on-active-change="setTheme" transfer />
 
         <div>
-            <p>ivu-extends 扩展组件 InputNumberUnit</p>
+            <p>ivu-extends 扩展组件 InputNumberUnit <b>(不推荐使用,主题色未加入)</b></p>
             <InputNumberUnit
                 :max="100"
                 :min="-10"
@@ -22,6 +22,9 @@
                 <TooltipText>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</TooltipText>
             
 
+            <baseForm />
+            <Divider />
+            123
         </div>
         
 
@@ -30,9 +33,10 @@
 <script>
 import { genThemeColor,InputNumberUnit,TooltipText } from 'ivu-extends'
 
+import baseForm from  './colorTheme/form';
 export default {
      components: {
-        InputNumberUnit,TooltipText
+        InputNumberUnit,TooltipText,baseForm
      },
     data(){
         return {

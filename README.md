@@ -50,6 +50,15 @@ genThemeColor('#ff4adb');
 
 新增更多的变量,项目核心的代码迁移到`/src/libs/theme/genThemeColor.js`
 
+### 显示模式切换
+```
+document.documentElement.setAttribute('data-vxe-ui-theme', 'dark');
+document.documentElement.setAttribute('data-vxe-ui-theme', 'light');
+
+```
+
+目前算法有问题,主题色与换肤算法上有问题,黑暗模式视觉效果差;
+
 ## monaco editor 引用
 使用js script方式引用,npm中引用与vue webpack存在问题,只能在0.33以下版本,项目中需要自定义行号上的图标只能在.34以上版本,而script当下可以使用最新版本0.52.2;
 [使用示例](https://microsoft.github.io/monaco-editor/playground.html?source=v0.52.2#example-creating-the-editor-hello-world)
@@ -65,6 +74,7 @@ JSONPath({path:'$..[UM-1-3-1]',json:cities})
 JSONPath({path:'$..[inner.no]',json:cities})
 ```
 
+$..book[?(@parent.bicycle && @parent.bicycle.color === "red")].category
 ```json
 {
     "inner.no": "htesro",
@@ -75,3 +85,5 @@ JSONPath({path:'$..[inner.no]',json:cities})
     ]
 }
 ```
+
+使用jsonpath-plus

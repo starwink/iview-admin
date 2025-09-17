@@ -1,12 +1,13 @@
-import { deepClone } from '@/libs/util'
+import { deepClone,extractionRouters } from '@/libs/util'
 import api from '@/api'
 
 
 
 const state = {
     isGenerate: false,
-    routes: [], //用于
-    headerActived: 0 //所在大类,[主项目,调试],下拉或icon切换
+    routes: [], //用于导航
+    headerActived: 0, //所在大类,[主项目,调试],下拉或icon切换,
+    routeMap:{},
 }
 
 const getters = {
@@ -24,6 +25,7 @@ const actions = {
             let accessedRoutes = data.asyncRoutes;
             commit('setRoutes', accessedRoutes)
             commit('setHeaderActived', data.currentPath)
+            commit('setRoutesMap', accessedRoutes)
             let routes = []
             //todo  处理路径数据
             data.asyncRoutes.map(item => {
@@ -46,6 +48,11 @@ const mutations = {
         state.routes = newRoutes.filter(item => {
             return item.children.length != 0
         })
+    },
+    setRoutesMap(state, routes){
+        let m=extractionRouters(routes);
+        console.log('mmm',m)
+        state.routeMap=m
     },
     // 根据路由判断属于哪个头部导航
     setHeaderActived(state, path) {

@@ -11,7 +11,7 @@
         </span>
 
       </span>
-      <sider-trigger :collapsed="collapsed" icon="md-menu" @on-change="handleCollpasedChange"></sider-trigger>
+      <!-- <sider-trigger :collapsed="collapsed" icon="md-menu" @on-change="handleCollpasedChange"></sider-trigger> -->
       <!-- <custom-bread-crumb show-icon style="margin-left: 30px;" :list="breadCrumbList"></custom-bread-crumb> -->
     </div>
     <div class="header-right">
@@ -23,13 +23,13 @@
   </div>
 </template>
 <script>
-import siderTrigger from './sider-trigger'
+// import siderTrigger from './sider-trigger'
 import customBreadCrumb from './custom-bread-crumb'
 import './header-bar.scss'
 export default {
   name: 'HeaderBar',
   components: {
-    siderTrigger,
+    // siderTrigger,
     customBreadCrumb
   },
   props: {

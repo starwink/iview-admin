@@ -7,6 +7,9 @@
                 <use :xlink:href="`#svgicon-${icon.name}`" />
             </svg>
         </i>
+        <i v-else-if="icon.type=='svgcode' && !!icon.name"  style="vertical-align: text-top;" v-html="formatSvgcode(icon.name)" >
+            <!-- {{formatSvgcode(icon.name)}} -->
+        </i>
         <!-- <span v-else >1</span> -->
     <!-- </template> -->
     <!-- <template v-else><span></span></template> -->
@@ -23,7 +26,7 @@ export default {
     },
     type:{
         type:String, 
-        default:'iview' //iview,icon,svg
+        default:'iview' //iview,icon,svg,svgcode
     },
     color: {
       type: String,
@@ -74,11 +77,18 @@ export default {
         if(name.indexOf(':')>-1){
             let data=name.split(':');
             this.icon.type=data[0]
-            this.icon.name=data[1]
+            // this.icon.name=data[1]
+            let startL=name.indexOf(data[1])
+            this.icon.name=name.substr(startL)
         }else{
             this.icon.name=name;
             this.icon.type='iview'
         }
+    },
+    formatSvgcode(svgcode){
+        svgcode = svgcode.replace(/width="(\d+)"/, `width="${this.size}"`);
+        svgcode = svgcode.replace(/height="(\d+)"/, `height="${this.size}"`);
+        return svgcode;
     }
   }
 }

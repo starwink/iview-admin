@@ -1,6 +1,15 @@
 export default {
-    '--layout-header-background':'#fff',
-    '--layout-sider-background':'#fff',
+  
+
+    '--font-color':'#515a6e',
+	'--layout-bg-color':'#515a6e',
+
+
+
 
     '--layout-layout-header-height':"50px",
+
+    // '--theme-color':'#515a6e',
+    // '--theme-bg-color':'#fff',
+
 }

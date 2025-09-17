@@ -5,16 +5,13 @@
         <!-- <fullscreen v-model="isFullscreen" style="margin-right: 10px;" /> -->
         <user />
         <SelectSys />
-        <!-- <error-store v-if="$config.plugin['error-store'] && $config.plugin['error-store'].showInHeader" :has-read="hasReadErrorPage" :count="errorCount"></error-store> -->
       </header-bar>
     </Header>
     <Layout style="height: calc(100% - var(--layout-layout-header-height));">
       <Sider hide-trigger collapsible :width="200" :collapsed-width="64" v-model="collapsed" class="left-sider" :style="{overflow: 'hidden'}" style="height:100%">
-        <!-- <p style="display:none">以:{{menuList}}</p> -->
-        <!-- <p style="display:none">menu:{{$store.state.menu}}</p> -->
         <side-menu accordion ref="sideMenu" theme="light" :active-name="$route.name" :collapsed="collapsed" @on-select="turnToPage" :menu-list="menuList">
-          <p>head</p>
-          <p slot="footer">bottom</p>
+          <!-- <p>head theme="light" theme="light"</p> -->
+          <switchMenuIcon :collapsed="collapsed" slot="footer" @click="test" />
         </side-menu>
       </Sider>
       <Content class="main-content-con">
@@ -28,10 +25,11 @@
 <script>
 import SideMenu from './components/side-menu'
 import HeaderBar from './components/header-bar'
+
 import SelectSys from './components/select-sys/index'
 import User from './components/user'
 import Fullscreen from './components/fullscreen'
-import ErrorStore from './components/error-store'
+import switchMenuIcon from './components/switchMenuIcon'
 import { mapMutations, mapActions, mapGetters } from 'vuex'
 import minLogo from '@/assets/images/logo-min.jpg'
 import maxLogo from '@/assets/images/logo.jpg'
@@ -44,12 +42,10 @@ export default {
   components: {
     SideMenu,
     HeaderBar,
-    // Language,
-    // TagsNav,
     Fullscreen,
-    ErrorStore,
     User,
     SelectSys,
+    switchMenuIcon,
   },
   data() {
     return {
@@ -93,22 +89,33 @@ export default {
       else {
         console.info('%c ','color: white; background-color: #f06292;padding:4px 8px 4px 8px',`⬇︎⬇︎⬇︎${JSON.stringify(route)}`);
         return ;
-        name = route.name
-        params = route.params
-        query = route.query
       }
-      //todo 通过name 获取跳转的配置
+      let routeParams=this.$store.state?.menu?.routeMap?.[name];
+      if(routeParams){
+        if(routeParams.meta.href){
+            window.open(routeParams.meta.href)
+            // window.location.href=
+        }else{
+            this.$router.push({name})
+        }
+      }else{
+        this.$router.push({name})
+      }
     
-      this.$router.push({
+      /* this.$router.push({
         name,
         params,
         query
-      })
+      }) */
     },
     handleCollapsedChange(state) {
       this.collapsed = state
     },
 
+    test(){
+        this.collapsed=!this.collapsed;
+        console.log('1232',this.collapsed)
+    }
 
   },
   watch: {

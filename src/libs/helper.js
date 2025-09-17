@@ -4,7 +4,7 @@ const dayjs = require('dayjs')
 import qs from "qs";
 
 export default {
-    
+
     exportEchart(echartInstance, title) {
         // https://echarts.apache.org/zh/api.html#echartsInstance.getDataURL
         let url = echartInstance.getDataURL({
@@ -20,7 +20,7 @@ export default {
         alink.click();
     },
 
-    
+
     /**
      * 获取URL中参数
      * @param     {[type]}    url [description]
@@ -35,17 +35,17 @@ export default {
         index = url.indexOf("?");
         if (index === -1) return data;
         url = url.substr(index + 1);
-       /*  url = url.slice(0, url.indexOf("#")).split("&");
-        index = 0;
-        len = url.length;
-        while (index < len) {
-            param = url[index].split("=");
-            if (param.length > 0) {
-                data[param[0]] = param[1];
-            }
-            index++;
-        } */
-        data=qs.parse(url);
+        /*  url = url.slice(0, url.indexOf("#")).split("&");
+         index = 0;
+         len = url.length;
+         while (index < len) {
+             param = url[index].split("=");
+             if (param.length > 0) {
+                 data[param[0]] = param[1];
+             }
+             index++;
+         } */
+        data = qs.parse(url);
         return data;
     },
     /**
@@ -140,7 +140,7 @@ export default {
         link.click();
         document.body.removeChild(link);
     },
-   
+
     getNumber: function (value) {
         return typeof value === "number" && !isNaN(value);
     },
@@ -196,39 +196,39 @@ export default {
             }
         }
     },
-    getCacheFun(){
+    getCacheFun() {
         //用token来判断是在院内端还是采集端 ;todo:之后还是用iframemsg 来做初始化吧
-        if(sessionStorage.getItem('token')){
+        if (sessionStorage.getItem('token')) {
             return sessionStorage
-        }else{
+        } else {
             return localStorage
         }
     },
-    getCache(name){
-        let storage=this.getCacheFun();
+    getCache(name) {
+        let storage = this.getCacheFun();
         return storage.getItem(name)
     },
-    setCache(name,value){
-        let storage=this.getCacheFun();
-        return storage.setItem(name,value)
+    setCache(name, value) {
+        let storage = this.getCacheFun();
+        return storage.setItem(name, value)
     },
-    delCache(name){
-        let storage=this.getCacheFun();
+    delCache(name) {
+        let storage = this.getCacheFun();
         return storage.removeItem(name)
     },
-    delCacheAll(){
-        let storage=this.getCacheFun();
+    delCacheAll() {
+        let storage = this.getCacheFun();
         storage.clear();
     },
-    getToken(){
-        let token='';
-        let val=this.getCache('user');
-        if(this.isJSON(val)){
-           token= this.getJSONByStr(val)?.token || ''
+    getToken() {
+        let token = '';
+        let val = this.getCache('user');
+        if (this.isJSON(val)) {
+            token = this.getJSONByStr(val)?.token || ''
         }
         return token
     },
-  
+
     getDate: (str, format = 'YYYY-MM-DD HH:mm:ss') => {
         if (!str) {
             str = dayjs().format(format)
@@ -332,7 +332,7 @@ export default {
         return `${this.getReatToFormatMinimumText(obj['达成率'], 2, 100)}(${obj['分子']}/${obj['分母']})`;
     },
 
-   
+
     //参数中科室no过滤成病区no
     createParmasDsetNoFilterWardNo(params) {
         let p = JSON.parse(JSON.stringify(params));
@@ -945,6 +945,13 @@ export default {
         }
         return obj;
     },
+    getStrByJson(str) {
+        try {
+            return JSON.stringify(str);
+        } catch (e) {
+            return '';
+        }
+    },
     getWhereDeptTree() {
         let tree = [];
         let data = sessionStorage.getItem('deptTree');
@@ -1121,5 +1128,39 @@ export default {
         }
         return [];
     },
+    getJsonPaths(obj, parentPath = '$', result = []) {
+        if (obj === null || typeof obj !== 'object') {
+            result.push(parentPath);
+            return result;
+        }
+
+        if (Array.isArray(obj)) {
+            obj.forEach((item, index) => {
+                this.getJsonPaths(item, `${parentPath}[${index}]`, result);
+            });
+        } else {
+            Object.keys(obj).forEach(key => {
+                this.getJsonPaths(obj[key], `${parentPath}.${key}`, result);
+            });
+        }
+
+        return result;
+    },
+    getPageMaxZIndex() {
+        let maxZIndex = 0;
+        document.querySelectorAll('*').forEach(element => {
+            const zIndex = parseInt(window.getComputedStyle(element).zIndex, 10);
+            if (!isNaN(zIndex) && zIndex > maxZIndex) {
+                maxZIndex = zIndex;
+            }
+        });
+        return maxZIndex;
+    },
+    getMaxZIndexStyle() {
+        let index = this.getPageMaxZIndex();
+        return { 'zIndex': index + 1 }
+    },
+
+
 
 };

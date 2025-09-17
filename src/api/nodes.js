@@ -13,5 +13,8 @@ export default {
     delNotes(data) {
         return request.post(`${url}/notes/del`, data);
     },
+    pushBedImg(data){
+        return request.post(`${url}/test/wxmpimg/img/bed`, data);
+    }
 
 }

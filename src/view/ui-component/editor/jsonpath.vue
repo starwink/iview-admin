@@ -2,6 +2,12 @@
   <div>
     <Button @click="addWidget">添加widget</Button>
     <Button @click="removeWidgeet">删除Widgeet</Button>
+    <Button @click="runtest">runtest</Button>
+    <Button @click="formatCode">格式化</Button>
+    <Button @click="runEditorFormat">runEditorFormat</Button>
+    <Button @click="compressCode">压缩</Button>
+    <Button @click="unfoleCode">展开内容</Button>
+    <Button @click="foleCode">折叠内容</Button>
     <br />
     <Button @click="addSettedIcon(6)">新增行号图标(6)</Button>
     <Button @click="addSettedIcon(9)">新增行号图标(9)</Button>
@@ -12,39 +18,95 @@
     <br />
     <Button @click="delSettedIcon()">单个删除(input)</Button>
     <Button @click="clearSettedIcon()">批量删除(input)</Button>
+    <Button @click="getJsonPath()">getJsonPath</Button>
+    <div>
+      <span>JSONPATH</span>
+      <!-- @on-enter="getJsonVal" -->
+      <Input v-model="form.jsonpath" @on-change="getJsonVal" style="width:100%;">
+      <span slot="prepend">$.</span>
+      </Input>
+      <span>结果:</span><span style="display:inline-block;overflow: auto;height:56px;background-color: #fff;padding:4px 12px;">{{page.jsonval}}</span>
+    </div>
     <!-- <p>{{form.setIconList}}</p> -->
     <!-- <Input v-model="form.ids" /> -->
-    <div ref="editor" style="height: 500px; border: 1px solid #ccc;"></div>
+
+    <div class="editor-operate-box">
+
+      <div ref="editor" class="editor-box"></div>
+      <div class="right-review-path">
+        <ul>
+          <li>pag</li>
+          <li>ifdisk12321</li>
+        </ul>
+        <p style="overflow-y: auto;height: 180px;">{{option.jsonpathAll}}</p>
+      </div>
+
+    </div>
   </div>
-</template>∏
+</template>
 <style lang="scss">
 .myGlyphMarginClass {
   background: red;
   border-radius: 12px;
   padding-left: 4px;
 }
+.editor-operate-box {
+  display: flex;
+  justify-content: space-between;
+  // align-items: center;
+  height: 360px;
+  .editor-box {
+    flex: 1;
+    // height: 300px;
+  }
+  .right-review-path {
+    width: 200px;
+    background-color: #999;
+  }
+}
 </style>
 <script>
 // import * as monaco from 'monaco-editor'
 import detailJson from './data/detail.json';
-import jsonpath from 'jsonpath';
+import jsonpathTestList from './data/jsonpath.test.json';
+// import jsonpath from 'jsonpath';
 // import jsonplus from 'jsonpath-plus';
 import { JSONPath } from 'jsonpath-plus';
+import jsonTree from './jsonTree.vue';
 
 export default {
   name: 'MonacoJsonEditor',
+  components: {
+    jsonTree
+  },
   props: {
     value: {
       type: String,
       default: '{}'
-    }
+    },
+    recommendPathConfig: { //点击json内容时获取推荐jsonPaht
+        type:Boolean,
+        default:true,
+    },
   },
   data() {
     return {
       editor: null,
-      form:{
-        ids:'',
-        setIconList:[],
+      form: {
+        ids: '',
+        setIconList: [],
+        json: {},
+    
+      
+        jsonpath: ''
+      },
+      page: {
+        jsonval: '',
+      },
+      option: {
+        jsonpath: [],
+        jsonpathAll: [], //editor中json的所有jsonpath
+          recommendJsonPath: [],
       }
     }
   },
@@ -60,6 +122,14 @@ export default {
     }
   },
   methods: {
+    getJsonPath(json = {}) {
+      if (typeof json == 'string') {
+        json = JSON.parse(json);
+      }
+      console.log('gjp', json)
+      // return []
+      return this.$helper.getJsonPaths(json)
+    },
     runjspath() {
       // console.log('jsonpath',jsonpath)
 
@@ -85,12 +155,34 @@ export default {
 
 
     },
-    initMonaco() {
-      this.runjspath();
+    getJsonVal() {
+      console.log('___VVVV___change', this.form.jsonpath);
 
+      let jsonpath = `$.${this.form.jsonpath}`;
+      //  this.page.jsonval= jsonpath.query(this.form.json, `$..extentFixedField`)
+      try {
+
+        console.log('jsonpath:', jsonpath, this.form.json)
+        // let res= jsonpath.query(this.form.json, jsonpath)
+        let res = JSONPath({ path: jsonpath, json: this.form.json, eval: 'native' })
+        console.log('query', res);
+        this.page.jsonval = res
+      } catch (err) {
+        this.page.jsonval = '';
+        console.log(err)
+      }
+    },
+    initMonaco() {
+      this.form.json = detailJson;
 
       let jsont = JSON.stringify(detailJson);
-      console.log('window.monaco.editor', window.monaco.editor)
+      if (this.recommendPathConfig) {
+        console.log('initmo',this.recommendPathConfig)
+        this.option.jsonpathAll = this.getJsonPath(detailJson)
+      }
+      //   console.log('window.monaco.editor', window.monaco.editor)
+      //   console.log('--winss', this.$helper.getJsonPaths(detailJson))
+
       this.editor = window.monaco.editor.create(this.$refs.editor, {
         // value: this.value,
         value: jsont,
@@ -110,14 +202,41 @@ export default {
       // 监听点击事件
       this.editor.onMouseDown((e) => {
         console.log('mounsedown', e);
-        /* if (e.target.type === window.monaco.editor.MouseTargetType.CONTENT_TEXT) {
-          const lineNumber = e.target.position.lineNumber
+        if (e.target.type === window.monaco.editor.MouseTargetType.CONTENT_TEXT) {
+          //   const lineNumber = e.target.position.lineNumber
+          const lineNumber = e?.target?.position?.lineNumber;
           this.handleLineClick(lineNumber)
-        } */
+        }
+      })
+
+      this.editor.onDidChangeModelContent((...e) => {
+        let code = this.editor.getValue();
+        this.form.json = JSON.parse(code);
+        console.log('chage',this.recommendPathConfig)
+        if (this.recommendPathConfig) {
+          this.option.jsonpathAll = this.getJsonPath(code);
+        }
+        // this.$emit('change', code);
+        // this.$emit('input', code);
       })
       setTimeout(() => {
         this.runEditorFormat()
       }, 200);
+    },
+    runEditorFormat() {
+      // this.editor.setValue(newValue);
+      this.editor.trigger(this.editor.getValue(), 'editor.action.formatDocument')
+    },
+    extractKey: function (str) {
+      // 匹配：双引号包围的字段名，后面紧跟冒号（前面可能有空格）
+      const match = str.match(/"([^"]+)"\s*:/);
+      if (match && match[1]) {
+        return match[1]; // 返回双引号中的内容，也就是字段名
+      }
+      return null; // 如果没匹配到，返回 null
+    },
+    countDots(str) {
+      return str.split('.').length - 1;
     },
     handleLineClick(lineNumber) {
       // 获取点击行的文本内容
@@ -126,21 +245,44 @@ export default {
 
       console.log('Clicked line:', lineNumber, 'Content:', lineContent)
 
-return ;
+
+      //   return;
       // 解析 JSON 并查找字段
-      try {
-        const jsonData = JSON.parse(model.getValue())
-        const fieldInfo = this.findFieldByLineContent(jsonData, lineContent)
-        if (fieldInfo) {
-          const jsonPath = this.getJsonPath(jsonData, fieldInfo.path)
-          console.log('Field Info:', fieldInfo, 'JSONPath:', jsonPath)
-          alert(`JSONPath: ${jsonPath}`)
-        } else {
-          console.warn('No matching field found for line content:', lineContent)
+      if (this.recommendPathConfig) {
+        try {
+          let pathKey = this.extractKey(lineContent);
+          console.log(pathKey);
+          if (pathKey) {
+            let keyY = lineContent.indexOf(pathKey);//通过前边距来大概判断是几层的
+            let num = parseInt(keyY / 4);
+            let topList = [], bottomList = [], max = 20;
+            this.option.jsonpathAll.map(res => {
+              if (res.indexOf(pathKey) > -1) {
+                if (topList.length + bottomList.length > 20) {
+                  return;
+                }
+                if (this.countDots(res) == num) {
+                  topList.push(res)
+                } else {
+                  bottomList.push(res)
+                }
+                console.log('1', res)
+              }
+            })
+            // console.log('t',topList)
+            // console.log('b',bottomList)
+            this.option.recommendJsonPath = [...topList, ...bottomList];
+            console.log('pushRecommendPath:', this.option.recommendJsonPath)
+            this.$emit('pushRecommendPath', this.form.recommendJsonPat)
+
+            // console.log(lineContent.indexOf(pathKey));
+          }
+
+        } catch (err) {
+          console.error('Invalid JSON:', err)
         }
-      } catch (err) {
-        console.error('Invalid JSON:', err)
       }
+
     },
     findFieldByLineContent(jsonData, lineContent) {
       /**
@@ -175,17 +317,8 @@ return ;
       traverse(jsonData)
       return result.length > 0 ? result[0] : null // 返回第一个匹配项
     },
-    getJsonPath(obj, pathArray) {
-      /**
-       * 根据路径数组生成 JSONPath 字符串
-       * 例如: ['a', 'b', 'c'] => '$.a.b.c'
-       */
-      return '$.' + pathArray.join('.')
-    },
-    runEditorFormat() {
-      // this.editor.setValue(newValue);
-      this.editor.trigger(this.editor.getValue(), 'editor.action.formatDocument')
-    },
+
+
     addWidget() {
       var overlayWidget = {
         domNode: (function () {
@@ -248,7 +381,7 @@ return ;
           },
         },
         {
-          range: new monaco.Range(startLineNumber+5, 1, endLineNumber+5, 1),
+          range: new monaco.Range(startLineNumber + 5, 1, endLineNumber + 5, 1),
           options: {
             // isWholeLine: true,
             //className: "myContentClass",
@@ -264,33 +397,59 @@ return ;
       }, 3000);
        */
     },
-    delSettedIcon(){
-        let setIcon =this.form.setIconList[0];
-        if(!setIcon){
-            return ;
-        }
-        console.log('setIcon--->',setIcon)
-        try{
-             let t=setIcon?.clear();
-            // console.log('run t',t);
-            this.form.setIconList.splice(0,1);
-            
-            // 不可行this.editor.removeDecorations()
-        }catch(err){
-            console.error(err);
-            console.log(this.form.setIconList)
-        }
-       
+    delSettedIcon() {
+      let setIcon = this.form.setIconList[0];
+      if (!setIcon) {
+        return;
+      }
+      console.log('setIcon--->', setIcon)
+      try {
+        let t = setIcon?.clear();
+        // console.log('run t',t);
+        this.form.setIconList.splice(0, 1);
+
+        // 不可行this.editor.removeDecorations()
+      } catch (err) {
+        console.error(err);
+        console.log(this.form.setIconList)
+      }
+
     },
-    clearSettedIcon(){
-        let setIcon =this.form.setIconList[0];
-        if(!setIcon){
-            return ;
-        }
-        console.log('this.editor.removeDecorations',this.editor)
-        console.log('dispose',setIcon)
-        setIcon.clear()
-    }
+    clearSettedIcon() {
+      let setIcon = this.form.setIconList[0];
+      if (!setIcon) {
+        return;
+      }
+      console.log('this.editor.removeDecorations', this.editor)
+      console.log('dispose', setIcon)
+      setIcon.clear()
+    },
+    formatCode() {
+      this.editor.trigger('mybutton', 'editor.action.formatDocument')
+    },
+    compressCode() {
+      try {
+        let json = JSON.stringify(JSON.parse(this.editor.getValue()), null, 0)
+        this.editor.setValue(json)
+      } catch (err) {
+        console.log(err)
+      }
+
+    },
+    foleCode() {
+      this.editor.getAction('editor.foldAll').run()
+    },
+    unfoleCode() {
+      this.editor.getAction('editor.unfoldAll').run()
+    },
+    runtest() {
+
+    },
+
+
+
+
+
   }
 }
 </script>

@@ -25,14 +25,14 @@
             </template>
         </div>
 
-       
+
     </div>
     <div class="side-menu-footer">
         <slot name="footer" >
-            <div>kkkoo{{this.$slots}}</div>
+            <div></div>
         </slot>
     </div>
-    
+
   </div>
 </template>
 <script>

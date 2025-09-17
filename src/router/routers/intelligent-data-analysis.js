@@ -50,6 +50,7 @@ export default [
                 component: () => import(/* webpackChunkName: 'intelligent-data-analysis' */ '@/view/jobtask/index'),
                 meta: {
                     title: '任务管理表2',
+                    icon: 'svg:task2',
                     access: [],
                 }
             }

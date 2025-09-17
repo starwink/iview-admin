@@ -2,6 +2,7 @@ import Cookies from 'js-cookie'
 // cookie保存的天数
 import config from '@/config'
 import { forEach, hasOneOf, objEqual } from '@/libs/tools'
+import { Message } from "view-design";
 
 export const TOKEN_KEY = 'token'
 
@@ -77,7 +78,21 @@ export const getMenuByRouterV2 = (list, access) => {
     })
     return res
   }
+  export const extractionRouters = (routers=[],i=0) => {
+    let dict={};
+    routers.forEach((item, index) => {
+      if(item.name){
+          dict[item.name]={name:item.name,path:item.path,meta:item.meta,_i:i+index+1}
+      }
+        if(item.children?.length>0){
+           dict={...extractionRouters(item.children,i+index+1),...dict} 
+        }
+        
+    })
+    return dict;
+  }
 
+  
 
 
 /**
@@ -327,4 +342,31 @@ export function deepClone(target) {
     }
     // 返回最终结果
     return result
+}
+
+
+export async function webCopy(text){
+    try {
+        // 现代浏览器方案（需 HTTPS）
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(text);
+          Message.success('复制成功！')
+        }
+        // 旧浏览器降级方案
+        else {
+          const textarea = document.createElement('textarea');
+          textarea.value = text;
+          textarea.readOnly = true;
+          textarea.style.position = 'absolute';
+          textarea.style.left = '-9999px';
+          document.body.appendChild(textarea);
+          textarea.select();
+          const success = document.execCommand('copy');
+          document.body.removeChild(textarea);
+          success ? alert('复制成功！') : alert('复制失败');
+        }
+      } catch (err) {
+        console.error('复制出错:', err);
+        Message.error('复制出错:', err)
+      }
 }

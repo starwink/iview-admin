@@ -20,3 +20,12 @@
 10. `#e1f0fe`：替换为 `var(--ivu-date-picker-hover-bg-color, #e1f0fe)`，总计 <big>**2**</big> 个。
 
 > 在线编译 _less_ ：https://www.dute.org/less-to-css
+
+
+## 主题切换
+### 亮色主题
+
+字体: #515a6e
+
+
+### 暗黑主题

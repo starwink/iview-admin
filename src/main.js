@@ -14,7 +14,7 @@ import { api } from '@/api/index.js'
 import VxeUITable from 'vxe-table'
 import 'vxe-table/lib/style.css'
 
-import genThemeColor from '@/libs/theme/genThemeColor'
+import genThemeColor from '@/libs/theme/genThemeColor.v2'
 
 
 import '@/assets/styles';
@@ -34,7 +34,6 @@ Vue.use(VxeUITable)
 
 import VueMeta from 'vue-meta' //html title配置
 Vue.use(VueMeta)
-
 
 // 自动加载 svg 图标
 const req = require.context('./assets/icons-svg', false, /\.svg$/)
