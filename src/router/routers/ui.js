@@ -347,7 +347,20 @@ export default [
                     icon: 'ios-aperture-outline',
                     hideInMenu:true,
                 },
-            }
+            },
+            {
+                path: 'gdata',
+                name: 'test/gdata',
+                // component: { render: h => h('router-view') },
+                component: () => import(/* webpackChunkName: 'pathUrl' */ '@/view/ui-component/data/index'),
+                meta: {
+                    title: '轻量化全局数据',
+                    icon: 'ios-aperture-outline',
+                    // hideInMenu:true,
+                },
+            },
+
+            
         ]
     },
 
