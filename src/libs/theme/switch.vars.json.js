@@ -15,6 +15,7 @@ export default {
         '--theme-bg-color': '#fff',
         '--theme-font-color': '#fff',
         '--font-color': '#515a6e',
+        '--font-color': '#1f1f1f',
         '--input-font-color': '#666',
         '--layout-bg-color': '#515a6e',
         '--theme-ive-btn-bg': '#fff',

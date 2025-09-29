@@ -1,0 +1,143 @@
+//0 未验证,1可行 -1 不行
+export default [
+    {
+        "name":"code",
+        "rule":"$.code",
+        "utools-jsontool":true,
+        "api":true,
+        "jsonpath-plus":false,
+    },
+    {
+        "name":"code",
+        "rule":"$..code",
+        "utools-jsontool":true,
+        "api":true,
+        "jsonpath-plus":false,
+    },
+    {
+        "name":"$.object.*.ytitle",
+        "rule":"$.object.*.ytitle",
+        "utools-jsontool":true,
+        "api":true,
+        "jsonpath-plus":false,
+    },
+    {
+        "name":"",
+        "rule":"$.object..ytitle",
+        "utools-jsontool":true,
+        "api":true,
+        "jsonpath-plus":false,
+    },
+    {
+        "name":"",
+        "rule":"object.bean[0]",
+        "utools-jsontool":true,
+        "api":true,
+        "jsonpath-plus":false,
+    },
+    {
+        "name":"",
+        "rule":"object.bean[-1]",
+        "utools-jsontool":true,
+        "api":false,
+        "jsonpath-plus":false,
+    },
+
+    {
+        "name":"第1,2,4项",
+        "rule":"object.gatherDataBean.allManualFields[0,1,3]",
+        "utools-jsontool":true,
+        "api":false,
+        "jsonpath-plus":false,
+    },
+    {
+        "name":"前2项",
+        "rule":"object.bean[:2]",
+        "utools-jsontool":true,
+        "api":false,
+        "jsonpath-plus":false,
+    },
+    {
+        "name":"最后1项",
+        "rule":"object.bean[(@.length-1)]",
+        "utools-jsontool":true,
+        "api":false,
+        "jsonpath-plus":false,
+    },
+    {
+        "name":"最后5项",
+        "rule":"object.gatherDataBean.allManualFields[-5:]",
+        "utools-jsontool":true,
+        "api":false,
+        "jsonpath-plus":false,
+    },
+
+    {
+        "name":"过滤出所有包含id的信息",
+        "rule":"object.bean[?(@.id)]",
+        "utools-jsontool":true,
+        "api":false,
+        "jsonpath-plus":false,
+    },
+    {
+        "name":"过滤出book下price>15的title",
+        "rule":".book[?(@.price>10)].title",
+        "utools-jsontool":true,
+        "api":false,
+        "jsonpath-plus":false,
+    },
+
+    
+    {
+        "name":"遍历所有的DVT-2-5-1的值",
+        "rule":"$..DVT-2-5-1",
+        "utools-jsontool":true,
+        "api":false,
+        "jsonpath-plus":false,
+    },
+    {
+        "name":"重复使用..",
+        "rule":"$.object..reportContent.data..DVT-2-5-1[1,2]",
+        "utools-jsontool":true,
+        "api":false,
+        "jsonpath-plus":false,
+    },
+    {
+        "name":"可能是有null数据",
+        "rule":"$.object..reportContent",
+        "utools-jsontool":true,
+        "api":false,
+        "jsonpath-plus":false,
+    },
+    {
+        "name":"",
+        "rule":"products[?(@.price > 15)].name",
+        "utools-jsontool":true,
+        "api":true,
+        "jsonpath-plus":false,
+    },
+    {
+        "name":"",
+        "rule":"users[?(@.age > 25 && @.city == 'NY')].name",
+        "utools-jsontool":true,
+        "api":true,
+        "jsonpath-plus":false,
+    },
+    {
+        "name":"元素下的所有元素",
+        "rule":"users[0].*",
+        "utools-jsontool":true,
+        "api":true,
+        "jsonpath-plus":false,
+    },
+    {
+        "name":"",
+        "rule":"$.library.books[*]['title', 'year']",
+        "utools-jsontool":true,
+        "api":true,
+        "jsonpath-plus":false,
+    }
+
+
+
+]

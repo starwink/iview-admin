@@ -4,6 +4,7 @@ import parentView from '@/components/parent-view'
 
 import intelligent_data_analysis from "./routers/intelligent-data-analysis.js";
 import ui_component from "./routers/ui.js";
+import comp_routers from "./routers/comp.js";
 
 
 
@@ -45,6 +46,14 @@ export default [
         },
         children:[
             ...ui_component,
+        ],
+    },
+    {
+        meta:{
+            title:'组件开发',
+        },
+        children:[
+            ...comp_routers,
         ],
     },
 

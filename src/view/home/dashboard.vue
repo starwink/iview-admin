@@ -13,17 +13,17 @@
     <Icon type="woman" size="44" /> -->
     <eIcon name="ios-checkmark" size="44" />
     <eIcon name="ri-printer-line" size="44" />
-
   </div>
 </template>
 <script>
 // import commonIcon from '@/components/common-icon'
 import eIcon from '_c/eIcon'
+
 // import eIcon from '@/components/eIcon/eIcon.vue';
 export default {
     
   components: {
-    eIcon
+    eIcon,
   },
   data() {
     return {
@@ -34,10 +34,14 @@ export default {
   },
   methods: {
     init() {
-      Object.assign(this.data, this.options.data());
-
+    //   Object.assign(this.data, this.options.data());
     }
   },
+  created(){
+    this.$nextTick(()=>{
+        this.init();
+    })
+  }
 }
 </script>
 <style lang="scss" scoped>
