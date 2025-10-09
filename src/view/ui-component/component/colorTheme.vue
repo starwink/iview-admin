@@ -68,6 +68,7 @@ export default {
             if(color){
                 this.form.color=color;
             }
+            localStorage.setItem('mainColor',color)
             genThemeColor(this.form.color);
         },
         

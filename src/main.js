@@ -56,7 +56,15 @@ Vue.prototype.$config = config
 
 Vue.prototype.$helper = helper
 Vue.prototype.$api = api
-genThemeColor('#ff4adb');
+
+genThemeColor(localStorage.getItem('mainColor') || '#ff4adb');
+
+
+import dbLogs from '@/store/logs.db'
+let logs=new dbLogs();
+logs.delOldData(7);
+Vue.prototype.$logs=logs
+
 
 
 /**

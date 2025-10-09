@@ -360,6 +360,17 @@ export default [
                 },
             },
 
+            {
+                path: 'indexeddb',
+                name: 'test/indexeddb',
+                // component: { render: h => h('router-view') },
+                component: () => import(/* webpackChunkName: 'pathUrl' */ '@/view/ui-component/data/indexedDB.vue'),
+                meta: {
+                    title: 'IndexedDB使用',
+                    icon: 'ios-aperture-outline',
+                },
+            },
+
             
         ]
     },
