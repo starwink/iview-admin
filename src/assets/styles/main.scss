@@ -1,0 +1,57 @@
+.button-span {
+    cursor: pointer;
+    margin: 0 8px;
+}
+.button-color-edit {
+    cursor: pointer;
+    color: var(--ivu-primary-color);
+}
+.button-color-del {
+    cursor: pointer;
+    color: #e02020;
+}
+.button-color-edit {
+    span {
+        color: var(--ivu-primary-color);
+    }
+}
+.button-color-del {
+    span {
+        color: #e02020;
+    }
+}
+
+$size-map: (-2: -2px,0:0px,4: 4px, 5: 5px, 8:8px, 10: 10px , 12:12px, 14: 14px, 15: 15px, 16: 16px, 20: 20px, 24: 24px, 25: 25px, 26:26px, 30: 30px, 40: 40px, 140: 140px);
+@each $name in map-keys($size-map) {
+    $value: map-get($size-map, $name);
+    .mt-#{$name} {
+        margin-top: $value;
+    }
+    .mr-#{$name} {
+        margin-right: $value;
+    }
+    .mb-#{$name} {
+        margin-bottom: $value;
+    }
+    .ml-#{$name} {
+        margin-left: $value;
+    }
+    .margin-#{$name} {
+        margin: $value;
+    }
+    .pt-#{$name} {
+        padding-top: $value !important;
+    }
+    .pr-#{$name} {
+        padding-right: $value;
+    }
+    .pb-#{$name} {
+        padding-bottom: $value;
+    }
+    .pl-#{$name} {
+        padding-left: $value;
+    }
+    .pd-#{$name} {
+        padding: $value;
+    }
+}
