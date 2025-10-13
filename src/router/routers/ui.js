@@ -111,10 +111,19 @@ export default [
                 path: 'fonts',
                 name: 'uiFonts',
                 meta: {
-                    title: '字体验证',
+                    title: '字体预览',
                     icon: 'svg:font',
                 },
                 component: () => import('@/view/fonts/index.vue')
+            },
+            {
+                path: 'icons',
+                name: 'uiIcons',
+                meta: {
+                    title: '图标预览',
+                    icon: 'svg:font',
+                },
+                component: () => import('@/view/ui-component/icons/index.vue')
             },
             {
                 path: 'index',
@@ -144,15 +153,7 @@ export default [
                 }
             },
            
-            {
-                path: 'drag',
-                name: 'uiDrag',
-                component: () => import(/* webpackChunkName: 'devExample' */ '@/view/drag/index'),
-                meta: {
-                    title: '拖拽',
-                    icon: 'md-move'
-                }
-            },
+            
             {
                 path: 'modal',
                 name: 'modal',
@@ -162,33 +163,7 @@ export default [
                     icon: 'md-move'
                 }
             },
-            {
-                path: 'pageexport',
-                name: 'pageexport',
-                component: () => import(/* webpackChunkName: 'devExample' */ '@/view/ui-component/page-export'),
-                meta: {
-                    title: '导出',
-                    icon: 'logo-freebsd-devil'
-                }
-            },
-            {
-                path: 'pagemark',
-                name: 'pagemark',
-                component: () => import(/* webpackChunkName: 'devExample' */ '@/view/ui-component/page-mark'),
-                meta: {
-                    title: '页面内容',
-                    icon: 'logo-freebsd-devil'
-                }
-            },
-            {
-                path: 'copyimg',
-                name: 'copyimg',
-                component: () => import(/* webpackChunkName: 'devExample' */ '@/view/ui-component/copyimg'),
-                meta: {
-                    title: '复制图片',
-                    icon: 'ios-copy'
-                }
-            },
+           
 
 
 
@@ -282,6 +257,54 @@ export default [
 
     },
     {
+        path:'/demo',
+        component:Layout,
+        name: 'demo/index',
+        meta: {
+            title: '模块',
+            icon: 'md-bowtie',
+        },
+        children:[
+            {
+                path: 'drag',
+                name: 'uiDrag',
+                component: () => import(/* webpackChunkName: 'devExample' */ '@/view/drag/index'),
+                meta: {
+                    title: '拖拽',
+                    icon: 'md-move'
+                }
+            },
+            {
+                path: 'pageexport',
+                name: 'pageexport',
+                component: () => import(/* webpackChunkName: 'devExample' */ '@/view/ui-component/page-export'),
+                meta: {
+                    title: 'word文件导出',
+                    icon: 'logo-freebsd-devil'
+                }
+            },
+            {
+                path: 'pagemark',
+                name: 'pagemark',
+                component: () => import(/* webpackChunkName: 'devExample' */ '@/view/ui-component/page-mark'),
+                meta: {
+                    title: '页面内容划线高亮',
+                    icon: 'logo-freebsd-devil'
+                }
+            },
+            {
+                path: 'copyimg',
+                name: 'copyimg',
+                component: () => import(/* webpackChunkName: 'devExample' */ '@/view/ui-component/copyimg'),
+                meta: {
+                    title: '复制图片到页面',
+                    icon: 'ios-copy'
+                }
+            },
+        ]
+
+    },
+    {
         path: '/editor',
         component: Layout,
         redirect: '/editor/index',
@@ -346,6 +369,18 @@ export default [
                     title: 'eIcon',
                     icon: 'ios-aperture-outline',
                     hideInMenu:true,
+                },
+            },
+            {
+                path: 'select',
+                name: 'test/select',
+                // component: { render: h => h('router-view') },
+                component: () => import(/* webpackChunkName: 'pathUrl' */ '@/view/ui-component/select-fid'),
+                meta: {
+                    title: 'eIcon',
+                    // icon: 'ios-aperture-outline',
+                    icon: 'ios-copy'
+                    // hideInMenu:true,
                 },
             },
             {

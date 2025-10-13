@@ -41,7 +41,7 @@ function addCustomTheme(themeName='light', fontColor, backgroundColor,colors={})
         ${themeC} {
             --theme-color: ${fontColor};
             --theme-bg-color: ${backgroundColor};
-            ${uiVals}
+            ${uiVals};
             ${switchVars}
         }
     `;

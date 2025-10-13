@@ -9,7 +9,6 @@ export default {
 
     '--layout-layout-header-height':"50px",
 
-    // '--theme-color':'#515a6e',
-    // '--theme-bg-color':'#fff',
+
 
 }
