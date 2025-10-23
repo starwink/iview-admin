@@ -12,20 +12,20 @@ export default [
     {
         path: '/',
         component: Layout,
-        redirect: '/dashboard',
+        redirect: '/data/business',
         name: 'home',
-        children: [
-            {
-                path: 'dashboard',
-                name: 'dashboard',
-                component: () => import(/* webpackChunkName: 'pathUrl' */ '@/views/pathUrl'),
-                meta: {
-                    title: '概览',
-                    access:[], //鉴权
+        // children: [
+        //     {
+        //         path: 'dashboard',
+        //         name: 'dashboard',
+        //         component: () => import(/* webpackChunkName: 'pathUrl' */ '@/views/pathUrl'),
+        //         meta: {
+        //             title: '概览',
+        //             access:[], //鉴权
                   
-                }
-            }
-        ]
+        //         }
+        //     }
+        // ]
     },
     
     

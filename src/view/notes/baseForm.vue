@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Modal class-name="eModal eModal-notesFormModal" width="50" v-model="show" @on-cancel="close" transfer footer-hide  :mask-closable="false">
+        <Modal class-name="eModal eModal-notesFormModal" width="300" v-model="show" @on-cancel="close" transfer footer-hide  :mask-closable="false">
             <div class="detail">
                 <div class="header" ref="header">
                     <span class="title">{{ form.id?'新增':'编辑' }}</span>
@@ -142,11 +142,11 @@ export default {
 
 .eModal-notesFormModal {
     .eModal-body {
-        height: auto !important;
-        padding: 16px;
-        overflow: hidden;
-        margin-bottom: 24px;
-        position: relative;
+        // height: auto !important;
+        // padding: 16px;
+        // overflow: hidden;
+        // margin-bottom: 24px;
+        // position: relative;
 
         .tips {
             text-align: center;

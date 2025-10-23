@@ -111,7 +111,7 @@ export default [
                 path: 'fonts',
                 name: 'uiFonts',
                 meta: {
-                    title: '字体预览',
+                    title: '字体',
                     icon: 'svg:font',
                 },
                 component: () => import('@/view/fonts/index.vue')
@@ -355,7 +355,7 @@ export default [
         component: { render: h => h('router-view') },
         // component: () => import(/* webpackChunkName: 'pathUrl' */ '@/view/ui-component/test'),
         meta: {
-            title: 'TEST',
+            title: '方法类',
             icon: 'logo-freebsd-devil',
             
         },
@@ -377,7 +377,7 @@ export default [
                 // component: { render: h => h('router-view') },
                 component: () => import(/* webpackChunkName: 'pathUrl' */ '@/view/ui-component/select-fid'),
                 meta: {
-                    title: 'eIcon',
+                    title: '下拉框(快捷新增未有)',
                     // icon: 'ios-aperture-outline',
                     icon: 'ios-copy'
                     // hideInMenu:true,

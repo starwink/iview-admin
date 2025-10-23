@@ -14,8 +14,8 @@ const importDirective = Vue => {
    * }
    */
   Vue.directive('draggable', directive.draggable)
-  console.log('--->',copy)
   Vue.directive('copy', copy)
+  
   Vue.directive('debounce', debounce)
   Vue.directive('fd', debounce)
 

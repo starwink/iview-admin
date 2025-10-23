@@ -45,7 +45,6 @@ function addCustomTheme(themeName='light', fontColor, backgroundColor,colors={})
             ${switchVars}
         }
     `;
-    console.log('themeC',themeC)
     
     document.head.appendChild(style);
 }
@@ -90,6 +89,7 @@ export default function genThemeColor(themeColor) {
     const tableHoverBgColor = tint(color, { value: 90 })
     const datePickerHoverBgColor = tint(color, { value: 85 })
 
+
     var colors = {
         '--ivu-primary-color': themeColor,
         '--ivu-link-hover-color': toRgb(linkHoverColor),
@@ -100,7 +100,11 @@ export default function genThemeColor(themeColor) {
         '--ivu-tree-title-selected-color': toRgb(treeTitleSelectedColor),
         '--ivu-menu-active-color': toRgb(menuActiveColor),
         '--ivu-table-hover-bg-color': toRgb(tableHoverBgColor),
-        '--ivu-date-picker-hover-bg-color': toRgb(datePickerHoverBgColor)
+        '--ivu-date-picker-hover-bg-color': toRgb(datePickerHoverBgColor),
+
+        '--theme-main-r':color.rgb[0],
+        '--theme-main-g':color.rgb[1],
+        '--theme-main-b':color.rgb[2],
 
     }
 
@@ -113,3 +117,16 @@ export default function genThemeColor(themeColor) {
     //     document.body.style.setProperty(key, colors[key])
     // })
 }
+
+//extractRgbaToObject('rgba(255, 110, 226, 1)')
+function extractRgbaToObject(rgbaString) {
+    const content = rgbaString.replace(/\s/g, '').match(/rgba?\(([^)]+)\)/)[1];
+    const parts = content.split(',');
+    const rgbaObject = {
+      r: parseInt(parts[0], 10),
+      g: parseInt(parts[1], 10),
+      b: parseInt(parts[2], 10),
+      a: parseFloat(parts[3])
+    };
+    return rgbaObject;
+  }

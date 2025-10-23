@@ -13,25 +13,40 @@
 </template>
 
 <script>
+// import asyncRoutes from '@/router/routers'
+
 export default {
   data() {
     return {
-      activeIndex: this.$store.state.menu.headerActived,
+    //   activeIndex: this.$store.state.menu.headerActived,
+      activeIndex:0,
       menu: [...this.$store.state.menu.routes],
+      name:''
       
       
     }
   },
+  
   computed: {
-    name() {
-      return this.menu[this.activeIndex]?.meta?.title 
-    }
+  
   },
   methods: {
+    init(){
+
+        this.setSelName()
+    },
+    setSelName(){
+         this.name= this.menu[this.activeIndex]?.meta?.title 
+    },
     switchMenu(index) {
-      this.$store.commit('menu/switchHeaderActived', index)
-      this.$router.push(this.$store.getters['menu/sidebarRoutes'][0].path)
+        this.setSelName()
+
+        this.$store.commit('menu/switchHeaderActived', index)
+        this.$router.push(this.$store.getters['menu/sidebarRoutes'][0].path)
     }
+  },
+  created(){
+    this.init();
   }
 }
 </script>

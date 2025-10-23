@@ -1,5 +1,13 @@
 # 自定义指令
-快捷键
+
+图片上传,
+
+左侧导航
+
+
+# 菜单项
+
+# 快捷键
 
 # json5 接入
 ```js
@@ -56,14 +64,12 @@ img  视频流实现 multipart/x-mixed-replace
 # 目录文件监听项目
 https://github.com/paulmillr/chokidar
 
-# 浏览器indexedDB 数据库操作 dexie.js
-https://dexie.org/
 
 
 [node.js lastlcsearch](https://elastic.ac.cn/guide/en/elasticsearch/client/javascript-api/current/getting-started-js.html)
 
 
-
+# 文章内容高亮
 ··· css
 ::selection {
   background-color: #ff6b6b; /* 背景色改为珊瑚红 */

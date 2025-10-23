@@ -1,5 +1,5 @@
 <template>
-  <div class="page-export">
+  <div class="json-parser">
     <h3>导出测试</h3>
     <p>检验jquery是否早期版本导出的.fn.wordexport</p>
     <span>1234567890 ,</span>
@@ -70,7 +70,9 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.page-export {
+.json-parser {
+    height: 100%;
+    overflow-y: auto;
     .review-item{
         background-color: #fff;
         margin: 16px;

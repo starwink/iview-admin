@@ -38,6 +38,26 @@ export default [
                 },
                 component: () => import(/* webpackChunkName: 'devComp' */ '@/view/ui-component/json-parser'),
             },
+            {
+                path: 'newclass',
+                name: 'newclass',
+
+                meta: {
+                    title: '类测试',
+                    icon: 'logo-freebsd-devil'
+                },
+                component: () => import(/* webpackChunkName: 'devComp' */ '@/view/ui-component/newclass'),
+            },
+            {
+                path: 'newclass2',
+                name: 'newclass2',
+
+                meta: {
+                    title: '类测试2',
+                    icon: 'logo-freebsd-devil'
+                },
+                component: () => import(/* webpackChunkName: 'devComp' */ '@/view/ui-component/newclass2'),
+            },
         ]
     }
 ]
