@@ -33,17 +33,17 @@ const constantRoutes = [
     {
         path: '/',
         component: Main,
-        redirect: 'dashboard',
-        children: [
-            {
-                path: '/dashboard',
-                name: 'dashboard',
-                component: () => import('@/view/home/dashboard'),
-                meta: {
-                    title: '概览',
-                }
-            },
-        ]
+        redirect: '/data/business',
+        // children: [
+        //     {
+        //         path: '/dashboard',
+        //         name: 'dashboard',
+        //         component: () => import('@/view/home/dashboard'),
+        //         meta: {
+        //             title: '概览',
+        //         }
+        //     },
+        // ]
     },
 
 
@@ -129,7 +129,7 @@ router.beforeEach(async (to, from, next) => {
                 // 如果已登录状态下，进入登录页会强制跳转到控制台页面
                 if (to.name == 'login') {
                     next({
-                        name: 'dashboard',
+                        name: 'home',
                         replace: true
                     })
                 }

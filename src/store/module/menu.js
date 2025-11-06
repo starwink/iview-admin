@@ -51,7 +51,6 @@ const mutations = {
     },
     setRoutesMap(state, routes){
         let m=extractionRouters(routes);
-        console.log('mmm',m)
         state.routeMap=m
     },
     // 根据路由判断属于哪个头部导航

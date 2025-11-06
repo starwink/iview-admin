@@ -5,6 +5,7 @@ import parentView from '@/components/parent-view'
 import intelligent_data_analysis from "./routers/intelligent-data-analysis.js";
 import ui_component from "./routers/ui.js";
 import comp_routers from "./routers/comp.js";
+import sysconfig_routers from "./routers/sys_config.js";
 
 
 
@@ -33,6 +34,7 @@ import comp_routers from "./routers/comp.js";
 // }
 export default [
     {
+        path: '/',
         meta:{
             title:'生产环境',
         },
@@ -41,19 +43,30 @@ export default [
         ],
     },
     {
+        path: '/ui',
         meta:{
-            title:'开发调试',
+            title:'主题样式',
         },
         children:[
             ...ui_component,
         ],
     },
     {
+        path: '/comp',
         meta:{
-            title:'组件开发',
+            title:'功能&组件',
         },
         children:[
             ...comp_routers,
+        ],
+    },
+    {
+        path: '/sys',
+        meta:{
+            title:'数据配置',
+        },
+        children:[
+            ...sysconfig_routers,
         ],
     },
 

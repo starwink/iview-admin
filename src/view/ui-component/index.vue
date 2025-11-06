@@ -1,87 +1,58 @@
-
 <template>
-  <div class="">
-    <Tabs value="Buttons">
-      <TabPane label="按钮" name="Buttons">
-        <Buttons />
-      </TabPane>
-      <TabPane label="换肤" name="colorTheme">
-        <ColorTheme />
-      </TabPane>
-      <TabPane label="指定测试" name="name3">
-        <Input v-model="form.text" />
-        <Button v-copy="form.text">coyp</Button>
-        <Button v-fd="fdTest">防抖test</Button>
-        <Button v-jl="fdTest">节流test</Button>
-        <p class="htest-v-style" v-style="11">fffffffffffffaaaaaaaaaaaaaaaaaaaaaaac12321452412321321432459372183216217</p>
-        <!-- <countTo :end='100' :decimals="2" :duration=5 delay=1 /> -->
-        {{form.text}}
-        <!-- {{this.$store.state.menu.routes}} -->
-
-      </TabPane>
-      <TabPane label="e图标" name="eIcon">
-        <div>
-
-            <eIcon name="svg:tyq" />
-            <code >{{form.code}}</code>
-
-        </div>
-      </TabPane>
-    </Tabs>
-  </div>
+    <div class="ui-reivew">
+        <ul class="model-box">
+            <li v-for="item,index of option.model" :key="index" @click.stop="openPath(item.url)">
+               {{index+1}}. {{item.name}}
+            </li>
+        </ul>
+    </div>
 </template>
 <script>
-import Buttons from './component/buttons.vue'
-import ColorTheme from './component/colorTheme.vue'
-import countTo from '@/components/count-to/count-to.vue'
-import eIcon from '_c/eIcon'
 export default {
-  components: {
-    Buttons,
-    ColorTheme,
-    countTo,
-    eIcon
-  },
-
-  data() {
-    return {
-      form: {
-        text: '1234',
-        code:'<eIcon name="svg:tyq" />'
-      },
-    }
-  },
-  methods: {
-    init() {
-      Object.assign(this.data, this.options.data());
+    data(){
+        return {
+            option:{
+                model:[
+                    {name:'框架主题',url:'/ui/uiframework'},
+                    {name:'字体',url:'/ui/fonts'},
+                    {name:'图标',url:'/ui/icons'},
+                    {name:'搜索列表',url:'/ui/list'},
+                    {name:'进阶表格',url:'/ui/table'},
+                    {name:'抽屉弹窗',url:'/ui/modal'},
+                ]
+            }
+        }
     },
-    fdTest() {
-      console.log(new Date().getTime())
-      console.log(this.form?.text)
-    }
-  },
-  mounted() {
-
-  },
-  created() {
-
-  },
+    methods:{
+        init(){
+            Object.assign(this.$data, this.$options.data());
+            
+        },
+        openPath(url){
+            this.$router.push(url)
+        }
+    },
 }
 </script>
 <style lang="scss" scoped>
-.htest-v-style {
-  width: 60px;
-  // -webkit-line-clamp: 2;
-
-  // display: -webkit-box;
-  // -webkit-box-orient: vertical;
-  // overflow: hidden;
-
-  text-overflow: ellipsis;
-  -webkit-box-orient: vertical;
-//   -webkit-line-clamp: 3;
-  display: -webkit-box;
-  overflow: hidden;
-  word-break: break-all;
+.ui-reivew{
+    padding:16px;
+    .model-box{
+        display: flex;
+        justify-content: flex-start;
+        list-style: none;
+        li{
+            padding:12px 32px;
+            background-color: #fff;
+            border-radius: 4px;
+            margin: 0 10px 10px 0;
+            cursor: pointer;
+            
+            &:hover{
+                color: var(--ivu-link-hover-color);
+                box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.12), 0 0 6px 0 rgba(0, 0, 0, 0.12);
+            }
+        }
+    }
 }
 </style>

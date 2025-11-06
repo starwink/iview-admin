@@ -31,6 +31,21 @@
 
     </div>
 
+    <div class="title mt-10">
+        icon:<code v-copy>
+            &lt;eIcon :name="'iview:'+name" /&gt;
+            </code>
+      </div>
+    <div class="icon-box">
+      
+      <div class="item" v-for="(name,i) of option.iviewList">
+        <span class="id">{{i}}</span>
+        <span class="name" @click.stop="copyName(name)">{{'iview:'+name}}</span>
+        <eIcon class="icon" :name="'iview:'+name" @click.native="copyCode(name,'iview')" />
+      </div>
+
+    </div>
+
 
 
   </div>
@@ -39,6 +54,7 @@
 import iconfontJsonList from '@/assets/icons/iconfont.json'
 import svgJsonList from '@/assets/icons-svg/svg-files.json'
 import eIcon from '_c/eIcon'
+import iviewList from './iview-icon'
 import { webCopy } from "@/libs/util";
 export default {
   components: {
@@ -51,7 +67,9 @@ export default {
 
       },
       option: {
-        iconfont: []
+        iconfont: [],
+        svgJsonList:[],
+        iviewList:[]
       }
     }
   },
@@ -65,7 +83,8 @@ export default {
       this.option.svgJsonList = svgJsonList.map(name => {
           return name.replace('.svg', '');
       }) || []
-      console.log('iconfontJsonList', iconfontJsonList, this.$route)
+      this.option.iviewList=iviewList;
+    
     },
     copyName(name){
         webCopy(name);

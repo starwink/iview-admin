@@ -1,36 +1,41 @@
 <template>
   <div class="side-menu-wrapper">
     <div class="side-menu-header">
-        <slot></slot>
+      <slot></slot>
     </div>
     <div class="side-menu-content">
-        <Menu ref="menu" v-show="!collapsed" :active-name="activeName" :open-names="openedNames" :accordion="accordion" :theme="theme" width="auto" @on-select="handleSelect">
-            <template v-for="item in menuList">
-                <!-- <template v-if="item.children && item.children.length === 1">
-                    <side-menu-item v-if="showChildren(item)" :key="`menu-${item.name}`" :parent-item="item"></side-menu-item>
-                    <menu-item v-else :name="getNameOrHref(item, true)" :key="`menu-${item.children[0].name}`"><eIcon :name="item.children[0]?.meta?.icon || ''"/><span>{{ showTitle(item.children[0]) }}</span></menu-item>
-                </template>
-                <template v-else> -->
-                    <side-menu-item v-if="showChildren(item)" :key="`menu-${item.name}`" :parent-item="item"></side-menu-item>
-                    <menu-item v-else :name="getNameOrHref(item)" :key="`menu-${item.name}`"><eIcon :name="item?.meta?.icon || ''"/><span>{{ showTitle(item) }}</span></menu-item>
-                <!-- </template> -->
-            </template>
-        </Menu>
-        <div class="menu-collapsed" v-show="collapsed" :list="menuList">
-            <template v-for="item in menuList">
-                <collapsed-menu v-if="item.children " @on-click="handleSelect" hide-title :root-icon-size="rootIconSize" :icon-size="iconSize" :theme="theme" :parent-item="item" :key="`drop-menu-${item.name}`"></collapsed-menu>
-                <Tooltip transfer v-else :content="(item.meta && item.meta.title) || (item.children && item.children[0] && item.children[0].meta.title)" placement="right" :key="`drop-menu-${item.name}`">
-                    <a @click="handleSelect(getNameOrHref(item, true))" class="drop-menu-a" :style="{textAlign: 'center'}"><eIcon :size="rootIconSize"  :name="item?.meta?.icon  || (item.children && item.children[0].icon)"/></a>
-                </Tooltip>
-            </template>
-        </div>
-
+      <Menu ref="menu" v-show="!collapsed" :active-name="activeName" :open-names="openedNames" :accordion="accordion" :theme="theme" width="auto" @on-select="handleSelect">
+        <template v-for="item in menuList">
+          <template v-if="item.children && item.children.length === 1">
+            <side-menu-item v-if="showChildren(item)" :key="`menu-${item.name}`" :parent-item="item"></side-menu-item>
+            <menu-item v-else :name="getNameOrHref(item, true)" :key="`menu-${item.children[0].name}`">
+              <eIcon :name="item.children[0]?.meta?.icon || ''" /><span>{{ showTitle(item.children[0]) }}</span>
+            </menu-item>
+          </template>
+          <template v-else>
+            <side-menu-item v-if="showChildren(item)" :key="`menu-${item.name}`" :parent-item="item"></side-menu-item>
+            <menu-item v-else :name="getNameOrHref(item)" :key="`menu-${item.name}`">
+              <eIcon :name="item?.meta?.icon || ''" /><span>{{ showTitle(item) }}</span>
+            </menu-item>
+          </template>
+        </template>
+      </Menu>
+      <div class="menu-collapsed" v-show="collapsed" :list="menuList">
+        <template v-for="item in menuList">
+          <collapsed-menu v-if="item.children  && item.children.length > 1" @on-click="handleSelect" hide-title :root-icon-size="rootIconSize" :icon-size="iconSize" :theme="theme" :parent-item="item" :key="`drop-menu-${item.name}`"></collapsed-menu>
+          <Tooltip transfer v-else :content="(item.meta && item.meta.title) || (item.children && item.children[0] && item.children[0].meta.title)" placement="right" :key="`drop-menu-${item.name}`">
+            <a @click="handleSelect(getNameOrHref(item, true))" class="drop-menu-a" :style="{textAlign: 'center'}">
+              <eIcon :size="rootIconSize" :name="item?.meta?.icon  || (item.children && item.children[0].icon)" />
+            </a>
+          </Tooltip>
+        </template>
+      </div>
 
     </div>
     <div class="side-menu-footer">
-        <slot name="footer" >
-            <div></div>
-        </slot>
+      <slot name="footer">
+        <div></div>
+      </slot>
     </div>
 
   </div>
@@ -43,7 +48,7 @@ import mixin from './mixin'
 
 export default {
   name: 'SideMenu',
-  mixins: [ mixin ],
+  mixins: [mixin],
   components: {
     SideMenuItem,
     CollapsedMenu
@@ -51,7 +56,7 @@ export default {
   props: {
     menuList: {
       type: Array,
-      default () {
+      default() {
         return []
       }
     },
@@ -80,47 +85,47 @@ export default {
       default: () => []
     }
   },
-  data () {
+  data() {
     return {
       openedNames: []
     }
   },
   methods: {
-    handleSelect (name) {
+    handleSelect(name) {
       this.$emit('on-select', name)
     },
-    getOpenedNamesByActiveName (name) {
+    getOpenedNamesByActiveName(name) {
       return this.$route.matched.map(item => item.name).filter(item => item !== name)
     },
-    updateOpenName (name) {
+    updateOpenName(name) {
       if (name === this.$config.homeName) this.openedNames = []
       else this.openedNames = this.getOpenedNamesByActiveName(name)
     }
   },
   computed: {
-    textColor () {
+    textColor() {
       return this.theme === 'dark' ? '#fff' : '#495060'
     }
   },
   watch: {
-    activeName (name) {
+    activeName(name) {
       if (this.accordion) this.openedNames = this.getOpenedNamesByActiveName(name)
       else this.openedNames = getUnion(this.openedNames, this.getOpenedNamesByActiveName(name))
     },
-    openNames (newNames) {
+    openNames(newNames) {
       this.openedNames = newNames
     },
-    openedNames () {
+    openedNames() {
       this.$nextTick(() => {
         this.$refs.menu.updateOpened()
       })
     }
   },
-  mounted () {
+  mounted() {
     this.openedNames = getUnion(this.openedNames, this.getOpenedNamesByActiveName(name))
   }
 }
 </script>
 <style lang="less">
-@import './side-menu.less';
+@import "./side-menu.less";
 </style>

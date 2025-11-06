@@ -1,6 +1,7 @@
 <template>
     <div class="indexedDB">
         <h3>indexedDB使用</h3>
+        <p>chrome49 ,64不兼容,推测可能要在71+以上版本,102可以;queueMicrotask 支持</p>
         <Button @click="addValue">addValue</Button>
         <Button @click="putValue">putValue</Button>
         <Button @click="batchValue">batchValue</Button>

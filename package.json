@@ -5,9 +5,9 @@
   "private": false,
   "scripts": {
     "dev": "vue-cli-service serve --open",
-    "reseticons":"npm run icons;npm run iconsvgs",
-    "icons":"node src/assets/icons/getJson.js;",
-    "iconsvgs":"node src/assets/icons-svg/getJson.js;",
+    "reseticons": "npm run icons;npm run iconsvgs",
+    "icons": "node src/assets/icons/getJson.js;",
+    "iconsvgs": "node src/assets/icons-svg/getJson.js;",
     "serve": "vue-cli-service serve --open",
     "build": "export NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service build"
   },

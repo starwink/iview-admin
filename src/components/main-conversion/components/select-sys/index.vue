@@ -6,7 +6,7 @@
         <Icon type="ios-arrow-down"></Icon>
       </a>
       <DropdownMenu slot="list" >
-        <DropdownItem v-for="(item, index) in menu" :name="index">{{item.meta.title}}</DropdownItem>
+        <DropdownItem v-for="(item, index) in menu" :name="index" :selected="activeIndex==index">{{item.meta.title}}</DropdownItem>
       </DropdownMenu>
     </Dropdown>
   </div>
@@ -26,27 +26,39 @@ export default {
       
     }
   },
+  watch:{
+    '$route':function(){
+        this.setSelName();
+    }
+  },
   
   computed: {
   
   },
   methods: {
     init(){
-
         this.setSelName()
     },
     setSelName(){
-         this.name= this.menu[this.activeIndex]?.meta?.title 
+        let fullPath=this.$route.fullPath;
+        let index=0;
+        this.$store.state.menu.routes.map((item,i)=>{
+            if(fullPath.startsWith(item.path)){
+                index=i
+            }
+        })
+        this.activeIndex=index;
+        this.name= this.menu[index]?.meta?.title 
     },
     switchMenu(index) {
-        this.setSelName()
-
-        this.$store.commit('menu/switchHeaderActived', index)
+        this.$store.commit('menu/switchHeaderActived', index)//
         this.$router.push(this.$store.getters['menu/sidebarRoutes'][0].path)
     }
   },
+  mounted(){
+      },
   created(){
-    this.init();
+      this.init();
   }
 }
 </script>
