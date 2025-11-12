@@ -18,8 +18,10 @@ export default {
             console.log('rce',e)
             this.$route.meta.title && this.$store.commit('settings/setTitle', this.$route.meta.title)
         }
+        
     },
     metaInfo() {
+         this.$Message.config({duration:4})
         return {
             title: this.$store.state.settings.title,
             titleTemplate: title => {

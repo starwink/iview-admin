@@ -2,6 +2,8 @@
 const dayjs = require('dayjs')
 // import UaParser from 'ua-parser-js'
 import qs from "qs";
+import JSON5 from 'json5';
+import { jsonrepair } from 'jsonrepair'
 
 export default {
 
@@ -938,6 +940,20 @@ export default {
             return false;
         }
     },
+    isJSON5(str){
+        if (!str) {
+            return false;
+        }
+        if (typeof str == 'object') {
+            return str;
+        }
+        try {
+            JSON5.parse(str);
+            return true;
+        } catch (e) {
+            return false;
+        }
+    },
     getJSONByStr(str) {
         let obj = {}
         if (this.isJSON(str)) {
@@ -950,6 +966,13 @@ export default {
             return JSON.stringify(str);
         } catch (e) {
             return '';
+        }
+    },
+    parseJSON5(str){
+        try {
+            return JSON5.parse(str);
+        } catch (e) {
+            return JSON5.parse(jsonrepair(str));
         }
     },
     getWhereDeptTree() {

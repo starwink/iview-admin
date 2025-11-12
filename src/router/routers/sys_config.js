@@ -21,8 +21,19 @@ export default [
                     title: '标签',
                     icon: 'md-pricetag'
                 },
-                component: () => import(/* webpackChunkName: 'devComp' */ '@/view/sys/list'),
+                component: () => import(/* webpackChunkName: 'sys' */ '@/view/sys/list'),
             },
+            {
+                path: 'english',
+                name: 'sys/english',
+
+                meta: {
+                    title: '管理',
+                    icon: 'svg:english-fill'
+                },
+                component: () => import(/* webpackChunkName: 'sys' */ '@/view/sys/english/list.manage'),
+            },
+            
             
         ]
     }

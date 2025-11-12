@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h3>编辑器调试demo</h3>
     <Button @click="addWidget">添加widget</Button>
     <Button @click="removeWidgeet">删除Widgeet</Button>
     <Button @click="runtest">runtest</Button>

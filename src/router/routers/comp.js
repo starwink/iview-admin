@@ -161,6 +161,51 @@ export default [
                 },
                 component: () => import(/* webpackChunkName: 'devComp' */ '@/view/ui-component/data/indexedDB.vue'),
             },
+            {
+                path: 'json5',
+                name: 'data/json5',
+                meta: {
+                    title: 'JSON5使用',
+                    icon: 'ios-aperture-outline',
+                },
+                component: () => import(/* webpackChunkName: 'devComp' */ '@/view/ui-component/data/json5.vue'),
+            },
+            {
+                path: 'copymp',
+                name: 'data/copymp3',
+                meta: {
+                    title: 'json5组合使用示例',
+                    icon: 'ios-aperture-outline',
+                },
+                component: () => import(/* webpackChunkName: 'devComp' */ '@/view/ui-component/data/copymp3.vue'),
+            },
+            {
+                path: 'loadenaudio',
+                name: 'data/loadenaudio',
+                meta: {
+                    title: '下载预览',
+                    icon: 'ios-aperture-outline',
+                },
+                component: () => import(/* webpackChunkName: 'devComp' */ '@/view/ui-component/data/loadAudio.vue'),
+            },
+            {
+                path: 'round-robin',
+                name: 'data/round-robin',
+                meta: {
+                    title: '仿真轮循',
+                    icon: 'ios-aperture-outline',
+                },
+                component: () => import(/* webpackChunkName: 'devComp' */ '@/view/ui-component/data/roundRobin.vue'),
+            },
+            {
+                path: 'round-robin-v2',
+                name: 'data/round-robin-v2',
+                meta: {
+                    title: '轮循实例',
+                    icon: 'ios-aperture-outline',
+                },
+                component: () => import(/* webpackChunkName: 'devComp' */ '@/view/ui-component/data/roundRobin.v2.vue'),
+            }
         ]
             
     },

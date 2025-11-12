@@ -11,6 +11,8 @@
 
 export default {
     'light': {
+        '--info-color': '#909399',
+        '--info-color-active': '#B1B3B8',
         '--theme-color': '#515a6e',
         '--theme-bg-color': '#fff',
         '--theme-font-color': '#fff',

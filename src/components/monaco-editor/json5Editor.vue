@@ -1,25 +1,23 @@
 <template>
   <div ref="monaco_editor" class="monaco-editor" :style="'height: ' + height + 'px'">
     <div class="e-tools" v-show="tools">
-      <Tooltip class="item" effect="dark" content="展开" placement="top-start">
-        <!-- <i class="el-icon-reading" @click.stop="formatJson" /> -->
+      <!-- <Tooltip class="item" effect="dark" content="展开" placement="top-start">
         <i @click.stop="formatJson" class="icon editor-iconfont icon-zhankai3"></i>
-      </Tooltip>
+      </Tooltip> -->
       <Tooltip class="item" effect="dark" content="压缩" placement="top-start">
-        <!-- <i class="el-icon-attract" @click.stop="compressJson" /> -->
         <i @click.stop="compressJson" class="icon editor-iconfont icon-compress"></i>
       </Tooltip>
 
-      <Tooltip class="item" effect="dark" content="修复" placement="top-start">
-        <!-- <i class="el-icon-brush" @click.stop="fixJson" /> -->
+     <!--  <Tooltip class="item" effect="dark" content="修复" placement="top-start">
         <i @click.stop="fixJson" class="icon editor-iconfont icon-xijiexiufu"></i>
-      </Tooltip>
+      </Tooltip> -->
     </div>
   </div>
 </template>
 <script>
 import { jsonrepair } from 'jsonrepair'
 import jsonPathFunc from './jsonEditor/jsonpath.fun'
+import { registerJson5Language } from "monaco-json5-highlighter";
 // import { JSONPath } from 'jsonpath-plus'
 
 export default {
@@ -36,10 +34,7 @@ export default {
       type: Boolean,
       default: true,
     },
-    recommendPathConfig: { //点击json内容时获取推荐jsonPaht
-      type: Boolean,
-      default: true,
-    },
+    
   },
 
   data() {
@@ -111,37 +106,30 @@ export default {
       if (window.monaco == void 0) {
         return;
       }
+      registerJson5Language(window.monaco);
 
-      if (this.recommendPathConfig) {
-        this.option.jsonpathAll = jsonPathFunc.getJsonPaths(this.form.code)
-      }
+      
       this.editor = window.monaco.editor.create(this.$refs.monaco_editor, {
-        language: 'json',
+        language: 'json5',
         value: this.form.code,
         theme: 'vs-dark',// vs, hc-black, or vs-dark
-        automaticLayout: true,
       })
 
       this.editor.onDidChangeModelContent((...e) => {
         let code = this.editor.getValue()
-        if (this.recommendPathConfig) {
-          this.option.jsonpathAll = jsonPathFunc.getJsonPaths(code);
-        }
+      
         this.$emit('change', code);
         this.$emit('input', code);
       })
-      // 监听点击事件
-      this.editor.onMouseDown((e) => {
-        // console.log('mounsedown', e);
-        const lineNumber = e?.target?.position?.lineNumber
-        // console.log(e,lineNumber)
-        this.clickLine(lineNumber)
-        /*  if (e.target.type === window.monaco.editor.MouseTargetType.CONTENT_TEXT) {//缩小点击区域小,只有在内容以及前端区域点击才能获取到,
-             const lineNumber = e.target.position.lineNumber
-             console.log(e,lineNumber)
-             this.clickLine(lineNumber)
-         } */
-      })
+
+        this.editor.onDidPaste((text) => {
+            let code = this.editor.getValue()
+            this.$emit('change', code);
+            this.$emit('input', code);
+            console.log('Pasted text:', text);
+        });
+
+     
       // 粘动实现jsonpath想法: editor.getModel().getOutlineModel()
     },
     setCode(code, runFormat = false) {
@@ -173,65 +161,22 @@ export default {
       }
     },
     formatJson() {//格式化展开
-      this.editor.trigger('func', 'editor.action.formatDocument')
+    //   this.editor.trigger('func', 'editor.action.formatDocument')
+    //    this.editor.trigger('', 'editor.expandAll');
+    //    let str = this.editor.getValue()
+      //todo json5等未标准json无法压缩
+    //   this.editor.setValue(JSON.stringify(str))
+      
     },
     compressJson() { //压缩
-      let str = this.editor.getValue()
-      //todo json5等未标准json无法压缩
-      this.editor.setValue(JSON.stringify(JSON.parse(str)))
+    //   let str = this.editor.getValue()
+    //   //todo json5等未标准json无法压缩
+    //   this.editor.setValue(JSON.stringify(JSON.parse(str)))
+
+       this.editor.trigger('', 'editor.foldAll');
     },
-    clickLine(lineNumber) {
-      // 获取点击行的文本内容
-      const model = this.editor.getModel()
-      const lineContent = model.getLineContent(lineNumber);//
-      // let lineContent=this.getLineContent(lineNumber);//按当前点击所在行的来获取内容
-      // console.log('Clicked line:', lineNumber, 'Content:', lineContent)
-      //   let keyName = jsonPathFunc.extractKey(lineContent);
-      // console.log('keyname',keyName)
-      // 解析 JSON 并查找字段
-      if (this.recommendPathConfig) {
-        try {
-          //   let pathKey = this.extractKey(lineContent);
-          let pathKey = jsonPathFunc.extractKey(lineContent);;
-          console.log('cpat', pathKey);
-          console.log('this.option.jsonpathAll', this.option.jsonpathAll)
-          //    this.$emit('clickLinePullJsonKey', pathKey)
-          if (pathKey) {
-            let keyY = lineContent.indexOf(pathKey);//通过前边距来大概判断是几层的
-            let num = parseInt(keyY / 4);
-            let topList = [], bottomList = [], max = 20;
-            this.option.jsonpathAll.map(res => {
-              if (res.indexOf(pathKey) > -1) {
-                if (topList.length + bottomList.length > 20) {
-                  return;
-                }
-                if (jsonPathFunc.countDots(res) == num) {
-                  topList.push(res)
-                } else {
-                  bottomList.push(res)
-                }
-              }
-            })
-            this.option.recommendJsonPath = [...topList, ...bottomList];
-            console.log('pushRecommendPath:', this.option.recommendJsonPath)
-            this.$emit('pushRecommendPath', this.option.recommendJsonPath)
-
-            // console.log(lineContent.indexOf(pathKey));
-          }
-
-        } catch (err) {
-          console.error('Invalid JSON:', err)
-        }
-      }
-
-    },
-    //按行获取所在行内容
-    getLineContent(lineNumber) {
-      // console.log('getLineContent',lineNumber)
-      let text = this.editor.getModel().getLineContent(lineNumber);
-      // console.log('text',text)
-      return text
-    }
+   
+   
   },
   beforeMount() {
     window.addEventListener('resize', this.$_resize)

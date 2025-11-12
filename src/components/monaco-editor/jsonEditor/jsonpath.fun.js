@@ -1,4 +1,4 @@
-import $helper from '@/utils/helper'
+import $helper from '@/libs/helper'
 export default {
     extractKey: function (str) {
         // 匹配：双引号包围的字段名，后面紧跟冒号（前面可能有空格）

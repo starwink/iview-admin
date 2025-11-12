@@ -10,10 +10,25 @@
         </div>
         <div class="table-box" ref="tableRef">
             <Table :columns="list.columns" :data="list.data" width="calc(100% - 16px)" :height="tableHeight"  border>
-                 <template slot-scope="{ row, index }" slot="case-type">
-                    <span v-if="row.diseaseStatus==1" class="case-type-color-login">未提交</span>
-                    <span v-else-if="row.diseaseStatus==2" class="case-type-color-success">采集中</span>
-                    <span v-else-if="row.diseaseStatus==3" class="case-type-color-error">异常</span>
+                 <template slot-scope="{ row, index }" slot="code_str">
+                    <div>
+                        <span>
+                            <eTooltip :text="row.code_str">
+                                <Tag>info</Tag>
+                            </eTooltip>
+                        </span>
+                        <span>
+                            <eTooltip :text="row.uk_mp3">
+                                <Tag @click.native="payAudio(row.uk_mp3)">UK</Tag>
+                            </eTooltip>
+                        </span>
+                        <span>
+                            <eTooltip :text="row.us_mp3">
+                                <Tag @click.native="payAudio(row.us_mp3)">US</Tag>
+                            </eTooltip>
+                        </span>
+                    </div>
+                    
                 </template>
                  <template slot-scope="{ row, index }" slot="created_at">
                     <span>{{$helper.getDateParams(row.created_at,'YYYY-MM-DD HH:mm')}}</span>
@@ -41,7 +56,11 @@
     </div>
 </template>
 <script>
+import eTooltip from "@/components/eTooltip";
 export default {
+    components: {
+        eTooltip,
+    },
     data(){
         return {
             tableHeight:200,
@@ -62,32 +81,30 @@ export default {
                     // },
                     {
                         title: 'ID',
-                        minWidth: 90,
+                        width: 90,
                         key: 'id',
 
                     },
                     {
                         title: 'word',
-                        minWidth: 180,
+                        width: 160,
                         key: 'word',
 
                     },
                     {
-                        title: '音频',
+                        title: '数据',
                         minWidth: 120,
-                        key: 'audio_json',
-                        ellipsis: true,
-                        tooltip: true,
+                        slot: 'code_str',
                     },
                     {
                         title: '创建时间',
-                        width: 140,
+                        width: 150,
                         slot: 'created_at',
                     },
                    
                     {
                         title: '更新时间',
-                        width: 140,
+                        width: 150,
                         slot: 'update_datetime',
                     },
                     {
@@ -106,6 +123,9 @@ export default {
                     }
                 ],
                 data:[]
+            },
+            loading:{
+                table:false
             }
         }
     },
@@ -124,11 +144,8 @@ export default {
 
         init(){
             Object.assign(this.$data, this.$options.data());
-
-            let arr=Array(18).fill({name:'1fsd'});
             this.$_resize();
-            this.list.data=arr;
-
+            this.search();
         },
         
         reset() {
@@ -139,6 +156,29 @@ export default {
         search() {
             this.page.pageNum = 1
             this.getList()
+        },
+        getList() {
+            if (this.loading.table) {
+                return;
+            }
+            this.loading.table = true
+            let params = { ...this.form, ...{ pageNum: this.page.current, pageSize: this.page.pageSize } }
+            this.$api.getEnglishList(params).then(res => {
+                this.loading.table = false;
+                // this.list.data = res.object.list;
+                let list=[];
+                res.object.list.map(res=>{
+                    list.push({
+                        ...res,
+                        ...{
+                            uk_mp3:this.getAudioUri(res,'uk'),
+                            us_mp3:this.getAudioUri(res,'us'),
+                        }
+                    })
+                })
+                this.list.data = list;
+                this.page.total = res.object.total || 0;
+            });
         },
         changePageCurrent(val) {
             this.page.pageNum = val
@@ -156,7 +196,19 @@ export default {
             console.log('edit',row)
         },
         del(row){
-            console.log('del',row)
+            this.delEnglish(row.id).then(res=>{
+                if(res.code==1){
+                    this.getList()
+                }
+            })
+        },
+        getAudioUri(row,type){
+            let info=this.$helper.getJSONByStr(row.code_str)
+            let uri=info?.[type]?.audioUrl || ''
+            return uri
+        },
+        payAudio(uri){
+            console.log('path',uri)
         }
     },
     created(){

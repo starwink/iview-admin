@@ -15,7 +15,6 @@
         <Button @click="getLogs">get logs</Button>
         <Button @click="resetDb">resetDb</Button>
         <Button @click="gadd">gloab add</Button>
-        <logsModal ref="logsModal" />
         <Button @click="openLogsModal">openLogsModal</Button>
 
     </div>
@@ -23,11 +22,8 @@
 <script>
 import { Dexie  } from 'dexie';
 import dbTheme from '@/store/theme.db'
-import dbLogs from '@/store/logs.db'
-import logsModal from '@/view/error-page/logsModal.vue'
 export default {
     components:{
-        logsModal
     },
     data(){
         return {
@@ -54,8 +50,6 @@ export default {
             console.log('idbthemeclass',dbTheme)
             this.the=new dbTheme();
             console.log('the',this.the)
-            this.logdb=new dbLogs();
-            this.logdb.delOldData(7)
             
         },
         addValue(){
@@ -150,10 +144,9 @@ export default {
             this.logdb.resetDb();
         },
         gadd(e){
-            this.$logs.add('全局测试','/main',JSON.stringify(e))
+            // this.$logs.add('全局测试','/main',JSON.stringify(e))
         },
         openLogsModal(){
-            this.$refs.logsModal.init();
         }
     },
     mounted(){
